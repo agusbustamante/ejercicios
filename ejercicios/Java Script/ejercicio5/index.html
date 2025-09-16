@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 5</title>
+</head>
+<body>
+    <h1>Ejercicio 5</h1>
+    <h3>Array de Paises</h3>
+
+    <script>
+        var elemento = prompt("Introduce un país:");
+        var arreglo = [];
+        arreglo.push(elemento);
+        elemento = prompt("Introduce otro país:");
+        arreglo.push(elemento);
+        elemento = prompt("Introduce otro país:");
+        arreglo.push(elemento);
+
+        document.write("<h4>El tipo de arreglo es: " + typeof arreglo + "</h4>");
+        document.write("<h4>Su longitud es: " + arreglo.length + "</h4>");
+
+        document.write("<h4>El primer país agregado fue: " + arreglo[0] + "</h4>");
+        document.write("<h4>El segundo país agregado fue: " + arreglo[1] + "</h4>");
+        document.write("<h4>El tercer país agregado fue: " + arreglo[2] + "</h4>");
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{
+    "empleados": [
+    {"legajo": "01", "apellidoYNombres": "Bustamante Agustin", "sueldoBasico": 300000 },
+    {"legajo": "02", "apellidoYNombres": "Salinas Sergio", "sueldoBasico": 250000 },
+    {"legajo": "03", "apellidoYNombres": "Giuliano Tomas", "sueldoBasico": 320000 },
+    {"legajo": "04", "apellidoYNombres": "Martinez Nicolas", "sueldoBasico": 280000 }
+    ],
+
+    "liquidaciones": [
+        {
+            "legajoEmpleado": "01",
+            "apellidoYNombres": "Bustamante Agustin",
+            "Fecha_liquidacion": "2025-09-01",
+            "MesDeliquidacion": "2025-09",
+            "SueldoBasico": 300000,
+            "concepto_no_renumerativo_1":{ "codigoConcepto": "01", "descripcion": "indemnizacion"},
+            "monto_no_renumerativo_1": 100000
+        },
+        {
+            "legajoEmpleado": "02",
+            "apellidoYNombres": "Salinas Sergio",
+            "Fecha_liquidacion": "2025-09-01",
+            "MesDeliquidacion": "2025-09",
+            "SueldoBasico": 250000,
+            "concepto_no_renumerativo_1":{ "codigoConcepto": "02", "descripcion": "Aignaciones familiares"},
+            "monto_no_renumerativo_1": 50000
+        },
+        {
+            "legajoEmpleado": "03",
+            "apellidoYNombres": "Giuliano Tomas",
+            "Fecha_liquidacion": "2025-09-01",
+            "MesDeliquidacion": "2025-09",
+            "SueldoBasico": 320000,
+            "concepto_no_renumerativo_1":{ "codigoConcepto": "03", "descripcion": "Viaticos"},
+            "monto_no_renumerativo_1": 80000
+        },
+        {
+            "legajoEmpleado": "04",
+            "apellidoYNombres": "Martinez Nicolas",
+            "Fecha_liquidacion": "2025-09-01",
+            "MesDeliquidacion": "2025-09",
+            "SueldoBasico": 280000,
+            "concepto_no_renumerativo_1":{ "codigoConcepto": "04", "descripcion": "adicional por presentismo"},
+            "monto_no_renumerativo_1": 60000
+        }
+    ]
+}
+
+
+
+
+
+
+
+
+

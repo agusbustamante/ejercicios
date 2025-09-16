@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuentes dinamicas</title>
+<style>
+ body {
+    font-family: Verdana, sans-serif;
+    margin: 0;
+    padding: 2rem;
+    line-height: 1.6;
+    background-color: #f0f4ff;
+    transition: font-size 0.3s ease;
+  }
+
+  h1 {
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+    color: #1a237e;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    background-color: #c5cae9;
+    padding: 0.6rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+  }
+
+  /* Resolución baja */
+  body {
+    font-size: 14px; /* tamaño base */
+  }
+
+  /* Resolución media */
+  @media (min-width: 800px) {
+    body {
+      font-size: 22px;
+    }
+  }
+
+  /* Resolución alta */
+  @media (min-width: 1600px) {
+    body {
+      font-size: 32px;
+    }
+  }
+
+  /* Los títulos serán un 80% más grandes que el texto normal */
+  h1 {
+    font-size: em;
+  }
+</style>
+</head>
+<body>
+  <h1>Ajuste automático de fuentes en diferentes pantallas</h1>
+
+  <p>En este ejemplo, los títulos son más grandes que el texto común, para destacar la información principal.</p>
+  <p>Se establece un tamaño base para todo el documento y se emplean unidades relativas para mantener proporciones.</p>
+  <p>Con la ayuda de media queries, la tipografía se ajusta automáticamente según el ancho de la ventana.</p>
+  <p>La resolución de pantalla se mide en píxeles de ancho por píxeles de alto, y cada dispositivo puede variar.</p>
+  <p>Equipos pequeños, como teléfonos modernos, suelen tener gran densidad de píxeles, lo que permite ver texto más nítido.</p>
+  <p>Por otro lado, pantallas grandes tienden a tener menos densidad, mostrando elementos más grandes.</p>
+  <p>En este caso, se usan tres rangos para simular distintos dispositivos.</p>
+  <p>Si la densidad es alta, la percepción es de alta calidad visual; si es baja, el contenido parece más grande.</p>
+  <p>Se prioriza ajustar el texto para mantener la legibilidad en todas las resoluciones.</p>
+  <p>Para esta práctica:</p>
+  <p>— 14px para pantallas pequeñas (móviles y tablets en vertical)</p>
+  <p>— 22px para pantallas medianas (entre 800px y 1599px de ancho)</p>
+  <p>— 32px para pantallas grandes (a partir de 1600px)</p>
+</body>
+</html>

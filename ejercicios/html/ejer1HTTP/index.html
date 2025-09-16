@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJERCICIO HTTP</title>
+</head>
+<body>
+    <header> 
+        <h1>REFERENCIA PROTOCOLO HTTP</h1>
+    </header>
+   <hr />
+    <section>
+        <h3>Links de Referencias</h3>
+        <h4>Abrir links</h4>
+        <nav>
+            <ul> 
+                <li> <a href="https://www.techtarget.com/whatis/definition/HTTP-Hypertext-Transfer-Protocol" target="_blank">TechTarget</a></li>        
+                <li> <a href="https://www.ionos.com/es-us/digitalguide/hosting/cuestiones-tecnicas/protocolo-http/" target="_blank">ionos</a></li>        
+            </ul>
+        </nav>
+    </section>
+    <br/>
+    <hr/>
+    <section>
+        <h3>Preguntas HTTP:</h3>
+        <ul>
+            <hr/>
+            <li>1 ¿Sobre qué protocolo binario está montado el protocolo HTTP?</li>
+            <p>HTTP está montado sobre el protocolo TCP (Protocolo de Control de Transmisión), que es un protocolo orientado a la conexión y confiable.</p>
+            <li>2 ¿Cuáles son los clientes HTTP y los servidores HTTP más utilizados?</li>
+            <p>Clientes HTTP: Navegadores web (Chrome, Firefox, Safari) y herramientas como cURL.</p>
+            <p>Servidores HTTP: Apache, Nginx, Microsoft IIS.</p>
+            <li>3 ¿Qué verbos admite un comando en el requerimiento HTTP?</li>
+            <p>Los verbos (métodos) más comunes son:</p>
+            <ul>
+                <li>GET: Solicita un recurso.</li>
+                <li>POST: Envía datos para crear o actualizar un recurso.</li>
+                <li>PUT: Crea o reemplaza un recurso del servidor. Se usa en web services.</li>
+                <li>DELETE: Elimina un recurso remoto del servidor.</li>
+                <li>CONNECT: Usado por proxies.</li>
+            </ul>
+            <li>4 ¿Qué contenido lleva el body de un requerimiento HTTP?</li>
+            <p>Datos de formularios (en métodos POST o PUT).</p>
+            <p>Archivos subidos (upload).</p>
+            <p>Cualquier otro tipo de datos en formato texto o binario.</p>
+            <li>5 ¿Qué diferencia existe entre un URL y un URI?</li>
+            <p>URI (Uniform Resource Identifier): Identificador único de un recurso.</p>
+            <p>URL (Uniform Resource Locator): Subconjunto de URI que especifica la ubicación y el método para acceder al recurso (ej: http://ejemplo.com/recurso).</p>
+            <p>El recurso completo incluido el protocolo que se está usando y el nombre del servidor al cual estoy queriendo acceder, en cambio el URI es parte del URL, es el recurso dentro de este host remoto.</p>
+            <li>6 ¿Cómo se almacena información relacionada con las respuestas HTTP?</li>
+            <p>Cookies: Pequeños datos enviados por el servidor y almacenados en el cliente.</p>
+            <p>Headers: Metadatos como Cache-Control, ETag, o Last-Modified para manejar caché.</p>
+            <li>7 ¿Qué significa HTTP sobre conexiones preexistentes?</li>
+            <p>Se refiere al uso de conexiones TCP persistentes (keep-alive) en HTTP/1.1, donde múltiples solicitudes/respuestas se realizan sobre una misma conexión TCP, evitando el overhead de establecer y cerrar conexiones repetidamente.</p>
+            <p>El asincronismo del HTTP permite generar nuevos recursos asincrónicamente cuando ya cargó todo antes.</p>
+            <li>8 ¿Qué significa Virtual Hosting?</li>
+            <p>Capacidad de alojar múltiples dominios en un mismo servidor con una única IP, usando el campo Host en los headers para diferenciarlos.</p>
+            <li>9 ¿Qué significa Cache por ETag?</li>
+            <p>Mecanismo de caché donde el servidor asigna un identificador único (ETag) a cada recurso. El cliente envía este ETag en futuras solicitudes (If-None-Match), y el servidor responde 304 Not Modified si el recurso no ha cambiado.</p>
+            <li>10 ¿Por qué el HTTP se considera STATELESS?</li>
+            <p>Porque cada solicitud HTTP es independiente y no mantiene información sobre solicitudes anteriores. Esto significa que el servidor no almacena el estado del cliente entre diferentes solicitudes.</p>
+            <p>HTTP es stateless (sin estado) porque cada solicitud (request) es independiente: el servidor no guarda información entre interacciones. Cada petición debe contener todos los datos necesarios para ser procesada, sin depender de solicitudes anteriores.</p>
+        </ul>
+    </section>
+    <section>
+        <h3>Seccion de Imagenes</h3>
+        <p>
+            imagenes de HTTP 
+        </p>
+        <img src="./c764e330-17b7-41b3-b695-5dc0b9cd848d.png" alt="HTTP 1.1" width="600">
+        <br>
+        <br>
+        <img src="./HTTP.png" alt="HTTP 2" width="600">
+    </section>
+    <hr>
+    <section>
+        <h3> Video de Referencia</h3>
+        <video src="./Protocolo de comunicación HTTP-HTTPS.mp4" width="320" height="640" controls>
+            </video>
+    </section>
+    <footer>
+        <h2>Datos del alumno:</h2>
+        <p>Nombre:Agustin Bustamante</p>
+        <a href="">agusti.bustamante886@comunidad.ub.edu.ar</a>
+    </footer>
+</body>
+</html>
