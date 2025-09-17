@@ -22,7 +22,7 @@
             "Fecha_liquidacion": "2025-09-01",
             "MesDeliquidacion": "2025-09",
             "SueldoBasico": 250000,
-            "concepto_no_renumerativo_1":{ "codigoConcepto": "02", "descripcion": "Aignaciones familiares"},
+            "concepto_no_renumerativo_1":{ "codigoConcepto": "02", "descripcion": "Asignaciones familiares"},
             "monto_no_renumerativo_1": 50000
         },
         {
@@ -45,6 +45,7 @@
         }
     ]
 }
+
 
 
 
