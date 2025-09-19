@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Divs Internos en Columnas</title>
+</head>
+<body>
+    <div class="marco">
+        <h1>Encolumnado sin Tablas</h1>
+        <div class="caja">
+            <div class="columna">
+                <p><span class ="textoNegrita">Columna 1</span></p>
+                <p>Las media queries son fundamentales en el diseño responsivo. Permiten aplicar estilos CSS específicos según las características del dispositivo, como el ancho de pantalla. En este ejemplo se utilizan breakpoints en 1200px, 900px y 600px para crear diferentes layouts según el tamaño de la pantalla del usuario.</p>
+                <p><span class ="textoNegrita">@media screen and (max-width: 600px)</span></p>
+                <img src="foto1.jpg" alt="Flores">
+            </div>
+            <div class="columna">
+                <p><span class ="textoNegrita">Columna 2</span></p>
+                <p>Este diseño utiliza la propiedad float: left para crear columnas. Aunque es una técnica más antigua, sigue siendo efectiva para layouts simples. Cada columna tiene un ancho calculado dinámicamente usando calc() que resta los márgenes del porcentaje total, permitiendo diseños flexibles y responsivos.</p>
+                <p><span class ="textoNegrita">float: left; width: calc(20% - 20px)</span></p>
+            </div>
+            <div class="columna">
+                <p><span class ="textoNegrita">Columna 3</span></p>
+                <p>El box model es crucial para entender cómo se calculan las dimensiones. Aquí se usa box-sizing: border-box para que el padding y border se incluyan en el ancho total, facilitando los cálculos responsivos.</p>
+            </div>
+            <div class="columna">
+                <p><span class ="textoNegrita">Columna 4</span></p>
+                <p>Los breakpoints definen cuándo cambia el layout. En pantallas grandes (>1200px) se muestran 5 columnas, en medianas (901-1200px) 3 columnas, en pequeñas (601-900px) 2 columnas, y en móviles (<600px) una sola columna apilada verticalmente.</p>
+            </div>
+            <div class="columna">
+                <p><span class ="textoNegrita">Columna 5</span></p>
+                <p>Las imágenes se adaptan automáticamente con max-width: 100% y height: auto. Esto asegura que nunca excedan el ancho de su contenedor y mantengan su proporción original.</p>
+                <p><span class="textoNegrita">max-width: 100%; height: auto;</span></p>
+            </div>
+            <div class="columna">
+                <p><span class ="textoNegrita">Columna 6</span></p>
+                <p>Se utilizan Google Fonts para mejorar la tipografía. Playfair Display para títulos elegantes y Source Sans Pro para el texto del cuerpo, combinando serif y sans-serif para crear jerarquía visual efectiva.</p>
+            </div>
+            <div class="columna">
+                <p><span class ="textoNegrita">Columna 7</span></p>
+                <p>Los box-shadow agregan profundidad y dimensión al diseño. Text-shadow mejora la legibilidad de los títulos. Estos efectos CSS crean una experiencia visual más rica sin necesidad de imágenes adicionales, manteniendo el rendimiento óptimo.</p>
+            </div>
+            <div class="columna">
+                <p><span class ="textoNegrita">Columna 8</span></p>
+                <p>Los colores y contrastes son fundamentales para la usabilidad. En este diseño se utilizan tonos cálidos como naranja y chocolate que crean una paleta armoniosa. El contraste adecuado entre texto y fondo asegura que el contenido sea legible en todos los dispositivos.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color:mistyrose;
+}
+
+h1 {
+    padding: 5px;
+    margin: 10px;
+    font-style: italic;
+}
+
+.caja1 {
+    width: 500px;
+    height: 150px;
+    margin: 15px auto;
+    border-radius: 8px;
+    text-align: justify;
+    overflow: hidden;
+    background-color: gold;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgb(141, 64, 89);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+@media (max-width: 550px) and (min-width: 400px) {
+    .caja1 {
+        width: 90%;
+    }
+}
+
+@media (max-width: 1080px) and (min-width: 600px) {
+    .caja1 {
+        background-color:lightcoral;
+        border: rgb(153, 78, 78) solid 2px;
+    }
+}
+
+@media (max-width: 600px) {
+    .caja1 {
+        background-color:darksalmon;
+        border: rgb(133, 83, 67) solid 2px;
+    }
+}
+
+.caja2 {
+    width: 500px;
+    height: 150px;
+    margin: 15px auto;
+    border-radius: 8px;
+    text-align: justify;
+    overflow: hidden;
+    background: radial-gradient(circle, mediumpurple, plum, white, white);
+    border: 1px solid gray;
+    box-shadow: 3px 3px 6px grey;
+    text-shadow: 2px 2px 4px rgb(70, 70, 70);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: italic 20px Georgia, 'Times New Roman', Times, serif;
+}
+
+@media (max-width: 550px) and (min-width: 400px) {
+    .caja2 {
+        width: 90%;
+    }
+}
+
+.caja3 {
+    width: 500px;
+    height: 150px;
+    margin: 15px auto;
+    border-radius: 8px;
+    text-align: justify;
+    overflow: hidden;
+    background-image: url("foto1.jpg"),
+    linear-gradient(90deg, darkseagreen, white, white, darkseagreen);      
+    background-repeat: no-repeat, no-repeat;
+    background-position: center, center;
+    background-size: contain, 100% 100%;
+    border: 1.5px solid seagreen;
+}
+
+@media (max-width: 550px) and (min-width: 400px) {
+    .caja3 {
+        width: 90%;
+    }
+}
+
+.caja4 {
+    width: 500px;
+    height: 150px;
+    margin: 15px auto;
+    border-radius: 8px;
+    text-align: justify;
+    overflow: hidden;
+    background-image: url("foto2.jpg");
+    background-repeat: no-repeat;
+    background-position: top;
+    background-attachment: scroll;
+    background-size: cover;
+    box-shadow: 7px 7px 5px rgb(99, 98, 98);
+}
+
+@media (max-width: 550px) and (min-width: 400px) {
+    .caja4 {
+        width: 90%;
+    }
+}
+
+.caja4 p {
+    text-align: center;
+    padding-top: 10px;
+    font: italic bold 18px Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: rgba(255, 255, 255, 0.712);
+    text-shadow: 2px 2px 3px black;
+}

@@ -1,0 +1,412 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 25%, #16213e  50%, #0f3460 75%, #533483 100%);
+    font-family: 'Exo 2', sans-serif;
+    color: #e0e6ff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-attachment: fixed;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.contenedor-principal {
+    width: 90%;
+    max-width: 1200px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border: 2px solid #00d4ff;
+    box-shadow: 
+        0 0 30px rgba(0, 212, 255, 0.3),
+        inset 0 0 30px rgba(0, 212, 255, 0.1);
+    padding: 40px;
+    margin: 20px 0;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.contenedor-principal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.titulo-genero {
+    font-family: 'Orbitron', monospace;
+    text-align: center;
+    background: linear-gradient(45deg, #00d4ff, #9333ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.navegacion {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(90deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
+    border-radius: 50px;
+    border: 1px solid #334155;
+    margin-bottom: 40px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.pestana {
+    padding: 18px 30px;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    flex: 1;
+    font-family: 'Orbitron', monospace;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+.pestana::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00d4ff, #9333ea);
+    transition: all 0.4s ease;
+    transform: translateX(-50%);
+}
+
+.pestana:hover {
+    color: #00d4ff;
+    background: rgba(0, 212, 255, 0.1);
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.pestana:hover::before {
+    width: 80%;
+}
+
+.formulario-datos {
+    margin: 30px 0;
+    padding: 30px;
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.7), rgba(30, 41, 59, 0.5));
+    border: 1px solid #334155;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.formulario-datos::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00d4ff, transparent, #9333ea);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.formulario-datos h2 {
+    color: #00d4ff;
+    margin-bottom: 30px;
+    border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+    padding-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.grupo-formulario {
+    margin-bottom: 25px;
+}
+
+.grupo-formulario label {
+    display: block;
+    margin-bottom: 12px;
+    color: #cbd5e1;
+    font-weight: 600;
+    text-align: left;
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.campo-texto {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #334155;
+    background: rgba(15, 23, 42, 0.8);
+    color: #e0e6ff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.campo-texto:focus {
+    background: rgba(0, 212, 255, 0.1);
+    outline: none;
+    border-color: #00d4ff;
+    box-shadow: 
+        0 0 0 3px rgba(0, 212, 255, 0.2),
+        0 0 20px rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.campo-texto::placeholder {
+    color: #64748b;
+    opacity: 0.8;
+}
+
+.titulo-principal {
+    text-align: center;
+    background: linear-gradient(45deg, #00d4ff, #9333ea, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 42px;
+    font-weight: 900;
+    margin: 50px 0 20px 0;
+    text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.instruccion {
+    text-align: center;
+    color: #94a3b8;
+    font-style: italic;
+    margin: -10px 0 40px 0;
+    padding: 15px;
+    font-size: 14px;
+    background: rgba(15, 23, 42, 0.3);
+    border-radius: 10px;
+    border: 1px solid rgba(52, 65, 85, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.contenedor-galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
+}
+
+.equipo {
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6));
+    border: 1px solid #334155;
+    padding: 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+}
+
+.equipo::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, transparent, #00d4ff, transparent, #9333ea, transparent);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.equipo:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(0, 212, 255, 0.2);
+}
+
+.equipo:hover::before {
+    opacity: 1;
+}
+
+.escudo-equipo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 15px;
+    border: 2px solid #334155;
+    will-change: transform;
+    position: relative;
+}
+
+.escudo-equipo::after {
+    content: 'Clic para ampliar';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #00d4ff;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-family: 'Exo 2', sans-serif;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.equipo:hover .escudo-equipo::after {
+    opacity: 1;
+}
+
+.escudo-equipo:active {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2.5);
+    z-index: 10;
+    box-shadow: 
+        0 0 0 100vmax rgba(0, 0, 0, 0.95),
+        0 0 100px rgba(0, 212, 255, 0.5);
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 20px;
+    border: 3px solid #00d4ff;
+}
+
+.info-equipo {
+    padding: 20px 0 10px;
+    text-align: center;
+}
+
+.info-equipo h3 {
+    color: #00d4ff;
+    font-size: 20px;
+    margin-bottom: 8px;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-equipo p {
+    color: #94a3b8;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 300;
+}
+
+@media (max-width: 768px) {
+    .contenedor-galeria {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    
+    .navegacion {
+        flex-direction: column;
+        border-radius: 20px;
+    }
+    
+    .pestana {
+        padding: 15px 20px;
+        font-size: 12px;
+    }
+    
+    .pestana::before {
+        height: 1px;
+    }
+    
+    .escudo-equipo:active {
+        transform: translate(-50%, -50%) scale(2);
+        max-width: 95%;
+        max-height: 95%;
+    }
+    
+    .formulario-datos {
+        max-width: 100%;
+        padding: 20px;
+    }
+    
+    .titulo-principal {
+        font-size: 28px;
+        margin: 30px 0 15px 0;
+    }
+    
+    .titulo-genero {
+        font-size: 24px;
+    }
+    
+    .equipo {
+        padding: 15px;
+    }
+    
+    .escudo-equipo {
+        height: 180px;
+    }
+    
+    .escudo-equipo::after {
+        font-size: 9px;
+        padding: 3px 6px;
+        bottom: 3px;
+        right: 3px;
+    }
+}

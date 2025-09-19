@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selectores de Evento - Fútbol</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="contenedor-principal">
+        <h2 class="titulo-genero">Elige tu liga de fútbol favorita</h2>
+        <div class="navegacion">
+            <a href="liga-argentina.html" class="pestana">Liga Argentina</a>
+            <a href="premier-league.html" class="pestana">Premier League</a>
+            <a href="bundesliga.html" class="pestana">Bundesliga</a>
+            <a href="mls.html" class="pestana">MLS</a>
+        </div>
+
+        <div class="formulario-datos">
+            <h2>Tu perfil futbolístico</h2>
+            <div class="grupo-formulario">
+                <label for="jugador-favorito">Jugador favorito:</label>
+                <input type="text" id="jugador-favorito" class="campo-texto" placeholder="Ej: Lionel Messi">
+            </div>
+            <div class="grupo-formulario">
+                <label for="equipo-favorito">Equipo favorito:</label>
+                <input type="text" id="equipo-favorito" class="campo-texto" placeholder="Ej: Boca Juniors">
+            </div>
+        </div>
+
+        <h1 class="titulo-principal">Galería de Equipos Destacados</h1>
+        <p class="instruccion">Haz clic y mantén presionado sobre cualquier escudo para agrandarlo</p>
+        
+        <div class="contenedor-galeria">
+            <div class="equipo">
+                <img src="boca.jpg" alt="Escudo Boca Juniors" class="escudo-equipo" loading="lazy">
+                <div class="info-equipo">
+                    <h3>Boca Juniors</h3>
+                    <p>Liga Argentina</p>
+                </div>
+            </div>
+            <div class="equipo">
+                <img src="chelsea.jpg" alt="Escudo Chelsea" class="escudo-equipo" loading="lazy">
+                <div class="info-equipo">
+                    <h3>Chelsea FC</h3>
+                    <p>Premier League</p>
+                </div>
+            </div>
+            <div class="equipo">
+                <img src="bayern.jpg" alt="Escudo Bayern Munich" class="escudo-equipo" loading="lazy">
+                <div class="info-equipo">
+                    <h3>Bayern Munich</h3>
+                    <p>Bundesliga</p>
+                </div>
+            </div>
+            <div class="equipo">
+                <img src="miami.jpg" alt="Escudo Inter Miami" class="escudo-equipo" loading="lazy">
+                <div class="info-equipo">
+                    <h3>Inter Miami</h3>
+                    <p>MLS</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
