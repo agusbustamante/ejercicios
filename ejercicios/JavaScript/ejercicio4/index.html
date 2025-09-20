@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Variables Simples</title>
+    <style> 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #2d4a3a;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f0f7f4 0%, #e8f5ee 100%);
+            padding: 20px;
+            margin: 0;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 600px;
+            background: #f8fcfa;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+            border: 1px solid #a8d5ba;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .contenedor-botones {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        button {
+            background: #a8d5ba;
+            color: #2d4a3a;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }   
+
+        button:hover {
+            background: #81c784;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .resultado {
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #81c784;
+            background: #f1f8e9;
+            border-radius: 15px;
+            min-height: 100px;
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #2d4a3a;
+        }
+
+        .resultado h2 {
+            color: #388e3c;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 600;
+        }
+
+        .resultado p {
+            color: #4a6741;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contenedor">  
+        
+        <div class="contenedor-botones">
+            <button id="btnZ">var z</button>
+            <button id="btnQ">let q</button>
+            <button id="btnA">var a = 7</button>
+            <button id="btnB">var b = '5'</button>
+            <button id="btnC">var c = 3</button>
+            <button id="btnSuma1">suma 1 = a + b</button>
+            <button id="btnSuma2">suma 2 = a + c</button>
+        </div>
+
+        <div id="resultado" class="resultado">
+        </div>
+    </div>
+
+    <script>
+        var z;
+        let q = "nuevo valor para q";
+        var a = 7;
+        var b = '5';
+        var c = 3;
+
+        document.getElementById('btnZ').addEventListener('click', function() {
+            document.getElementById('resultado').innerHTML = '<h2>Valor de z: ' + z + '</h2><h2>Tipo de z: ' + typeof z + '</h2>';
+        });
+
+        document.getElementById('btnQ').addEventListener('click', function() {
+            document.getElementById('resultado').innerHTML = '<h2>Valor de q: ' + q + '</h2><h2>Tipo de q: ' + typeof q + '</h2>';
+        });
+
+        document.getElementById('btnA').addEventListener('click', function() {
+            document.getElementById('resultado').innerHTML = '<h2>Valor de a: ' + a + '</h2><h2>Tipo de a: ' + typeof a + '</h2>';
+        });
+
+        document.getElementById('btnB').addEventListener('click', function() {
+            document.getElementById('resultado').innerHTML = '<h2>Valor de b: ' + b + '</h2><h2>Tipo de b: ' + typeof b + '</h2>';
+        });
+
+        document.getElementById('btnC').addEventListener('click', function() {
+            document.getElementById('resultado').innerHTML = '<h2>Valor de c: ' + c + '</h2><h2>Tipo de c: ' + typeof c + '</h2>';
+        });
+
+        document.getElementById('btnSuma1').addEventListener('click', function() {
+            var suma1 = a + parseInt(b); 
+            document.getElementById('resultado').innerHTML = '<h2>Valor de suma 1: ' + suma1 + '</h2><h2>Tipo de suma 1: ' + typeof suma1 + '</h2>';
+        });
+
+        document.getElementById('btnSuma2').addEventListener('click', function() {
+            var suma2 = a + c;
+            document.getElementById('resultado').innerHTML = '<h2>Valor de suma 2: ' + suma2 + '</h2><h2>Tipo de suma 2: ' + typeof suma2 + '</h2>';
+        });
+    </script>
+</body>
+</html>

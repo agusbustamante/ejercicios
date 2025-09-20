@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Operaciones sobre Input</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .contenedor {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .input-container {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            text-align: center;
+            transition: border-color 0.3s ease;
+            background-color: #fafafa;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #999;
+            background-color: white;
+        }
+
+        .grilla-botones {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .boton {
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+            transition: all 0.2s ease;
+        }
+
+        .boton:hover {
+            background-color: #e9ecef;
+            transform: translateY(-1px);
+        }
+
+        .boton:active {
+            transform: translateY(0);
+        }
+
+        #muestraValor {
+            grid-column: span 2;
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #45a049;
+            font-weight: 600;
+        }
+
+        #muestraValor:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contenedor">
+        <h1>Operaciones</h1>
+        <div class="input-container">
+            <input type="text" id="caja" placeholder="Introduce un valor numérico" inputmode="numeric">
+        </div>
+        <div class="grilla-botones">
+            <button id="muestraValor">Mostrar Valor</button>
+            <button id="multiplica">× 2</button>
+            <button id="elevadoEquis">2ˣ</button>
+            <button id="suma">+ 1</button>
+            <button id="elevadoCuadrado">x²</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("muestraValor").addEventListener('click', function () {
+            alert("El valor actual es: " + document.getElementById("caja").value);
+        });
+
+        document.getElementById("multiplica").addEventListener('click', function () {
+            let valor = parseFloat(document.getElementById("caja").value);
+            if (isNaN(valor)) {
+                alert("Por favor, introduce un número válido");
+                return;
+            }
+            document.getElementById("caja").value = valor * 2;
+        });
+
+        document.getElementById("elevadoEquis").addEventListener('click', function () {
+            let valor = parseFloat(document.getElementById("caja").value);
+            if (isNaN(valor)) {
+                alert("Por favor, introduce un número válido");
+                return;
+            }
+            document.getElementById("caja").value = Math.pow(2, valor);
+        });
+
+        document.getElementById("suma").addEventListener('click', function () {
+            let valor = parseFloat(document.getElementById("caja").value);
+            if (isNaN(valor)) {
+                alert("Por favor, introduce un número válido");
+                return;
+            }
+            document.getElementById("caja").value = valor + 1;
+        });
+
+        document.getElementById("elevadoCuadrado").addEventListener('click', function () {
+            let valor = parseFloat(document.getElementById("caja").value);
+            if (isNaN(valor)) {
+                alert("Por favor, introduce un número válido");
+                return;
+            }
+            document.getElementById("caja").value = Math.pow(valor, 2);
+        });
+    </script>
+</body>
+</html>

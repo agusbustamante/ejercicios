@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arreglos de futbol</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #1a1a2e;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 15px; 
+            margin-top: 5px; 
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 8px; 
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #93c5fd;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fbbf24;
+        }
+
+        .contenedor {
+            background-color: #1e3a8a;
+            padding: 20px 25px 25px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            border: 2px solid #ffd700;
+            margin: 0;
+        }
+
+        .lista-equipos {
+            background-color: #1e40af;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        .item-equipo {
+            padding: 8px 0;
+            border-bottom: 1px dashed #fbbf24;
+        }
+
+        .item-equipo:last-child {
+            border-bottom: none;
+        }
+
+        .info-cantidad {
+            background-color: #ffd700;
+            color: #1e3a8a;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+    
+    <script>
+        var equiposFavoritos = [];
+    </script>
+</head>
+
+<body>
+
+    <div class="contenedor">
+        <h1>Equipos Favoritos</h1>
+        <div id="contenido">
+        </div>
+    </div>
+
+    <script>
+        equiposFavoritos = ["Boca Juniors", "Barcelona"];
+
+        equiposFavoritos.push(prompt('Ya tienes dos equipos favoritos. Agregue un tercer equipo:'));
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const contenidoDiv = document.getElementById('contenido');
+            
+            const tipoInfo = document.createElement('h2');
+            tipoInfo.textContent = 'Tipo para equiposFavoritos: ' + typeof equiposFavoritos;
+
+            const listaEquipos = document.createElement('div');
+            listaEquipos.className = 'lista-equipos';
+            
+            equiposFavoritos.forEach(function(equipo, indice) {
+                const elementoEquipo = document.createElement('div');
+                elementoEquipo.className = 'item-equipo';
+                
+                let texto = '';
+                if (indice === 0) {
+                    texto = 'Primer equipo cargado desde programa: ' + equipo;
+                } else if (indice === 1) {
+                    texto = 'Segundo equipo cargado desde programa: ' + equipo;
+                } else if (indice === 2) {
+                    texto = 'Tercer equipo cargado desde teclado: ' + equipo;
+                } else {
+                    texto = 'Equipo ' + (indice + 1) + ': ' + equipo;
+                }
+                
+                elementoEquipo.textContent = texto;
+                listaEquipos.appendChild(elementoEquipo);
+            });
+            
+            const infoLongitud = document.createElement('div');
+            infoLongitud.className = 'info-cantidad';
+            infoLongitud.textContent = 'Cantidad de equipos favoritos: ' + equiposFavoritos.length;
+            
+            contenidoDiv.appendChild(listaEquipos);
+            contenidoDiv.appendChild(infoLongitud);
+        });
+    </script>
+
+</body>
+</html>

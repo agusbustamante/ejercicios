@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Personas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #bbdefb;
+            color: #222;
+            padding: 0;
+            margin: 0;
+        }
+
+        h1, h2 {
+            color: #2d7a46;
+            text-align: center;
+        }
+
+        .formulario {
+            background: #fff;
+            padding: 24px 32px;
+            border-radius: 12px;
+            margin: 32px auto 20px auto;
+            max-width: 400px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #2d7a46;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 14px;
+            border: 1px solid #b5b5b5;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+            background: #f9f9f9;
+            transition: border-color 0.2s;
+        }
+
+        input:invalid {
+            border-color: #e57373;
+        }
+        input:valid {
+            border-color: #2d7a46;
+        }
+
+        .boton {
+            background: #2d7a46;
+            color: #fff;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 6px 0;
+            font-size: 1em;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            transition: background 0.2s;
+        }
+        .boton:hover {
+            background: #226034;
+        }
+        .boton:disabled {
+            background: #e0e0e0;
+            color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .control {
+            background: #fff;
+            padding: 18px 32px;
+            border-radius: 12px;
+            max-width: 400px;
+            margin: 0 auto 24px auto;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #presentacion {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 24px 32px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 10px 8px;
+            text-align: left;
+        }
+        th {
+            background: #eafbe7;
+            color: #2d7a46;
+        }
+
+        #longitud {
+            margin-top: 14px;
+            font-weight: 500;
+            color: #226034;
+        }
+
+        .error {
+            color: #e57373;
+            font-size: 0.95em;
+            margin-top: -4px;
+            margin-bottom: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="formulario">
+        <h1>Datos de personas</h1>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="Ingrese nombre" required>
+        <div id="nombreError" class="error">Por favor ingrese un nombre válido</div>
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" placeholder="Ingrese apellido" required>
+        <div id="apellidoError" class="error">Por favor ingrese un apellido válido</div>
+
+        <label for="fechaNac">Fecha de Nacimiento:</label>
+        <input type="date" id="fechaNac" required>
+        <div id="fechaNacError" class="error">Por favor ingrese una fecha válida</div>
+
+    <button id="crearAlumno" class="boton">Agregar persona</button>
+    </div>
+
+    <div class="control">
+    <button id="mostrarLista" class="boton">Lista de personas</button>
+    <button id="ocultarPresentacion" class="boton">Ocultar Lista</button>
+    </div>
+
+    <div id="presentacion" class="hidden">
+        <h2>Lista</h2>
+        <table id="tablaAlumnos">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Fecha de Nacimiento</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <p id="longitud"></p>
+    </div>
+
+    <script>
+
+        const arregloAlumnos = [
+            {
+                nombre: "Agustín",
+                apellido: "Bustamante",
+                fechaNac: "30-03-2005"
+            }
+        ];
+
+    const nombreInput = document.getElementById("nombre");
+    const apellidoInput = document.getElementById("apellido");
+    const fechaNacInput = document.getElementById("fechaNac");
+    const crearAlumnoBtn = document.getElementById("crearAlumno");
+    const mostrarListaBtn = document.getElementById("mostrarLista");
+    const ocultarPresentacionBtn = document.getElementById("ocultarPresentacion");
+    const presentacionDiv = document.getElementById("presentacion");
+    const tablaBody = document.querySelector("#tablaAlumnos tbody");
+    const longitudParrafo = document.getElementById("longitud");
+
+        
+    const nombreError = document.getElementById("nombreError");
+    const apellidoError = document.getElementById("apellidoError");
+    const fechaNacError = document.getElementById("fechaNacError");
+
+        
+        function validarCampos() {
+            let valido = true;
+            // Validar nombre
+            if (!nombreInput.checkValidity()) {
+                nombreError.style.display = "block";
+                valido = false;
+            } else {
+                nombreError.style.display = "none";
+            }
+            // Validar apellido
+            if (!apellidoInput.checkValidity()) {
+                apellidoError.style.display = "block";
+                valido = false;
+            } else {
+                apellidoError.style.display = "none";
+            }
+            // Validar fecha de nacimiento
+            if (!fechaNacInput.checkValidity()) {
+                fechaNacError.style.display = "block";
+                valido = false;
+            } else {
+                fechaNacError.style.display = "none";
+            }
+            return valido;
+        }
+
+        
+        crearAlumnoBtn.addEventListener("click", function () {
+            if (validarCampos()) {
+                const nuevoAlumno = {
+                    nombre: nombreInput.value,
+                    apellido: apellidoInput.value,
+                    fechaNac: fechaNacInput.value
+                };
+                // Agregar al arreglo
+                arregloAlumnos.push(nuevoAlumno);
+                alert("Persona añadida correctamente.");
+                // Limpiar formulario
+                nombreInput.value = '';
+                apellidoInput.value = '';
+                fechaNacInput.value = '';
+                // Ocultar mensajes de error
+                nombreError.style.display = "none";
+                apellidoError.style.display = "none";
+                fechaNacError.style.display = "none";
+            } else {
+                alert("Por favor, complete todos los campos correctamente.");
+            }
+        });
+
+        
+        mostrarListaBtn.addEventListener("click", function () {
+            tablaBody.innerHTML = '';
+            arregloAlumnos.forEach(function(alumno, indice) {
+                const fila = document.createElement("tr");
+                const celdaNombre = document.createElement("td");
+                celdaNombre.textContent = alumno.nombre;
+                const celdaApellido = document.createElement("td");
+                celdaApellido.textContent = alumno.apellido;
+                const celdaFechaNac = document.createElement("td");
+                celdaFechaNac.textContent = alumno.fechaNac;
+                fila.appendChild(celdaNombre);
+                fila.appendChild(celdaApellido);
+                fila.appendChild(celdaFechaNac);
+                tablaBody.appendChild(fila);
+            });
+            longitudParrafo.innerHTML = `Longitud del arreglo de objetos: ${arregloAlumnos.length}`;
+            presentacionDiv.style.display = "block";
+            presentacionDiv.classList.remove("hidden");
+            presentacionDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        ocultarPresentacionBtn.addEventListener("click", function () {
+            presentacionDiv.style.display = "none";
+            presentacionDiv.classList.add("hidden");
+        });
+
+    nombreInput.addEventListener("input", validarCampos);
+    apellidoInput.addEventListener("input", validarCampos);
+    fechaNacInput.addEventListener("input", validarCampos);
+    </script>
+</body>
+</html>

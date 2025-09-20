@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elementos</title>
+    <style>
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background-color: #f3f3f3;
+            color: #22223b;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-weight: 900;
+            margin-bottom: 28px;
+            color: #2d3142;
+            letter-spacing: 3px;
+            background: none;
+            border-radius: 0;
+            padding: 0;
+        }
+
+        .controls {
+            margin-bottom: 28px;
+            display: flex;
+            gap: 16px;
+        }
+
+        button {
+            background-color: #fff;
+            color: #4f8a8b;
+            border: 2px solid #4f8a8b;
+            border-radius: 0;
+            padding: 12px 28px;
+            cursor: pointer;
+            font-size: 17px;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            box-shadow: none;
+            transition: background 0.3s, color 0.3s, border 0.3s;
+        }
+
+        button:hover {
+            background-color: #4f8a8b;
+            color: #fff;
+            border-color: #306b73;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid #4f8a8b;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .elemento {
+            background-color: #e0e7ff;
+            border: 2px solid #4f8a8b;
+            border-radius: 0;
+            padding: 16px;
+            margin-bottom: 16px;
+            font-size: 18px;
+            color: #22223b;
+            font-weight: 600;
+            box-shadow: none;
+        }
+
+        .elemento p {
+            font-weight: 500;
+            margin: 8px 0 0;
+            font-size: 15px;
+            font-style: normal;
+            color: #306b73;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Elementos</h1>
+
+    <div class="controls">
+        <button id="crear">Agregar</button>
+        <button id="limpiar">Limpiar </button>
+        <button id="info">Info</button>
+    </div>
+
+    <div id="contenedor" class="container"></div>
+
+    <script>
+        let diarioData = {
+            contador: 1,
+            entradas: []
+        };
+
+        const btnCrear = document.getElementById('crear');
+        const btnLimpiar = document.getElementById('limpiar');
+        const btnInfo = document.getElementById('info');
+        const contenedor = document.getElementById('contenedor');
+
+        function crearEntrada() { 
+            const nuevoElemento = document.createElement('div');
+            nuevoElemento.className = 'elemento';
+            const textoHtml = `<h3>Elemento creado ${diarioData.contador}</h3>`;
+            nuevoElemento.innerHTML = textoHtml;
+             
+            contenedor.appendChild(nuevoElemento);
+            
+            diarioData.entradas.push({
+                id: diarioData.contador,
+                elemento: nuevoElemento
+            });
+            
+            diarioData.contador++;
+            
+            contenedor.scrollTop = contenedor.scrollHeight;
+        }
+
+        function limpiarDiario() {
+            while(contenedor.childNodes.length > 0) {
+                contenedor.removeChild(contenedor.childNodes[0]);
+            }
+
+            diarioData.contador = 1;
+            diarioData.entradas = [];
+        }
+
+        function mostrarInfo() {
+            alert(`Cantidad de entradas: ${contenedor.childNodes.length}`);
+        }
+
+        btnCrear.addEventListener('click', crearEntrada);
+        btnLimpiar.addEventListener('click', limpiarDiario);
+        btnInfo.addEventListener('click', mostrarInfo);
+    </script>
+
+</body>
+
+</html>
+
+

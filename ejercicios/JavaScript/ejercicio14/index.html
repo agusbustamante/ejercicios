@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Traducción</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+            background: #f0f0f0;
+        }
+        
+        #frase {
+            color: #2c3e50;
+            font-size: 3.5em;
+            font-weight: 900;
+            font-family: 'Arial Black', Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frase" id="frase"></div>
+    <script>
+        const traducciones = {
+            "español": "Mismo mensaje, tu idioma",
+            "inglés": "Same message, your language",
+            "francés": "Même message, votre langue",
+            "portugués": "Mesma mensagem, seu idioma",
+            "italiano": "Stesso messaggio, la tua lingua",
+            "alemán": "Gleiche Nachricht, deine Sprache",
+            "noruego": "Samme melding, ditt språk",
+            "ruso": "То же сообщение, ваш язык",
+            "chino": "相同的信息，你的语言",
+            "japonés": "同じメッセージ、あなたの言語",
+            "árabe": "نفس الرسالة، لغتك",
+            "hindi": "वही संदेश, आपकी भाषा",
+            "coreano": "같은 메시지, 당신의 언어",
+            "turco": "Aynı mesaj, senin dilin",
+            "holandés": "Hetzelfde bericht, jouw taal",
+            "sueco": "Samma meddelande, ditt språk",
+            "polaco": "Ta sama wiadomość, twój język",
+            "hebreo": "אותו הודעה, השפה שלך",
+        };
+        
+        let idioma = navigator.language.toLowerCase();
+        
+        const mapaIdiomas = {
+            "es": "español",
+            "en": "inglés", 
+            "fr": "francés",
+            "pt": "portugués",
+            "it": "italiano",
+            "de": "alemán",
+            "no": "noruego",
+            "ru": "ruso",
+            "zh": "chino",
+            "ja": "japonés",
+            "ar": "árabe",
+            "hi": "hindi",
+            "ko": "coreano",
+            "tr": "turco",
+            "nl": "holandés",
+            "sv": "sueco",
+            "pl": "polaco",
+            "he": "hebreo"
+        };
+        
+        const codigoIdioma = idioma.substring(0, 2);
+        
+        const nombreIdioma = mapaIdiomas[codigoIdioma] || "español";
+        
+        const fraseTraducida = traducciones[nombreIdioma];
+        
+        document.getElementById("frase").textContent = fraseTraducida;
+    </script>
+</body>
+</html>

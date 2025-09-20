@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Función con Flecha</title>
+    <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+    
+    .contenedor {
+        background-color: rgba(255, 255, 255, 0.75);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        padding: 40px;
+        width: 100%;
+        max-width: 900px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+    }
+    
+    h1 {
+        color: #667eea;
+        margin-bottom: 35px;
+        font-size: 2.2rem;
+        font-weight: 700;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .calculadora {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 15px;
+        padding: 30px;
+        border-radius: 15px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+    }
+    
+    .grupo-input {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .etiqueta {
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #667eea;
+        white-space: nowrap;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+    }
+    
+    input {
+        width: 120px;
+        height: 45px;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        text-align: center;
+        background: #fff;
+        box-sizing: border-box;
+    }
+    
+    input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        transform: scale(1.02);
+    }
+    
+    .operador {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #764ba2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0 10px;
+        height: 45px;
+        width: 30px;
+    }
+    
+    .boton {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        height: 45px;
+        min-width: 80px;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        box-sizing: border-box;
+    }
+    
+    .boton:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        background: linear-gradient(45deg, #764ba2, #667eea);
+    }
+    
+    .boton:active {
+        transform: translateY(0);
+    }
+    
+    .resultado {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 15px;
+        background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+        border-radius: 10px;
+        height: 45px;
+        min-width: 80px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        box-sizing: border-box;
+    }
+    
+    .resultado h3 {
+        color: #667eea;
+        margin-right: 10px;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    
+    #resultado {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #764ba2;
+        text-align: center;
+    }
+    
+    @media (max-width: 700px) {
+        .calculadora {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+        
+        .operador {
+            margin: 5px 0;
+            font-size: 1.5rem;
+        }
+        
+        .contenedor {
+            padding: 25px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+        }
+        
+        .input, .boton, .resultado {
+            width: 200px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Suma Función con Flecha</h1>
+        
+        <div class="calculadora">
+            <div class="grupo-input">
+                <label class="etiqueta" for="numero1">Número 1</label>
+                <input class="input" type="number" id="numero1" placeholder="Número">
+            </div>
+            
+            <div class="operador">+</div>
+            
+            <div class="grupo-input">
+                <label class="etiqueta" for="numero2">Número 2</label>
+                <input class="input" type="number" id="numero2" placeholder="Número">
+            </div>
+            
+            <button class="boton" id="btnSumar">Sumar</button>
+            
+            <div class="resultado">
+                <div id="resultado"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const suma = (a, b) => {
+            const c = a + b;
+            return c;
+        }
+
+        const inputNumero1 = document.getElementById('numero1');
+        const inputNumero2 = document.getElementById('numero2');
+        const btnSumar = document.getElementById('btnSumar');
+        const resultadoElement = document.getElementById('resultado');
+
+        btnSumar.addEventListener('click', () => {
+            const num1 = parseFloat(inputNumero1.value) || 0;
+            const num2 = parseFloat(inputNumero2.value) || 0;
+            const resultado = suma(num1, num2);
+            resultadoElement.textContent = resultado;
+        });
+    </script>
+</body>
+</html>

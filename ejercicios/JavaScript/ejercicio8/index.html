@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones entre Inputs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #a8e6cf 0%, #88d8c0 50%, #7fcdcd 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .contenedor {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 380px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 300;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            color: #7f8c8d;
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .grupo-entrada {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            color: #34495e;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 12px;
+            font-size: 15px;
+            background-color: #ffffff;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .contenedor-resultado {
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(116, 185, 255, 0.3);
+        }
+
+        #resultado {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 22px;
+            font-weight: 600;
+            color: #ffffff;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        #resultado::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contenedor-botones {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        button {
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        #Suma {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: #ffffff;
+        }
+
+        #Promedio {
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+            color: #ffffff;
+        }
+
+        #Mayor {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: #ffffff;
+        }
+
+        @media (max-width: 480px) {
+            .contenedor {
+                padding: 30px 25px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            input[type="number"] {
+                padding: 12px 15px;
+            }
+            
+            button {
+                padding: 15px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Operaciones entre inputs</h1>
+        <h2>Ingresa tres números y selecciona una operación</h2>
+
+        <div class="grupo-entrada">
+            <label>Primer Número</label>
+            <input type="number" id="input1" value="0">
+        </div>
+
+        <div class="grupo-entrada">
+            <label>Segundo Número</label>
+            <input type="number" id="input2" value="0">
+        </div>
+
+        <div class="grupo-entrada">
+            <label>Tercer Número</label>
+            <input type="number" id="input3" value="0">
+        </div>
+
+        <div class="contenedor-resultado">
+            <input type="text" id="resultado" readonly placeholder="Resultado">
+        </div>
+
+        <div class="contenedor-botones">
+            <button id="Suma">Sumar</button>
+            <button id="Promedio">Promedio</button>
+            <button id="Mayor">Número Mayor</button>
+        </div>
+    </div>
+
+    <script>
+        input1 = document.getElementById("input1");
+        input2 = document.getElementById("input2");
+        input3 = document.getElementById("input3");
+        resultado = document.getElementById("resultado");
+
+        document.getElementById("Suma").addEventListener("click", function () {
+            suma = parseFloat(input1.value) + parseFloat(input2.value) + parseFloat(input3.value);
+            resultado.value = suma;
+        });
+
+        document.getElementById("Promedio").addEventListener("click", function () {
+            promedio = (parseFloat(input1.value) + parseFloat(input2.value) + parseFloat(input3.value)) / 3;
+            resultado.value = promedio.toFixed(2);
+        });
+
+        document.getElementById("Mayor").addEventListener("click", function () {
+            mayor = Math.max(parseFloat(input1.value), parseFloat(input2.value), parseFloat(input3.value));
+            resultado.value = mayor;
+        });
+    </script>
+</body>
+</html>

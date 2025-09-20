@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redes Sociales - Acceso Rápido</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #2c3e50;
+            color: #4a4a4a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .contenedor {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: #5a67d8;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitulo {
+            color: #718096;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .contenedor-botones {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .boton {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(107, 115, 255, 0.3);
+            text-decoration: none;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .boton::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .boton:hover::before {
+            left: 100%;
+        }
+
+        .boton:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(107, 115, 255, 0.4);
+        }
+
+        .boton:active {
+            transform: translateY(0);
+        }
+
+        .boton i {
+            margin-right: 15px;
+            font-size: 1.5rem;
+            width: 30px;
+            text-align: center;
+        }
+
+        .boton-netflix {
+            background: linear-gradient(135deg, #e50914 0%, #b20710 100%);
+            box-shadow: 0 6px 20px rgba(229, 9, 20, 0.3);
+        }
+
+        .boton-instagram {
+            background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+            box-shadow: 0 6px 20px rgba(131, 58, 180, 0.3);
+        }
+
+        .boton-twitch {
+            background: linear-gradient(135deg, #9146ff 0%, #6441a4 100%);
+            box-shadow: 0 6px 20px rgba(145, 70, 255, 0.3);
+        }
+
+        .boton-tiktok {
+            background: linear-gradient(135deg, #000000 0%, #ff0050 50%, #00f2ea 100%);
+            box-shadow: 0 6px 20px rgba(255, 0, 80, 0.3);
+        }
+
+        .boton span {
+            flex-grow: 1;
+        }
+
+        @media (max-width: 600px) {
+            .contenedor {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .boton {
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor">
+        
+        <div class="contenedor-botones">
+            <button class="boton boton-netflix" data-url="https://www.netflix.com/">
+                <i class="fas fa-play-circle"></i>
+                <span>Ver Netflix</span>
+            </button>
+
+            <button class="boton boton-instagram" data-url="https://www.instagram.com/">
+                <i class="fab fa-instagram"></i>
+                <span>Explorar Instagram</span>
+            </button>
+            
+            <button class="boton boton-twitch" data-url="https://www.twitch.tv/">
+                <i class="fab fa-twitch"></i>
+                <span>Ver Streams en Twitch</span>
+            </button>
+            
+            <button class="boton boton-tiktok" data-url="https://www.tiktok.com/">
+                <i class="fab fa-tiktok"></i>
+                <span>Descubrir TikTok</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function redireccionar(url) {
+            window.location.href = url;
+        }
+
+        document.querySelectorAll('.boton').forEach(boton => {
+            boton.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                redireccionar(url);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

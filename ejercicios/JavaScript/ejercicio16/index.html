@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Validación con KeyUp</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+      min-height: 100vh;
+      margin: 0;
+    }
+    h2 {
+      color: #3b82f6;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+      text-align: left;
+      margin-left: 40px;
+      margin-top: 40px;
+    }
+    form {
+      background: #fff;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.12);
+      padding: 32px 28px;
+      border-radius: 12px;
+      border: 1px solid #e0e7ff;
+      min-width: 280px;
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      margin: 0;
+    }
+    label {
+      color: #6366f1;
+      font-weight: 500;
+      margin-bottom: 6px;
+      display: block;
+      text-align: left;
+    }
+    input {
+      display: block;
+      margin: 10px auto 18px auto;
+      padding: 10px;
+      width: 90%;
+      border: 1px solid #c7d2fe;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #f1f5f9;
+      transition: border-color 0.2s;
+    }
+    input:focus {
+      border-color: #6366f1;
+      outline: none;
+      background: #fff;
+    }
+    .boton {
+      padding: 10px 28px;
+      margin: 8px 6px 0 6px;
+      background: linear-gradient(90deg, #6366f1 0%, #3b82f6 100%);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .boton:hover {
+      background: linear-gradient(90deg, #3b82f6 0%, #6366f1 100%);
+      transform: translateY(-2px) scale(1.04);
+    }
+  </style>
+</head>
+<body>
+  <h2>Validación de input</h2>
+
+  <form id="miFormulario" action="respuesta.html" method="get">
+    <label for="dia">Ingrese un dia del mes:</label>
+    <input type="number" id="dia" name="diaDelMes" placeholder="1 - 31" min="1" max="31">
+
+    <label for="mes">Ingrese el número del mes:</label>
+    <input type="number" id="mes" name="mes" placeholder="1 - 12" min="1" max="12">
+
+  <button type="submit" class="boton">Enviar</button>
+  <button type="reset" class="boton">Reset</button>
+  </form>
+
+  <script>
+    const diaInput = document.getElementById("dia");
+    const mesInput = document.getElementById("mes");
+    const form = document.getElementById("miFormulario");
+
+    diaInput.addEventListener("keyup", function () {
+      let valor = parseInt(diaInput.value, 10);
+      if (diaInput.value !== "" && (isNaN(valor) || valor < 1 || valor > 31)) {
+        alert("El valor debe estar entre 1 y 31");
+        diaInput.value = "";
+      }
+    });
+
+    mesInput.addEventListener("keyup", function () {
+      let valor = parseInt(mesInput.value, 10);
+      if (mesInput.value !== "" && (isNaN(valor) || valor < 1 || valor > 12)) {
+        alert("El valor debe estar entre 1 y 12");
+        mesInput.value = "";
+      }
+    });
+
+    form.addEventListener("submit", function (e) {
+      if (diaInput.value === "" || mesInput.value === "") {
+        alert("Complete los campos correctamente antes de enviar.");
+        e.preventDefault();
+      }
+    });
+
+    diaInput.addEventListener("change", function() {
+      if (!diaInput.checkValidity()) {
+        alert("El día debe estar entre 1 y 31");
+        diaInput.value = "";
+      }
+    });
+
+    mesInput.addEventListener("change", function() {
+      if (!mesInput.checkValidity()) {
+        alert("El mes debe estar entre 1 y 12");
+        mesInput.value = "";
+      }
+    });
+  </script>
+</body>
+</html>
