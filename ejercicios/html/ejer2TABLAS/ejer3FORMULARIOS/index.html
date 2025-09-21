@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Formulario</title>
+</head>
+<body>
+    <h1>Alta de Usuario</h1>
+    <form action="respuestaFormulario.html" method="get">
+        <label for="usuario">Usuario:</label><br>
+        <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario" required><br><br>
+
+    <label for="email">Correo electrónico:</label><br>
+    <input type="email" id="email" name="email" placeholder="ejemplo@email.com" required title="Ingrese un correo electrónico válido"><br><br>
+
+        <label for="clave">Clave:</label><br>
+        <input type="password" id="clave" name="clave" required><br><br>
+
+    <label for="nacimiento">Fecha de nacimiento:</label><br>
+    <input type="date" id="nacimiento" name="nacimiento" title="Seleccione su fecha de nacimiento"><br><br>
+
+        <label for="pais">País:</label><br>
+        <select id="pais" name="pais">
+            <option value="">Seleccione...</option>
+            <option value="argentina">Argentina</option>
+            <option value="chile">Chile</option>
+            <option value="uruguay">Uruguay</option>
+            <option value="paraguay">Paraguay</option>
+        </select><br><br>
+
+    <label for="colorFavorito">Color favorito:</label><br>
+    <input type="color" id="colorFavorito" name="colorFavorito" title="Seleccione su color favorito"><br><br>
+
+        <label for="comentario">Comentario:</label><br>
+        <input type="text" id="comentario" name="comentario"><br><br>
+
+    <label for="telefono">Teléfono:</label><br>
+
+        <label>Género:</label><br>
+        <label><input type="radio" name="genero" value="masculino"> Masculino</label>
+        <label><input type="radio" name="genero" value="femenino"> Femenino</label>
+        <label><input type="radio" name="genero" value="otro"> Otro</label><br><br>
+
+        <label><input type="checkbox" name="terminos" required> Acepto los términos y condiciones</label><br><br>
+
+
+        <br><br>
+        <label for="deshabilitado">Campo deshabilitado:</label><br>
+        <input type="text" id="deshabilitado" name="deshabilitado" value="No editable" disabled><br><br>
+
+        <label for="soloLectura">Campo solo lectura:</label><br>
+        <input type="text" id="soloLectura" name="soloLectura" value="Solo lectura" readonly><br><br>
+
+        <label for="seleccionMultiple">Selecciona tus hobbies:</label><br>
+    <select id="seleccionMultiple" name="hobbies[]" multiple size="4" required>
+            <option value="deporte">Deporte</option>
+            <option value="musica">Música</option>
+            <option value="arte">Arte</option>
+            <option value="lectura">Lectura</option>
+        </select><br><br>
+
+    <label for="patternVal">Pattern de validación (ej: abc12):</label><br>
+    <input type="text" id="patternVal" name="patternVal" pattern="[a-z]{3}[1-3]{2}" placeholder="abc12" title="3 letras seguidas de dos números de 1 a 3" required><br><br>
+
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Limpiar">
+    </form>
+</body>
+</html>
