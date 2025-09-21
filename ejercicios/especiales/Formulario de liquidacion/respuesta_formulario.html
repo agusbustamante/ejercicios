@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Respuestas del Formulario de Liquidación</title>
+  <link rel="stylesheet" href="respuesta_styles.css">
+</head>
+<body>
+  <div class="respuesta-container">
+    <h1>Datos recibidos</h1>
+    <div id="datosRecibidos"></div>
+    <a href="index.html" style="color: purple; text-decoration: underline">&lt; Volver al formulario</a>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const datosDiv = document.getElementById('datosRecibidos');
+    let html = '';
+    params.forEach((value, key) => {
+      if (key === 'concepto_noRemunerativo_1' && params.has('descripcion_noRemunerativo_1')) {
+        const descripcion = params.get('descripcion_noRemunerativo_1');
+        html += `<div><b style='color:#222'>${key}:</b> <span style='color:#222'>${value} - ${descripcion}</span></div>`;
+      } else if (key === 'descripcion_noRemunerativo_1') {
+      } else {
+        html += `<div><b style='color:#222'>${key}:</b> <span style='color:#222'>${value}</span></div>`;
+      }
+    });
+    datosDiv.innerHTML = html;
+    let qs = '';
+    for (const [key, value] of params.entries()) {
+      qs += `${key}=${value}\n`;
+    }
+    document.getElementById('queryString').value = qs.trim();
+  </script>
+</body>
+</html>

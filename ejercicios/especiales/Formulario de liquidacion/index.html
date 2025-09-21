@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Formulario de liquidacion de sueldos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="form-container">
+    <h1>Formulario de Liquidación de sueldos</h1>
+    <form id="liquidacionForm" method="get" action="respuesta_formulario.html">
+      <div class="row">
+        <div class="col">
+          <label for="legajoEmpleado">Legajo Empleado</label>
+          <input id="legajoEmpleado" name="legajoEmpleado" type="text" placeholder="Ej: 01" required>
+          <label for="apellidoYNombres">Apellido y Nombre</label>
+          <input id="apellidoYNombres" name="apellidoYNombres" type="text" placeholder="Ej: Bustamante Agustin" required>
+          <label for="fecha_liquidacion">Fecha de liquidación</label>
+          <input id="fecha_liquidacion" name="fecha_liquidacion" type="date" required>
+        </div>
+        <div class="col">
+          <label for="mesDeLiquidacion">Mes de liquidación (YYYY-MM)</label>
+          <input id="mesDeLiquidacion" name="mesDeLiquidacion" type="month" required>
+          <label for="sueldoBasico">Sueldo básico</label>
+          <input id="sueldoBasico" name="sueldoBasico" type="number" min="0" step="0.01" placeholder="Ej: 300000" required>
+          <label for="concepto_noRemunerativo_1">Concepto no remunerativo 1 (parametrizable)</label>
+          <select id="concepto_noRemunerativo_1" name="concepto_noRemunerativo_1" required>
+            <option value="">-- seleccionar --</option>
+          </select>
+          <label for="monto_no_remunerativo_1">Monto no remunerativo 1</label>
+          <input id="monto_no_remunerativo_1" name="monto_no_remunerativo_1" type="number" min="0" step="0.01" value="0">
+            <input type="hidden" id="descripcion_noRemunerativo_1" name="descripcion_noRemunerativo_1" value="">
+        </div>
+      </div>
+      <button type="submit">ENVIAR</button>
+    </form>
+  </div>
+  <script>
+  const conceptosJsonText = `[
+    {"codigo":"01","descripcion":"Indemnizaciones"},
+    {"codigo":"02","descripcion":"Asignaciones familiares"},
+    {"codigo":"03","descripcion":"Viáticos"},
+    {"codigo":"04","descripcion":"Adicional por presentismo"}
+  ]`;
+  const conceptosDesdeVariable = JSON.parse(conceptosJsonText);
+  function poblarSelectConceptos(conceptos) {
+    const select = document.getElementById('concepto_noRemunerativo_1');
+    while (select.options.length > 1) select.remove(1);
+    conceptos.forEach(item => {
+      const opt = document.createElement('option');
+      opt.value = item.codigo;
+      opt.textContent = `${item.codigo} - ${item.descripcion}`;
+      opt.dataset.descripcion = item.descripcion;
+      select.appendChild(opt);
+    });
+  }
+  poblarSelectConceptos(conceptosDesdeVariable);
+  document.getElementById('concepto_noRemunerativo_1').addEventListener('change', function() {
+    const select = this;
+    const selectedOption = select.options[select.selectedIndex];
+    const descripcion = selectedOption.dataset.descripcion || '';
+    document.getElementById('descripcion_noRemunerativo_1').value = descripcion;
+  });
+
+  function actualizarDescripcion() {
+    const select = document.getElementById('concepto_noRemunerativo_1');
+    const selectedOption = select.options[select.selectedIndex];
+    const descripcion = selectedOption.dataset.descripcion || '';
+    document.getElementById('descripcion_noRemunerativo_1').value = descripcion;
+  }
+  actualizarDescripcion();
+
+  document.getElementById('liquidacionForm').addEventListener('submit', function(e) {
+    actualizarDescripcion();
+  });
+  </script>
+</body>
+</html>

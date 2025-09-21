@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Liquidaciones de sueldos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="contenido-principal">
+        <header class="encabezado">
+            <h1>Liquidaciones de sueldos</h1>
+            <div class="controles">
+                <button id="cargar" class="boton">Cargar datos</button>
+                <button id="vaciar" class="boton">Vaciar datos</button>
+                <button id="abrir-modal" class="boton">Cargar Formulario</button>
+            </div>
+        </header>
+
+        <div class="contenedor-tabla" id="contenedor-tabla">
+            <table aria-label="Tabla de liquidaciones" id="tabla-principal">
+                <thead>
+                    <tr>
+                        <th>Legajo</th>
+                        <th>Apellido y Nombres</th>
+                        <th>Fecha Liquidación</th>
+                        <th>Mes de Liquidación</th>
+                        <th>Sueldo Básico</th>
+                        <th>Código</th>
+                        <th>Descripción Concepto</th>
+                        <th style="white-space:normal;">Monto<br>no remunerativo 1</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo"></tbody>
+                <tfoot id="pie-tabla">
+                    <tr>
+                        <td colspan="4">Total filas:</td>
+                        <td id="total-filas">0</td>
+                        <td colspan="2">Suma Monto no remunerativo</td>
+                        <td id="suma-no-rem">0</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <footer class="pie">
+        <div class="pie-nota">Alumno: Bustamante Agustin</div>
+    </footer>
+
+    <div id="modal" class="modal">
+        <div class="contenido-modal">
+            <span class="cerrar-modal" id="cerrar-modal">x</span>
+            <div class="encabezado-modal">Formulario de Liquidación de sueldos</div>
+            <iframe id="formulario" src="../Formulario de liquidacion/index.html"
+                style="width:100%;height:650px;border:none;border-radius:8px;overflow:hidden;background:#f4f8fc;">
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+    const datosPrueba = [
+        {"LegajoEmpleado": "01","ApellidoYNombres": "Bustamante, Agustin","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 120000,"concepto_noRemunerativo_1": {"CodigoConcepto":"01","Descripcion":"Indemnizaciones"},"Monto_no_remunerativo_1": 60000},
+        {"LegajoEmpleado": "02","ApellidoYNombres": "Gomez, Juan","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 95000,"concepto_noRemunerativo_1": {"CodigoConcepto":"02","Descripcion":"Asignaciones familiares"},"Monto_no_remunerativo_1": 30000},
+        {"LegajoEmpleado": "03","ApellidoYNombres": "Martinez, Pablo","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 110000,"concepto_noRemunerativo_1": {"CodigoConcepto":"03","Descripcion":"Viaticos"},"Monto_no_remunerativo_1": 20000},
+        {"LegajoEmpleado": "04","ApellidoYNombres": "Rodriguez, Lucas","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 105000,"concepto_noRemunerativo_1": {"CodigoConcepto":"04","Descripcion":"Adicional por presentismo"},"Monto_no_remunerativo_1": 40000},
+        {"LegajoEmpleado": "05","ApellidoYNombres": "Fernandez, Maria","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 98000,"concepto_noRemunerativo_1": {"CodigoConcepto":"05","Descripcion":"Indemnizaciones"},"Monto_no_remunerativo_1": 35000},
+        {"LegajoEmpleado": "06","ApellidoYNombres": "Lopez, Carla","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 102000,"concepto_noRemunerativo_1": {"CodigoConcepto":"06","Descripcion":"Asignaciones familiares"},"Monto_no_remunerativo_1": 45000},
+        {"LegajoEmpleado": "07","ApellidoYNombres": "Perez, Diego","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 115000,"concepto_noRemunerativo_1": {"CodigoConcepto":"07","Descripcion":"Viaticos"},"Monto_no_remunerativo_1": 25000},
+        {"LegajoEmpleado": "08","ApellidoYNombres": "Sanchez, Lucia","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 99000,"concepto_noRemunerativo_1": {"CodigoConcepto":"08","Descripcion":"Adicional por presentismo"},"Monto_no_remunerativo_1": 32000},
+        {"LegajoEmpleado": "09","ApellidoYNombres": "Torres, Javier","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 108000,"concepto_noRemunerativo_1": {"CodigoConcepto":"09","Descripcion":"Indemnizaciones"},"Monto_no_remunerativo_1": 41000},
+        {"LegajoEmpleado": "10","ApellidoYNombres": "Ramirez, Sofia","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 101000,"concepto_noRemunerativo_1": {"CodigoConcepto":"10","Descripcion":"Asignaciones familiares"},"Monto_no_remunerativo_1": 38000},
+        {"LegajoEmpleado": "11","ApellidoYNombres": "Castro, Bruno","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 107000,"concepto_noRemunerativo_1": {"CodigoConcepto":"11","Descripcion":"Viaticos"},"Monto_no_remunerativo_1": 42000},
+        {"LegajoEmpleado": "12","ApellidoYNombres": "Diaz, Paula","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 96000,"concepto_noRemunerativo_1": {"CodigoConcepto":"12","Descripcion":"Adicional por presentismo"},"Monto_no_remunerativo_1": 27000},
+        {"LegajoEmpleado": "13","ApellidoYNombres": "Mendez, Tomas","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 112000,"concepto_noRemunerativo_1": {"CodigoConcepto":"13","Descripcion":"Indemnizaciones"},"Monto_no_remunerativo_1": 46000},
+        {"LegajoEmpleado": "14","ApellidoYNombres": "Vega, Camila","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 104000,"concepto_noRemunerativo_1": {"CodigoConcepto":"14","Descripcion":"Asignaciones familiares"},"Monto_no_remunerativo_1": 39000},
+        {"LegajoEmpleado": "15","ApellidoYNombres": "Silva, Mateo","Fecha_liquidacion": "2025-09-01","MesDeLiquidacion": "2025-09","SueldoBasico": 109000,"concepto_noRemunerativo_1": {"CodigoConcepto":"15","Descripcion":"Viaticos"},"Monto_no_remunerativo_1": 43000}
+    ];
+
+    const columnas = [
+        "Legajo", "Apellido y Nombres", "Fecha Liquidación", "Mes de Liquidación", "Sueldo Básico", "Código", "Descripción Concepto", "Monto no remunerativo 1"
+    ];
+    const mapa = {
+        "Legajo": "LegajoEmpleado",
+        "Apellido y Nombres": "ApellidoYNombres",
+        "Fecha Liquidación": "Fecha_liquidacion",
+        "Mes de Liquidación": "MesDeLiquidacion",
+        "Sueldo Básico": "SueldoBasico",
+        "Código": "concepto_noRemunerativo_1.CodigoConcepto",
+        "Descripción Concepto": "concepto_noRemunerativo_1.Descripcion",
+        "Monto no remunerativo 1": "Monto_no_remunerativo_1"
+    };
+
+    function obtenerValor(item, clave) {
+        if (clave.includes('.')) {
+            const [obj, prop] = clave.split('.');
+            return item[obj] ? item[obj][prop] : '';
+        }
+        return item[clave] || '';
+    }
+
+    function formatearNumero(valor) {
+        return (valor || valor === 0) ? Number(valor).toLocaleString() : '';
+    }
+
+    function crearTabla(datos) {
+        const tabla = document.createElement('table');
+        tabla.setAttribute('aria-label', 'Tabla de liquidaciones');
+        tabla.className = 'tabla-datos';
+
+        const thead = document.createElement('thead');
+        const trHead = document.createElement('tr');
+        columnas.forEach(col => {
+            const th = document.createElement('th');
+            th.innerText = col;
+            trHead.appendChild(th);
+        });
+        thead.appendChild(trHead);
+        tabla.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        datos.forEach(item => {
+            const tr = document.createElement('tr');
+            columnas.forEach(col => {
+                const td = document.createElement('td');
+                let valor = obtenerValor(item, mapa[col]);
+                if (col === "Sueldo Básico" || col === "Monto no remunerativo 1") {
+                    td.innerText = formatearNumero(valor);
+                    td.className = 'numero';
+                } else {
+                    td.innerText = valor;
+                }
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+        tabla.appendChild(tbody);
+        return tabla;
+    }
+
+    const contenedorTabla = document.getElementById('contenedor-tabla');
+    const totalFilas = document.getElementById('total-filas');
+    const sumaNoRem = document.getElementById('suma-no-rem');
+    let datosActuales = [];
+
+    function cargarDatos() {
+        if (datosActuales.length) return;
+        datosActuales = datosPrueba.slice();
+        contenedorTabla.innerHTML = '';
+        contenedorTabla.appendChild(crearTabla(datosActuales));
+        totalFilas.textContent = datosActuales.length;
+        sumaNoRem.textContent = formatearNumero(
+            datosActuales.reduce((s, v) => s + Number(v.Monto_no_remunerativo_1 || 0), 0)
+        );
+    }
+
+    function vaciarDatos() {
+        datosActuales = [];
+        const tabla = document.createElement('table');
+        tabla.setAttribute('aria-label', 'Tabla de liquidaciones');
+        tabla.className = 'tabla-datos';
+
+        const thead = document.createElement('thead');
+        const trHead = document.createElement('tr');
+        columnas.forEach(col => {
+            const th = document.createElement('th');
+            th.innerText = col;
+            trHead.appendChild(th);
+        });
+        thead.appendChild(trHead);
+        tabla.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        const tr = document.createElement('tr');
+        columnas.forEach(() => {
+            const td = document.createElement('td');
+            td.innerHTML = '&nbsp;';
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+        tabla.appendChild(tbody);
+
+        contenedorTabla.innerHTML = '';
+        contenedorTabla.appendChild(tabla);
+        totalFilas.textContent = 0;
+        sumaNoRem.textContent = 0;
+    }
+
+    document.getElementById('cargar').onclick = cargarDatos;
+    document.getElementById('vaciar').onclick = vaciarDatos;
+
+    document.getElementById('abrir-modal').onclick = function() {
+        document.getElementById('contenido-principal').classList.add('atenuado');
+        document.getElementById('modal').classList.add('activo');
+    };
+    document.getElementById('cerrar-modal').onclick = function() {
+        document.getElementById('contenido-principal').classList.remove('atenuado');
+        document.getElementById('modal').classList.remove('activo');
+    };
+
+    vaciarDatos();
+    </script>
+</body>
+</html>

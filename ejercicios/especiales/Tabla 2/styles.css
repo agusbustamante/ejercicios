@@ -1,0 +1,269 @@
+:root {
+	--fondo: #fff4ec;
+	--acento: #ff8c6b;
+	--suave: #ffe1d6;
+	--alto-tabla: 72vh;
+}
+
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background: var(--fondo);
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.atenuado {
+	opacity: 0.3;
+	pointer-events: none;
+}
+
+.encabezado {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 30px;
+	margin-bottom: 15px;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+.encabezado h1 {
+	flex: 1;
+	text-align: center;
+	margin: 0;
+	font-size: 28px;
+}
+
+.controles {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+}
+
+.boton {
+	padding: 10px 16px;
+	cursor: pointer;
+	background: #2a4d6b;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	transition: background 0.2s;
+}
+
+.boton:hover {
+	background: #1d3557;
+}
+
+.contenedor-tabla {
+	flex: 1 1 auto;
+	height: var(--alto-tabla);
+	overflow: auto;
+	margin: 10px 12px;
+	border-top: 1px solid rgba(0, 0, 0, 0.05);
+	background: transparent;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+@media (max-width: 900px) {
+	.encabezado {
+		flex-direction: column;
+		align-items: stretch;
+		padding: 12px 8px;
+	}
+	.encabezado h1 {
+		font-size: 22px;
+		margin-bottom: 10px;
+	}
+	.controles {
+		justify-content: center;
+		gap: 6px;
+	}
+	.contenido-modal {
+		min-width: 220px;
+		max-width: 98vw;
+		width: 98vw;
+		padding: 18px 8px 12px 8px;
+	}
+	.contenedor-tabla {
+		margin: 4px 2px;
+	}
+	table {
+		min-width: 600px;
+		font-size: 12px;
+	}
+	thead th, td {
+		padding: 8px 6px;
+		font-size: 12px;
+	}
+}
+
+@media (max-width: 650px) {
+	.contenido-modal {
+		min-width: 120px;
+		max-width: 100vw;
+		width: 100vw;
+		padding: 8px 2px 8px 2px;
+	}
+	.encabezado h1 {
+		font-size: 16px;
+	}
+	table {
+		min-width: 350px;
+		font-size: 10px;
+	}
+	thead th, td {
+		padding: 4px 2px;
+		font-size: 10px;
+	}
+}
+	min-width: 1000px;
+	table-layout: fixed;
+}
+
+thead tr {
+	background: var(--acento);
+	color: #fff;
+	position: sticky;
+	top: 0;
+	z-index: 3;
+}
+
+thead th {
+	padding: 18px 16px;
+	text-transform: uppercase;
+	font-size: 12px;
+	border-right: 1px solid rgba(0, 0, 0, 0.06);
+	white-space: normal;
+}
+
+tbody tr:nth-child(even) {
+	background: var(--suave);
+}
+tbody tr:nth-child(odd) {
+	background: rgba(255, 140, 107, 0.10);
+}
+
+td {
+	padding: 14px 16px;
+	font-size: 13px;
+	color: #111;
+	vertical-align: middle;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+tfoot tr {
+	background: var(--acento);
+	font-weight: 600;
+	color: #fff;
+	position: sticky;
+	bottom: 0;
+	z-index: 3;
+}
+
+.pie {
+	background: var(--fondo);
+	border-top: 4px solid var(--acento);
+	text-align: center;
+	padding: 12px 8px;
+	margin-top: auto;
+}
+
+.pie-nota {
+	font-size: 16px;
+	color: #222;
+}
+
+#modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.25);
+	z-index: 1000;
+	justify-content: center;
+	align-items: center;
+	pointer-events: none;
+}
+
+#modal.activo {
+	display: flex;
+	pointer-events: auto;
+}
+
+.contenido-modal {
+	background: #f4f8fc;
+	border-radius: 8px;
+	box-shadow: 0 4px 24px #0002;
+	padding: 32px 28px 18px 28px;
+	min-width: 400px;
+	max-width: 650px;
+	width: 650px;
+	position: relative;
+	pointer-events: auto;
+}
+
+.encabezado-modal {
+	font-size: 1.3em;
+	font-weight: bold;
+	margin-bottom: 18px;
+}
+
+.cerrar-modal {
+	position: absolute;
+	top: 12px;
+	right: 18px;
+	font-size: 1.3em;
+	color: #a33;
+	cursor: pointer;
+	font-weight: bold;
+}
+.contenido-modal {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	box-sizing: border-box;
+}
+.contenido-modal iframe {
+	width: 100% !important;
+	min-width: 0 !important;
+	max-width: 100vw !important;
+	height: 65vh !important;
+	min-height: 320px;
+	border: none;
+	border-radius: 8px;
+	background: #f4f8fc;
+	box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+	.contenido-modal {
+		min-width: 120px;
+		max-width: 98vw;
+		width: 98vw;
+		padding: 12px 4px 8px 4px;
+	}
+	.contenido-modal iframe {
+		height: 55vh !important;
+		min-height: 220px;
+	}
+}
+
+@media (max-width: 650px) {
+	.contenido-modal {
+		min-width: 0;
+		max-width: 100vw;
+		width: 100vw;
+		padding: 4px 0 4px 0;
+	}
+	.contenido-modal iframe {
+		height: 45vh !important;
+		min-height: 120px;
+	}
+}
