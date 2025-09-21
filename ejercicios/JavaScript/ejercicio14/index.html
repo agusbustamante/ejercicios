@@ -30,24 +30,24 @@
     <div class="frase" id="frase"></div>
     <script>
         const traducciones = {
-            "español": "Mismo mensaje, tu idioma",
-            "inglés": "Same message, your language",
-            "francés": "Même message, votre langue",
-            "portugués": "Mesma mensagem, seu idioma",
-            "italiano": "Stesso messaggio, la tua lingua",
-            "alemán": "Gleiche Nachricht, deine Sprache",
-            "noruego": "Samme melding, ditt språk",
-            "ruso": "То же сообщение, ваш язык",
-            "chino": "相同的信息，你的语言",
-            "japonés": "同じメッセージ、あなたの言語",
-            "árabe": "نفس الرسالة، لغتك",
-            "hindi": "वही संदेश, आपकी भाषा",
-            "coreano": "같은 메시지, 당신의 언어",
-            "turco": "Aynı mesaj, senin dilin",
-            "holandés": "Hetzelfde bericht, jouw taal",
-            "sueco": "Samma meddelande, ditt språk",
-            "polaco": "Ta sama wiadomość, twój język",
-            "hebreo": "אותו הודעה, השפה שלך",
+            "español": "Bienvenido",
+            "inglés": "Welcome",
+            "francés": "Bienvenue",
+            "portugués": "Bem-vindo",
+            "italiano": "Benvenuto",
+            "alemán": "Willkommen",
+            "noruego": "Velkommen",
+            "ruso": "Добро пожаловать",
+            "chino": "欢迎",
+            "japonés": "ようこそ",
+            "árabe": "أهلا بك",
+            "hindi": "स्वागत है",
+            "coreano": "환영합니다",
+            "turco": "Hoşgeldiniz",
+            "holandés": "Welkom",
+            "sueco": "Välkommen",
+            "polaco": "Witamy",
+            "hebreo": "ברוך הבא"
         };
         
         let idioma = navigator.language.toLowerCase();
@@ -74,9 +74,7 @@
         };
         
         const codigoIdioma = idioma.substring(0, 2);
-        
         const nombreIdioma = mapaIdiomas[codigoIdioma] || "español";
-        
         const fraseTraducida = traducciones[nombreIdioma];
         
         document.getElementById("frase").textContent = fraseTraducida;
