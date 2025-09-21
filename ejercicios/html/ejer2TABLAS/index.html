@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f8fafc;
+            margin: 0;
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #2a4365;
+            margin-bottom: 24px;
+        }
+        table {
+            border: 1px solid #b6c2d1;
+            border-radius: 8px;
+            border-collapse: collapse;
+            width: 700px;
+            margin: 0 auto 30px auto;
+            box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+            background: #fff;
+        }
+        th, td {
+            border: 1px solid #b6c2d1;
+            padding: 10px 8px;
+            text-align: center;
+        }
+        th {
+            background: #e3eafc;
+            color: #2a4365;
+            font-weight: 600;
+        }
+        .cabecera {
+            background: #cfe2ff;
+            font-size: 1.2em;
+            color: #1a365d;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .hora {
+            background: #e6f7ff;
+            color: #2a4365;
+        }
+        .reunion {
+            background: #ffd8b2;
+        }
+        .taller {
+            background: #e6d6ff;
+        }
+        .lab {
+            background: #e0e0e0; 
+        }
+        .conf {
+            background: #d6f0ff; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Horario Semanal</h1>
+    <table>
+        <tr>
+            <td colspan="6" class="cabecera">Horario Semanal</td>
+        </tr>
+        <tr>
+            <th class="hora">Hora</th>
+            <th class="hora">Lunes</th>
+            <th class="hora">Martes</th>
+            <th class="hora">Miércoles</th>
+            <th class="hora">Jueves</th>
+            <th class="hora">Viernes</th>
+        </tr>
+        <tr>
+            <td>08:00 - 09:00</td>
+            <td class="reunion">Reunión</td>
+            <td>Clase</td>
+            <td>Disponible</td>
+            <td class="lab" rowspan="3">Laboratorio<br>(Jueves 3h)</td>
+            <td class="taller">Taller</td>
+        </tr>
+        <tr>
+            <td>09:00 - 10:00</td>
+            <td>Tarea</td>
+            <td class="conf">Conferencia</td>
+            <td>Proyecto</td>
+            <td>Consultas</td>
+        </tr>
+        <tr>
+            <td>10:00 - 11:00</td>
+            <td>Disponible</td>
+            <td class="taller">Taller</td>
+            <td>Clase</td>
+            <td class="conf">Conferencia</td>
+        </tr>
+        <tr>
+            <td>11:00 - 12:00</td>
+            <td>Almuerzo</td>
+            <td>Almuerzo</td>
+            <td>Almuerzo</td>
+            <td>Almuerzo</td>
+            <td>Almuerzo</td>
+        </tr>
+    </table>
+</body>
+</html>
