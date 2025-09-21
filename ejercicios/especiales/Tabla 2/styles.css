@@ -267,3 +267,11 @@ tfoot tr {
 		min-height: 120px;
 	}
 }
+
+th:nth-child(1),
+td:nth-child(1) {
+    white-space: normal !important;  
+    overflow: visible !important;   
+    text-overflow: unset !important; 
+}
+
