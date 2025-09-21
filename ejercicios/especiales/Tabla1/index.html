@@ -1,60 +1,50 @@
 <!doctype html>
 <html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tabla de Liquidaciones</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Liquidaciones de sueldos</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Liquidaciones de sueldos</h1>
-        <div class="controls">
-            <button id="loadBtn">Cargar datos</button>
-            <button id="clearBtn">Vaciar datos</button>
-        </div>
-    </header>
-
-    <div class="table-wrap" id="tableWrap">
-        <table aria-label="Tabla de liquidaciones" id="mainTable">
-            <thead>
-                <tr>
-                    <th>Legajo</th>
-                    <th>Apellido y Nombres</th>
-                    <th>Fecha Liquidacion</th>
-                    <th>Mes de Liquidacion</th>
-                    <th>Sueldo Basico</th>
-                    <th>Codigo </th>
-                    <th>Descripcion Concepto</th>
-                    <th style="white-space:normal;">Monto<br>no remunerativo 1</th>
-                </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-            <tfoot id="tfoot">
-                <tr>
-                    <td colspan="4">Total filas:</td>
-                    <td id="totalRows">0</td>
-                    <td colspan="2">Suma Monto no remunerativo</td>
-                    <td id="sumNoRem">0</td>
-                </tr>
-            </tfoot>
-        </table>
+  <header>
+    <h1>Liquidaciones de sueldos</h1>
+    <div class="controls">
+      <button id="loadBtn">Cargar datos</button>
+      <button id="clearBtn">Vaciar datos</button>
     </div>
+  </header>
 
-    <div class="footer-note">Alumno: Bustamante Agustin</div>
+  <div class="table-wrap" id="tableWrap">
+    <table aria-label="Tabla de liquidaciones" id="mainTable">
+      <thead>
+        <tr>
+         <th>Legajo<br>Empleado</th>
+          <th>Apellido y Nombres</th>
+          <th>Fecha Liquidacion</th>
+          <th>Mes de Liquidacion</th>
+          <th>SueldoBasico</th>
+          <th>Codigo</th>
+          <th>Descripcion Concepto</th>
+          <th style="white-space:normal;">Monto<br>no remunerativo 1</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+      <tfoot id="tfoot">
+        <tr>
+          <td colspan="4">Total filas:</td>
+          <td id="totalRows">0</td>
+          <td colspan="2">Suma Monto no remunerativo</td>
+          <td id="sumNoRem">0</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
-    <script>
-    let items = [];
+  <div class="footer-note">Alumno: Bustamante Agustin</div>
 
-    const loadBtn = document.getElementById('loadBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const tbody = document.getElementById('tbody');
-    const totalRows = document.getElementById('totalRows');
-    const sumNoRem = document.getElementById('sumNoRem');
-    const tableWrap = document.getElementById('tableWrap');
-    const mainTable = document.getElementById('mainTable');
-
-    const sampleJSON = [
+  <script>
+    const datos = [
         {LegajoEmpleado:"01",ApellidoYNombres:"Bustamante, Agustin",Fecha_liquidacion:"2025-09-01",MesDeLiquidacion:"2025-09",SueldoBasico:120000,concepto_noRemunerativo_1:{CodigoConcepto:"01",Descripcion:"Indemnizaciones"},Monto_no_remunerativo_1:60000},
         {LegajoEmpleado:"02",ApellidoYNombres:"Gomez, Juan",Fecha_liquidacion:"2025-09-01",MesDeLiquidacion:"2025-09",SueldoBasico:95000,concepto_noRemunerativo_1:{CodigoConcepto:"02",Descripcion:"Asignaciones familiares"},Monto_no_remunerativo_1:30000},
         {LegajoEmpleado:"03",ApellidoYNombres:"Martinez, Pablo",Fecha_liquidacion:"2025-09-01",MesDeLiquidacion:"2025-09",SueldoBasico:110000,concepto_noRemunerativo_1:{CodigoConcepto:"03",Descripcion:"Viaticos"},Monto_no_remunerativo_1:20000},
@@ -72,98 +62,57 @@
         {LegajoEmpleado:"15",ApellidoYNombres:"Silva, Mateo",Fecha_liquidacion:"2025-09-01",MesDeLiquidacion:"2025-09",SueldoBasico:109000,concepto_noRemunerativo_1:{CodigoConcepto:"15",Descripcion:"Viaticos"},Monto_no_remunerativo_1:43000}
     ];
 
-    function createRow(item){
+    const loadBtn = document.getElementById('loadBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const tbody = document.getElementById('tbody');
+    const totalRows = document.getElementById('totalRows');
+    const sumNoRem = document.getElementById('sumNoRem');
+
+    function formatoNumero(n){
+      if (n === undefined || n === null || n === '') return '';
+      return Number(n).toLocaleString();
+    }
+
+    function filaHTML(item){
+      const codigo = item.concepto_noRemunerativo_1?.CodigoConcepto || '';
+      const desc = item.concepto_noRemunerativo_1?.Descripcion || '';
+      return `
+        <tr>
+          <td>${item.LegajoEmpleado || ''}</td>
+          <td>${item.ApellidoYNombres || ''}</td>
+          <td>${item.Fecha_liquidacion || ''}</td>
+          <td>${item.MesDeLiquidacion || ''}</td>
+          <td class="num">${formatoNumero(item.SueldoBasico)}</td>
+          <td>${codigo}</td>
+          <td>${desc}</td>
+          <td class="num">${formatoNumero(item.Monto_no_remunerativo_1)}</td>
+        </tr>
+      `;
+    }
+
+    function mostrarTabla(datosArray){
+      tbody.innerHTML = '';
+      if (!datosArray.length){
         const tr = document.createElement('tr');
-        const codigo = (item.concepto_noRemunerativo_1 && item.concepto_noRemunerativo_1.CodigoConcepto) || '';
-        const desc = (item.concepto_noRemunerativo_1 && item.concepto_noRemunerativo_1.Descripcion) || '';
-        tr.innerHTML = `
-            <td>${item.LegajoEmpleado || ''}</td>
-            <td>${item.ApellidoYNombres || ''}</td>
-            <td>${item.Fecha_liquidacion || ''}</td>
-            <td>${item.MesDeLiquidacion || ''}</td>
-            <td class="num">${formatNumber(item.SueldoBasico)}</td>
-            <td>${codigo}</td>
-            <td>${desc}</td>
-            <td class="num">${formatNumber(item.Monto_no_remunerativo_1)}</td>
-        `;
-        return tr;
-    }
-
-    function adjustFillHeight() {
-        const thead = mainTable.querySelector('thead');
-        const tfoot = mainTable.querySelector('tfoot');
-        const fillRow = tbody.querySelector('.fill-row');
-        if (!fillRow) return;
-
-        const wrapHeight = tableWrap.clientHeight;
-        const theadH = thead.offsetHeight;
-        const tfootH = tfoot.offsetHeight;
-        const available = Math.max(0, wrapHeight - theadH - tfootH);
-
-        const firstTd = fillRow.querySelector('td');
-        if (firstTd) {
-            firstTd.style.height = available + 'px';
+        for (let i=0;i<8;i++){
+          const td = document.createElement('td');
+          td.innerHTML = i===0 ? '<div class="empty-box"></div>' : '&nbsp;';
+          tr.appendChild(td);
         }
+        tbody.appendChild(tr);
+      } else {
+        datosArray.forEach(d => tbody.insertAdjacentHTML('beforeend', filaHTML(d)));
+      }
+
+      totalRows.textContent = datosArray.length;
+      const suma = datosArray.reduce((acc,item) => acc + Number(item.Monto_no_remunerativo_1 || 0), 0);
+      sumNoRem.textContent = formatoNumero(suma);
     }
 
-    function populateTable(array){
-        items = array.map(x => ({...x}));
-        tbody.innerHTML = '';
+    loadBtn.addEventListener('click', () => mostrarTabla(datos));
+    clearBtn.addEventListener('click', () => mostrarTabla([]));
 
-        if (array.length === 0) {
-            const tr = document.createElement('tr');
-            tr.className = 'fill-row';
-            for (let i = 0; i < 8; i++) {
-                const td = document.createElement('td');
-                if (i === 0) {
-                    const div = document.createElement('div');
-                    div.className = 'empty-box';
-                    td.appendChild(div);
-                } else {
-                    td.innerHTML = '&nbsp;';
-                }
-                tr.appendChild(td);
-            }
-            tbody.appendChild(tr);
-
-            requestAnimationFrame(adjustFillHeight);
-        } else {
-            items.forEach(it => tbody.appendChild(createRow(it)));
-        }
-
-        totalRows.textContent = items.length;
-        sumNoRem.textContent = formatNumber(
-            items.reduce((s, v) => {
-                let monto = v.Monto_no_remunerativo_1;
-                if (typeof monto === 'string') {
-                    monto = monto.replace(/\./g, '').replace(/,/g, '');
-                }
-                monto = Number(monto);
-                return s + (Number.isFinite(monto) ? monto : 0);
-            }, 0)
-        );
-    }
-
-    function formatNumber(v){
-        if(v === undefined || v === null || v === '') return '';
-        const n = Number(v);
-        if(Number.isNaN(n)) return v;
-        return n.toLocaleString();
-    }
-
-    populateTable([]);
-
-    window.addEventListener('resize', () => {
-        requestAnimationFrame(adjustFillHeight);
-    });
-
-    loadBtn.addEventListener('click', ()=> populateTable(sampleJSON));
-    clearBtn.addEventListener('click', ()=>{
-        items = [];
-        populateTable([]);
-        totalRows.textContent = 0;
-        sumNoRem.textContent = 0;
-    });
-    </script>
+    mostrarTabla([]);
+  </script>
 </body>
 </html>
