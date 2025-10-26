@@ -1,0 +1,117 @@
+:root{
+  --color-primario:#5a189a;
+  --color-secundario:#9d4edd;
+  --color-fondo:#f1e8fb;
+  --color-texto:#212529;
+  --color-boton:#7b2cbf;
+  --color-boton-hover:#5a189a;
+  --borde:#cfa9e9;
+  --overlay-opacity:.55;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--color-texto);
+  background:var(--color-fondo);
+  display:flex;flex-direction:column;min-height:100vh;
+}
+
+/* CABECERA */
+.barra-superior{background:var(--color-primario);color:#fff;font-weight:700;position:sticky;top:0;z-index:10}
+.barra-inner{height:56px;display:flex;align-items:center;justify-content:center;position:relative}
+.titulo{margin:0;font-size:1.5rem;font-weight:800}
+.acciones-header{position:absolute;right:12px;display:flex;gap:.6rem}
+.boton{background:var(--color-boton);color:#fff;border:1px solid var(--color-secundario);padding:.5rem 1rem;border-radius:6px;cursor:pointer;font-size:.95rem;transition:background .12s ease,transform .06s ease}
+.boton:hover{background:var(--color-boton-hover)}
+.boton:active{transform:translateY(1px)}
+
+/* CONTENEDOR TABLA */
+.tabla-contenedor{flex:1;display:flex;flex-direction:column;padding:1rem}
+
+
+.tabla-wrapper{
+  flex:1;
+
+  max-width: calc(100% + 2rem);
+  margin-left: -1rem;
+  margin-right: -1rem;
+  overflow-y:auto;
+  overflow-x:hidden;            
+  scrollbar-gutter:stable both-edges;
+  border:1px solid var(--color-secundario);
+  border-radius:0; 
+  background:#fff;
+}
+
+/* TABLA */
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+
+thead{background:var(--color-primario);color:#fff}
+th,td{
+  padding:.55rem;text-align:left;border-bottom:1px solid var(--borde);
+  word-break:break-word;         
+  overflow-wrap:anywhere;        
+}
+tbody tr:nth-child(odd){background:rgba(90,24,154,.05)}
+tbody tr:nth-child(even){background:rgba(157,78,221,.05)}
+
+[campo-dato="legajo"]   { width:8% }
+[campo-dato="apellido"] { width:20% }
+[campo-dato="fecha"]    { width:12% }
+[campo-dato="mes"]      { width:14% }
+[campo-dato="sueldo"]   { width:12% }
+[campo-dato="concepto"] { width:16% }
+[campo-dato="monto"]    { width:8% }
+[campo-dato="pdf"]      { width:10%; text-align:center; }
+
+thead th{ position:sticky; top:0; z-index:1 }
+
+@media (max-width:992px){
+  [campo-dato="monto"],[campo-dato="pdf"]{display:none}
+}
+@media (max-width:768px){
+  [campo-dato="mes"],[campo-dato="concepto"]{display:none}
+}
+
+/* PIE */
+.pie{background:var(--color-primario);color:#fff;text-align:center;padding:.5rem 1rem;font-size:.85rem}
+
+.overlay{
+  position:fixed; inset:0;
+  display:none; justify-content:center; align-items:center;
+  background:rgba(255,255,255,var(--overlay-opacity));
+  z-index:1000;
+}
+.overlay.activo{display:flex}
+
+.modal{
+  width:min(1100px,96vw);
+  background:#fff;
+  border:1px solid var(--color-secundario);
+  border-radius:6px;
+  box-shadow:0 10px 30px rgba(56,10,95,.12);
+  overflow:hidden;
+}
+.modal-header{
+  background:var(--color-primario);
+  color:#fff; display:flex; justify-content:space-between; align-items:center;
+  padding:.8rem 1rem;
+}
+.modal-header h2{font-size:1rem; font-weight:700}
+.cerrar{background:transparent;color:#fff;border:0;font-size:1.4rem;cursor:pointer;line-height:1}
+.modal-body{padding:18px;max-height:72vh;overflow:auto}
+
+.fila-campos{display:flex;gap:22px;margin-bottom:12px;flex-wrap:wrap}
+.grupo-campo{flex:1 1 260px;display:flex;flex-direction:column;min-width:220px}
+.grupo-campo label{font-weight:600;margin-bottom:6px}
+.grupo-campo input,.grupo-campo select{
+  padding:12px 10px;border:1px solid var(--borde);background:#fff;height:48px;width:100%;
+}
+.grupo-campo input:focus,.grupo-campo select:focus{
+  outline:none; box-shadow:0 0 0 2px rgba(157,78,221,.12); border-color:var(--color-secundario);
+}
+.acciones{text-align:center;margin-top:18px}
+
+.deshabilitado{ opacity:.3; pointer-events:none }

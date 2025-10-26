@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liquidaciones de Sueldos</title>
+  <link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+  <header class="barra-superior">
+    <div class="barra-inner">
+      <h1 class="titulo">Liquidaciones de Sueldos</h1>
+      <div class="acciones-header">
+        <button id="cargarDatos1" class="boton">Cargar datos</button>
+        <button id="vaciarDatos1" class="boton">Vaciar datos</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="tabla-contenedor">
+    <div class="tabla-wrapper">
+      <table aria-label="Tabla de liquidaciones de sueldos">
+        <thead>
+          <tr>
+            <th campo-dato="legajo">Legajo</th>
+            <th campo-dato="apellido">Apellido y nombres</th>
+            <th campo-dato="fecha">Fecha</th>
+            <th campo-dato="mes">Mes</th>
+            <th campo-dato="sueldo">Sueldo básico</th>
+            <th campo-dato="concepto">Concepto no rem. 1</th>
+            <th campo-dato="monto">Monto no rem. 1</th>
+            <th campo-dato="pdf">PDF</th>
+          </tr>
+        </thead>
+        <tbody id="tbody1"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="pie">Programación en ambiente de redes – 2025 · Alumno: Agustin Bustamante</footer>
+
+  <script>
+  (function(){
+    const dataJSON = `[
+      {"LegajoEmpleado":"E001","ApellidoYNombres":"Bustamante, Agustin","Fecha_liquidacion":"2025-09-01","MesDeLiquidacion":"Septiembre 2025","SueldoBasico":750000,"concepto_noRemunerativo_1":"Indemnizaciones","Monto_no_remunerativo_1":12000.00,"pdf_liquidacion":"liquidacion-01.pdf"},
+      {"LegajoEmpleado":"E002","ApellidoYNombres":"Gómez, María","Fecha_liquidacion":"2025-09-05","MesDeLiquidacion":"Septiembre 2025","SueldoBasico":600000,"concepto_noRemunerativo_1":"Asignaciones familiares","Monto_no_remunerativo_1":3500.25,"pdf_liquidacion":"liquidacion-02.pdf"},
+      {"LegajoEmpleado":"E003","ApellidoYNombres":"Rodríguez, Ana","Fecha_liquidacion":"2025-09-10","MesDeLiquidacion":"Septiembre 2025","SueldoBasico":560000,"concepto_noRemunerativo_1":"Viáticos","Monto_no_remunerativo_1":7800.50,"pdf_liquidacion":"liquidacion-03.pdf"},
+      {"LegajoEmpleado":"E004","ApellidoYNombres":"López, Carlos","Fecha_liquidacion":"2025-09-12","MesDeLiquidacion":"Septiembre 2025","SueldoBasico":640000,"concepto_noRemunerativo_1":"Adicional por presentismo","Monto_no_remunerativo_1":15000.00,"pdf_liquidacion":"liquidacion-04.pdf"}
+    ]`;
+
+    function cargarFilas(tbodyId){
+      const tbody = document.getElementById(tbodyId);
+      tbody.innerHTML = '';
+      JSON.parse(dataJSON).forEach(reg=>{
+        const tr = document.createElement('tr');
+        const campos = [
+          ['legajo',  reg.LegajoEmpleado],
+          ['apellido',reg.ApellidoYNombres],
+          ['fecha',   reg.Fecha_liquidacion],
+          ['mes',     reg.MesDeLiquidacion],
+          ['sueldo',  Number(reg.SueldoBasico).toFixed(2)],
+          ['concepto',reg.concepto_noRemunerativo_1],
+          ['monto',   Number(reg.Monto_no_remunerativo_1).toFixed(2)],
+          ['pdf',      reg.pdf_liquidacion ||'']
+        ];
+        campos.forEach(([k,v])=>{
+          const td = document.createElement('td');
+          td.setAttribute('campo-dato', k);
+          td.textContent = v ?? '';
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.getElementById('cargarDatos1').addEventListener('click', ()=> cargarFilas('tbody1'));
+      document.getElementById('vaciarDatos1').addEventListener('click', ()=> (document.getElementById('tbody1').innerHTML=''));
+    });
+  })();
+  </script>
+</body>
+</html>
