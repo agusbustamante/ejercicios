@@ -16,7 +16,7 @@ function cfg(): array {
   if ($is_hostinger) {
     return [
       // Configuración de Hostinger
-      'host'     => 'u644169671_liquidaABM',       
+      'host'     => 'localhost',       
       'port'     => 3306,
       'dbname'   => 'u644169671_liquidaABM',    
       'user'     => 'u644169671_usuario',       
@@ -61,3 +61,4 @@ try {
   ]);
   exit; 
 }
+
