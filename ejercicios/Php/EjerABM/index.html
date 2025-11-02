@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Listado de liquidaciones</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Liquidaciones</h1>
+
+    <section id="controles">
+      <input type="hidden" id="orden" value="LegajoEmpleado">
+      <label>Mes: <input id="f_mes" type="month" /></label>
+      <button id="btnBuscar" type="button">Buscar</button>
+      <button id="btnVaciar" type="button">Vaciar</button>
+      <button id="btnAlta" type="button">Alta</button>
+    </section>
+
+    <section>
+      <table id="tabla" border="1" cellspacing="0" cellpadding="6">
+        <thead>
+          <tr>
+            <th data-orden="LegajoEmpleado">Legajo</th>
+            <th data-orden="ApellidoYNombres">Apellido y Nombre</th>
+            <th data-orden="Fecha_liquidacion">Fecha</th>
+            <th data-orden="MesDeLiquidacion">Mes</th>
+            <th data-orden="SueldoBasico">Sueldo</th>
+            <th data-orden="concepto_no_remunerativo_1">Concepto</th>
+            <th data-orden="Monto_no_remunerativo_1">Monto</th>
+            <th>PDF</th>
+            <th>Modi</th>
+            <th>Borrar</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="10">Sin datos</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  <footer id="pie" class="pie">Alumno: <strong>Bustamante Agustin</strong> · Total: 0</footer>
+
+    <!-- Formulario modal simplificado -->
+    <div id="modalForm" class="modal oculto" aria-hidden="true">
+      <div class="modal-contenido">
+        <h2 id="tituloForm">Formulario</h2>
+        <form id="formLiquidacion">
+          <input type="hidden" id="accion" name="accion" value="alta">
+          <input type="hidden" id="legajoOriginal" name="LegajoEmpleadoOriginal" value="">
+          <label>Legajo: <input id="LegajoEmpleado" name="LegajoEmpleado" required></label><br>
+          <label>Apellido y Nombre: <input id="ApellidoYNombres" name="ApellidoYNombres"></label><br>
+          <label>Fecha: <input id="Fecha_liquidacion" name="Fecha_liquidacion" type="date"></label><br>
+          <label>Mes: <input id="MesDeLiquidacion" name="MesDeLiquidacion"></label><br>
+          <label>Sueldo: <input id="SueldoBasico" name="SueldoBasico" type="number" step="0.01"></label><br>
+          <label>Concepto: <select id="CodConceptoNoRem" name="CodConceptoNoRem"></select></label><br>
+          <label>Monto NR: <input id="Monto_no_remunerativo_1" name="Monto_no_remunerativo_1" type="number" step="0.01"></label><br>
+          <label>PDF: <input id="pdf_liquidacion" name="pdf_liquidacion" type="file" accept="application/pdf"></label><br>
+          <div class="acciones-form"><button id="btnCancelarForm" type="button">Cancelar</button>
+          <button type="submit" class="boton">Enviar</button></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal PDF -->
+    <div id="modalPDF" class="modal oculto" aria-hidden="true">
+      <div class="modal-contenido modal-pdf">
+        <div style="text-align:right"><button id="btnCerrarPDF" type="button">Cerrar PDF</button></div>
+        <iframe id="iframePDF" style="width:100%;height:80vh;border:0"></iframe>
+      </div>
+    </div>
+
+    <!-- Modal Respuesta -->
+    <div id="modalRespuesta" class="modal oculto" aria-hidden="true">
+      <div class="modal-contenido">
+        <pre id="textoRespuesta"></pre>
+        <div style="text-align:right;margin-top:0.6rem"><button id="btnCerrarRespuesta" type="button">Cerrar</button></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Script de la aplicación -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    (function(){
+  function mostrarModal(id){const n=document.getElementById(id);n.classList.remove('oculto');n.setAttribute('aria-hidden','false');}
+  function ocultarModal(id){const n=document.getElementById(id);n.classList.add('oculto');n.setAttribute('aria-hidden','true');}
+
+  function armarParams(){
+    const p=new URLSearchParams();
+    p.append('orden',document.getElementById('orden').value);
+    p.append('f_liquidaciones_mes_num',document.getElementById('f_mes').value);
+    return p;
+  }
+
+  function renderTabla(list){
+    const tbody=document.getElementById('tbody');
+    tbody.innerHTML='';
+    if(!list||list.length===0){tbody.innerHTML='<tr><td colspan="10">Sin resultados</td></tr>';return;}
+    const frag=document.createDocumentFragment();
+    list.forEach(reg=>{
+      const tr=document.createElement('tr');
+      tr.dataset.legajo=reg.LegajoEmpleado;
+
+      const cols=[
+        reg.LegajoEmpleado,
+        reg.ApellidoYNombres,
+        reg.Fecha_liquidacion,
+        reg.MesDeLiquidacion,
+        (Number(reg.SueldoBasico||0)).toFixed(2),
+        reg.concepto_no_remunerativo_1 || '',
+        (Number(reg.Monto_no_remunerativo_1||0)).toFixed(2)
+      ];
+      cols.forEach(v=>{const td=document.createElement('td');td.textContent=v??'';tr.appendChild(td);});
+
+      const tdPdf=document.createElement('td');
+      if(Number(reg.pdf_bytes)>0){
+        const b=document.createElement('button');
+        b.type='button';b.className='boton-accion';b.dataset.accion='pdf';b.textContent='PDF';b.title='Ver PDF';
+        tdPdf.appendChild(b);
+      } else tdPdf.textContent='-';
+      tr.appendChild(tdPdf);
+
+      const tdM=document.createElement('td');const bm=document.createElement('button');
+      bm.type='button';bm.className='boton-accion';bm.dataset.accion='modi';bm.textContent='Modi';bm.title='Modificar';
+      tdM.appendChild(bm);tr.appendChild(tdM);
+
+      const tdD=document.createElement('td');const bd=document.createElement('button');
+      bd.type='button';bd.className='boton-accion';bd.dataset.accion='borrar';bd.textContent='Borrar';bd.title='Eliminar';
+      tdD.appendChild(bd);tr.appendChild(tdD);
+
+      frag.appendChild(tr);
+    });
+    tbody.appendChild(frag);
+  }
+
+  async function cargaTabla(){
+    const params=armarParams();
+    //console.log('Variables a enviar:', params.toString());
+    document.getElementById('tbody').innerHTML='<tr><td colspan="10">Cargando…</td></tr>';
+    try{
+      const resp=await fetch('salidaJsonLiquidacionesConPrepare.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()});
+      if(!resp.ok){ throw new Error('HTTP '+resp.status); }
+      const json=await resp.json();
+      renderTabla(json.liquidaciones||[]);
+      document.getElementById('pie').innerHTML='Alumno: <strong>Bustamante Agustin</strong> · Total: '+(json.cuenta??0);
+    }catch(err){
+      console.error(err);
+      document.getElementById('tbody').innerHTML='<tr><td colspan="10">Error de comunicación con el servidor.</td></tr>';
+    }
+  }
+
+  async function cargarConceptos(){
+    try{
+      const resp=await fetch('salidaJsonConceptos.php');
+      const json=await resp.json();
+      //console.log('JSON de familias:', json);
+      const sel=document.getElementById('CodConceptoNoRem');
+      if(sel){ sel.innerHTML=''; (json.conceptos||[]).forEach(item=>{ const opt=document.createElement('option'); opt.value=item.CodigoConcepto; opt.textContent=`${item.CodigoConcepto} – ${item.Descripcion}`; sel.appendChild(opt); }); }
+    }catch(err){ console.error(err); }
+  }
+
+  function abrirAlta(){
+    document.getElementById('tituloForm').textContent='Alta de liquidación';
+    document.getElementById('accion').value='alta';
+    document.getElementById('legajoOriginal').value='';
+    document.getElementById('formLiquidacion').reset();
+    mostrarModal('modalForm');
+  }
+
+  function abrirModi(reg){
+    document.getElementById('tituloForm').textContent='Modificar liquidación';
+    document.getElementById('accion').value='modi';
+    document.getElementById('legajoOriginal').value=reg.LegajoEmpleado;
+
+    document.getElementById('LegajoEmpleado').value=reg.LegajoEmpleado;
+    document.getElementById('ApellidoYNombres').value=reg.ApellidoYNombres;
+    document.getElementById('Fecha_liquidacion').value=reg.Fecha_liquidacion;
+    document.getElementById('MesDeLiquidacion').value=reg.MesDeLiquidacion;
+    document.getElementById('SueldoBasico').value=reg.SueldoBasico;
+    document.getElementById('Monto_no_remunerativo_1').value=reg.Monto_no_remunerativo_1;
+    document.getElementById('CodConceptoNoRem').value = reg.concepto_no_remunerativo_1 || '';
+    document.getElementById('pdf_liquidacion').value='';
+    mostrarModal('modalForm');
+  }
+
+  async function mostrarPDF(legajo){
+    try{
+      const r=await fetch('pdf.php?legajo='+encodeURIComponent(legajo));
+      if(!r.ok){alert('No hay documento PDF registrado');return;}
+      const blob=await r.blob();
+      const url=URL.createObjectURL(blob);
+      const iframe=document.getElementById('iframePDF');
+      if(iframe){iframe.src=url;mostrarModal('modalPDF');}else{window.open(url,'_blank');}
+    }catch(err){console.error(err);alert('Error al obtener el PDF.');}
+  }
+
+  async function enviarFormulario(ev){
+    ev.preventDefault();
+    const form=ev.target;
+    const accion=document.getElementById('accion').value;
+    const url=(accion==='alta')?'alta.php':'modi.php';
+    const fd=new FormData(form);
+    const leg=document.getElementById('LegajoEmpleado').value;
+    if(accion==='modi'){
+      if(!confirm('¿Estás seguro que desea modificar el registro '+leg+'?'))return;
+      fd.append('LegajoEmpleadoOriginal',document.getElementById('legajoOriginal').value);
+    }else{
+      if(!confirm('¿Estás seguro de insertar el registro? '+leg))return;
+    }
+    try{
+      const resp=await fetch(url,{method:'POST',body:fd});
+      const json=await resp.json();
+      alert('Respuesta del servidor:\n'+(json.estado||JSON.stringify(json)));
+      document.getElementById('textoRespuesta').textContent=json.estado||JSON.stringify(json);
+      ocultarModal('modalForm');mostrarModal('modalRespuesta');cargaTabla();
+    }catch(err){
+      console.error(err);
+      document.getElementById('textoRespuesta').textContent='Error de comunicación con el servidor.';
+      ocultarModal('modalForm');mostrarModal('modalRespuesta');
+    }
+  }
+
+  async function eliminarRegistro(legajo){
+    if(!confirm('¿Estás seguro que desea borrar eliminar el '+legajo+'?'))return;
+    try{
+      const params=new URLSearchParams();params.append('LegajoEmpleado',legajo);
+      const resp=await fetch('baja.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()});
+      const json=await resp.json();
+      alert('Respuesta de la baja:\n'+(json.estado||JSON.stringify(json)));
+      document.getElementById('textoRespuesta').textContent=json.estado||JSON.stringify(json);
+      mostrarModal('modalRespuesta');cargaTabla();
+    }catch(err){console.error(err);alert('Error al eliminar.');}
+  }
+
+  // Delegación de eventos de la tabla
+  document.getElementById('tbody').addEventListener('click',ev=>{
+    const btn=ev.target.closest('button');if(!btn)return;
+    const accion=btn.dataset.accion;
+    const tr=btn.closest('tr');
+    const legajo=tr.dataset.legajo;
+    if(accion==='pdf'){ mostrarPDF(legajo); }
+    else if(accion==='modi'){
+      const c=tr.querySelectorAll('td');
+      const reg={
+        LegajoEmpleado: c[0].textContent,
+        ApellidoYNombres: c[1].textContent,
+        Fecha_liquidacion: c[2].textContent,
+        MesDeLiquidacion: c[3].textContent,
+        SueldoBasico: c[4].textContent,
+        concepto_no_remunerativo_1: c[5].textContent,
+        Monto_no_remunerativo_1: c[6].textContent
+      };
+      abrirModi(reg);
+    } else if(accion==='borrar'){ eliminarRegistro(legajo); }
+  });
+
+  document.querySelector('#tabla thead').addEventListener('click',ev=>{
+    const th=ev.target.closest('[data-orden]');if(!th)return;document.getElementById('orden').value=th.dataset.orden;
+  });
+
+  document.getElementById('btnBuscar').addEventListener('click', cargaTabla);
+  document.getElementById('btnVaciar').addEventListener('click', ()=>{
+    document.getElementById('tbody').innerHTML='<tr><td colspan="10">Sin datos</td></tr>';
+    document.getElementById('pie').innerHTML='Alumno: <strong>Bustamante Agustin</strong> · Total: 0';
+  });
+  document.getElementById('btnAlta').addEventListener('click', abrirAlta);
+
+  document.getElementById('btnCancelarForm').addEventListener('click', ()=>ocultarModal('modalForm'));
+  document.getElementById('btnCerrarPDF').addEventListener('click', ()=>{ document.getElementById('iframePDF').src=''; ocultarModal('modalPDF'); });
+  document.getElementById('btnCerrarRespuesta').addEventListener('click', ()=>ocultarModal('modalRespuesta'));
+  document.getElementById('formLiquidacion').addEventListener('submit', enviarFormulario);
+
+  // Carga inicial
+  cargarConceptos();
+    })();
+  } catch (err) {
+    console.error('Error inicializando scripts:', err);
+    try { document.getElementById('tbody').innerHTML = '<tr><td colspan="10">Error en cliente: '+(err.message||err)+'</td></tr>'; } catch(e){}
+  }
+});
+</script>
+
+</body>
+</html>
