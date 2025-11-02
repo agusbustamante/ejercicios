@@ -4,9 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Liquidaciones de sueldos – ABM</title>
+  <!-- tu CSS -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+  <!-- ENCABEZADO -->
   <header class="barra-superior">
     <div class="barra-inner">
       <h1 class="titulo">Liquidaciones de sueldos</h1>
@@ -14,14 +17,20 @@
         <label>Orden:
           <input id="orden" type="text" value="LegajoEmpleado" />
         </label>
-        <button id="btnBuscar" class="boton">Cargar datos</button>
-        <button id="btnVaciar" class="boton">Vaciar datos</button>
-        <button id="btnAlta" class="boton">Alta registro</button>
+
+        <!-- onClick de respaldo por si el navegador cachea el JS -->
+        <button id="btnBuscar" class="boton"
+                onclick="window.__cargaTabla && window.__cargaTabla()">Cargar datos</button>
+        <button id="btnVaciar" class="boton"
+                onclick="window.__vaciarTabla && window.__vaciarTabla()">Vaciar datos</button>
+        <button id="btnAlta" class="boton"
+                onclick="window.__abrirAlta && window.__abrirAlta()">Alta registro</button>
       </div>
     </div>
   </header>
 
-  <main class="max tabla-contenedor">
+  <!-- TABLA -->
+  <main class="tabla-contenedor">
     <div class="tabla-wrapper">
       <table id="tabla" aria-label="Tabla de liquidaciones de sueldos">
         <thead>
@@ -34,11 +43,15 @@
             <th data-orden="concepto_no_remunerativo_1">Concepto no rem. 1</th>
             <th data-orden="Monto_no_remunerativo_1">Monto no rem. 1</th>
             <th>PDF</th>
-            <th>Modi</th>
+            <th>Modificar</th>
             <th>Borrar</th>
           </tr>
+
+          <!-- FILTROS -->
           <tr class="filtros">
-            <th></th><th></th><th></th>
+            <th></th>
+            <th></th>
+            <th></th>
             <th>
               <select id="f_mes" aria-label="Mes de liquidación" title="Mes de liquidación">
                 <option value="" selected>(todos)</option>
@@ -59,9 +72,11 @@
             <th></th><th></th><th></th><th></th><th></th><th></th>
           </tr>
         </thead>
+
         <tbody id="tbody">
           <tr><td colspan="10">Sin datos. Pulse “Cargar datos” para consultar.</td></tr>
         </tbody>
+
         <tfoot>
           <tr>
             <td id="pie" colspan="10">Alumno: <strong>Bustamante Agustin</strong> · Total: 0</td>
@@ -73,7 +88,7 @@
 
   <footer class="pie">Programación en ambiente de redes – 2025 · Alumno: Bustamante Agustin</footer>
 
-  <!-- Modal: formulario -->
+  <!-- MODAL FORM -->
   <div id="modalForm" class="modal oculto" aria-hidden="true">
     <div class="modal-contenido">
       <h2 id="tituloForm">Registrar liquidación</h2>
@@ -85,37 +100,30 @@
           <label>Legajo:</label>
           <input type="text" name="LegajoEmpleado" id="LegajoEmpleado" required />
         </div>
-
         <div class="fila-form">
           <label>Apellido y nombres:</label>
           <input type="text" name="ApellidoYNombres" id="ApellidoYNombres" required />
         </div>
-
         <div class="fila-form">
           <label>Fecha de liquidación:</label>
           <input type="date" name="Fecha_liquidacion" id="Fecha_liquidacion" required />
         </div>
-
         <div class="fila-form">
           <label>Mes de liquidación:</label>
           <input type="text" name="MesDeLiquidacion" id="MesDeLiquidacion" placeholder="Ej: 2025-09" required />
         </div>
-
         <div class="fila-form">
           <label>Sueldo básico:</label>
           <input type="number" step="0.01" name="SueldoBasico" id="SueldoBasico" required />
         </div>
-
         <div class="fila-form">
           <label>Concepto no remunerativo 1:</label>
           <select name="CodConceptoNoRem" id="CodConceptoNoRem" required></select>
         </div>
-
         <div class="fila-form">
           <label>Monto no remunerativo 1:</label>
           <input type="number" step="0.01" name="Monto_no_remunerativo_1" id="Monto_no_remunerativo_1" required />
         </div>
-
         <div class="fila-form">
           <label>Documento PDF:</label>
           <input type="file" name="pdf_liquidacion" id="pdf_liquidacion" accept="application/pdf" />
@@ -129,28 +137,326 @@
     </div>
   </div>
 
-  <!-- Modal PDF -->
+  <!-- MODAL PDF -->
   <div id="modalPDF" class="modal oculto" aria-hidden="true">
     <div class="modal-contenido modal-pdf">
       <iframe id="iframePDF" width="100%" height="600" title="Documento PDF"></iframe>
-      <div style="text-align:center;padding:10px;">
+      <div style="text-align:center;margin-top:.5rem;">
         <button type="button" id="btnCerrarPDF" class="boton">Cerrar</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal Respuesta -->
+  <!-- MODAL RESPUESTA -->
   <div id="modalRespuesta" class="modal oculto" aria-hidden="true">
     <div class="modal-contenido">
       <h3>Respuesta del servidor</h3>
-      <pre id="textoRespuesta" style="white-space:pre-wrap;margin:0;"></pre>
+      <pre id="textoRespuesta" style="white-space:pre-wrap;"></pre>
       <div style="text-align:center;margin-top:.5rem;">
         <button type="button" id="btnCerrarRespuesta" class="boton">Aceptar</button>
       </div>
     </div>
   </div>
 
-  <!-- Tu JS actual (no cambia) -->
-  <script src="app.js"></script>
+  <!-- ================== SCRIPT PRINCIPAL (con alertas) ================== -->
+  <script>
+  (function(){
+    /* ===== Helpers modales ===== */
+    function mostrarModal(id){
+      const n = document.getElementById(id);
+      if (!n) return;
+      n.classList.remove('oculto');
+      n.setAttribute('aria-hidden', 'false');
+    }
+    function ocultarModal(id){
+      const n = document.getElementById(id);
+      if (!n) return;
+      n.classList.add('oculto');
+      n.setAttribute('aria-hidden', 'true');
+    }
+
+    /* ===== Params para Ajax ===== */
+    function armarParams(){
+      const p = new URLSearchParams();
+      p.append('orden', document.getElementById('orden').value);
+      p.append('f_liquidaciones_mes_num', document.getElementById('f_mes').value);
+      return p;
+    }
+
+    /* ===== Render tabla ===== */
+    function renderTabla(list){
+      const tbody = document.getElementById('tbody');
+      tbody.innerHTML = '';
+      if(!list || !list.length){
+        tbody.innerHTML = '<tr><td colspan="10">Sin resultados</td></tr>';
+        return;
+      }
+      const frag = document.createDocumentFragment();
+      list.forEach(reg=>{
+        const tr = document.createElement('tr');
+        tr.dataset.legajo = reg.LegajoEmpleado;
+
+        const cols = [
+          reg.LegajoEmpleado,
+          reg.ApellidoYNombres,
+          reg.Fecha_liquidacion,
+          reg.MesDeLiquidacion,
+          (Number(reg.SueldoBasico||0)).toFixed(2),
+          reg.concepto_no_remunerativo_1 || '',
+          (Number(reg.Monto_no_remunerativo_1||0)).toFixed(2)
+        ];
+        cols.forEach(val=>{
+          const td = document.createElement('td');
+          td.textContent = (val ?? '');
+          tr.appendChild(td);
+        });
+
+        // PDF
+        const tdPdf = document.createElement('td');
+        if (Number(reg.pdf_bytes) > 0) {
+          const b = document.createElement('button');
+          b.type='button'; b.className='boton-accion'; b.dataset.accion='pdf'; b.textContent='PDF'; b.title='Ver PDF';
+          tdPdf.appendChild(b);
+        } else { tdPdf.textContent='-'; }
+        tr.appendChild(tdPdf);
+
+        // Modi
+        const tdM=document.createElement('td'); const bm=document.createElement('button');
+        bm.type='button'; bm.className='boton-accion'; bm.dataset.accion='modi'; bm.textContent='Modi'; tdM.appendChild(bm); tr.appendChild(tdM);
+
+        // Borrar
+        const tdD=document.createElement('td'); const bd=document.createElement('button');
+        bd.type='button'; bd.className='boton-accion'; bd.dataset.accion='borrar'; bd.textContent='Borrar'; tdD.appendChild(bd); tr.appendChild(tdD);
+
+        frag.appendChild(tr);
+      });
+      tbody.appendChild(frag);
+    }
+
+    /* ===== Ajax: cargar lista ===== */
+    async function cargaTabla(){
+      const params = armarParams();
+
+      // Alerta requerida por el profesor
+      alert(
+        'Variables a enviar (antes de Ajax):\n' +
+        'orden = ' + params.get('orden') + '\n' +
+        'f_liquidaciones_mes_num = ' + (params.get('f_liquidaciones_mes_num')||'(vacío)')
+      );
+
+      document.getElementById('tbody').innerHTML = '<tr><td colspan="10">Cargando…</td></tr>';
+      try{
+        const resp = await fetch('salidaJsonLiquidacionesConPrepare.php', {
+          method:'POST',
+          headers:{'Content-Type':'application/x-www-form-urlencoded'},
+          body: params.toString()
+        });
+        const json = await resp.json();
+        // Si algo vino mal en la conexión, mostralo
+        if (json && json.error) {
+          alert('Respuesta listar:\n' + JSON.stringify(json, null, 2));
+        }
+        renderTabla(json.liquidaciones || []);
+        document.getElementById('pie').innerHTML = 'Alumno: <strong>Bustamante Agustin</strong> · Total: ' + (json.cuenta ?? 0);
+      }catch(err){
+        console.error(err);
+        document.getElementById('tbody').innerHTML = '<tr><td colspan="10">Error de comunicación con el servidor.</td></tr>';
+      }
+    }
+
+    /* ===== Combo de conceptos: 1ª alerta con JSON de familias ===== */
+    async function cargarConceptos(){
+      try{
+        const resp = await fetch('salidaJsonConceptos.php');
+        const json = await resp.json();
+
+        // Alerta “JSON de familias (datos iniciales)”
+        alert('JSON de familias (datos iniciales):\n' + JSON.stringify(json));
+
+        const sel = document.getElementById('CodConceptoNoRem');
+        sel.innerHTML = '';
+        (json.conceptos || []).forEach(item=>{
+          const opt = document.createElement('option');
+          opt.value = item.CodigoConcepto;
+          opt.textContent = `${item.CodigoConcepto} – ${item.Descripcion}`;
+          sel.appendChild(opt);
+        });
+      }catch(err){ console.error(err); }
+    }
+
+    /* ===== Alta / Modi ===== */
+    function abrirAlta(){
+      document.getElementById('tituloForm').textContent = 'Alta de liquidación';
+      document.getElementById('accion').value = 'alta';
+      document.getElementById('legajoOriginal').value = '';
+      document.getElementById('formLiquidacion').reset();
+      mostrarModal('modalForm');
+    }
+
+    function abrirModi(reg){
+      document.getElementById('tituloForm').textContent = 'Modificar liquidación';
+      document.getElementById('accion').value = 'modi';
+      document.getElementById('legajoOriginal').value = reg.LegajoEmpleado;
+
+      document.getElementById('LegajoEmpleado').value = reg.LegajoEmpleado;
+      document.getElementById('ApellidoYNombres').value = reg.ApellidoYNombres;
+      document.getElementById('Fecha_liquidacion').value = reg.Fecha_liquidacion;
+      document.getElementById('MesDeLiquidacion').value = reg.MesDeLiquidacion;
+      document.getElementById('SueldoBasico').value = reg.SueldoBasico;
+      document.getElementById('CodConceptoNoRem').value = '';
+      document.getElementById('Monto_no_remunerativo_1').value = reg.Monto_no_remunerativo_1;
+      document.getElementById('pdf_liquidacion').value = '';
+      mostrarModal('modalForm');
+    }
+
+    /* ===== Ver PDF: alerta llegada de binario ===== */
+    async function mostrarPDF(legajo){
+      try{
+        const r = await fetch('pdf.php?legajo=' + encodeURIComponent(legajo));
+        if (!r.ok) { alert('No hay documento PDF registrado'); return; }
+        const blob = await r.blob();
+
+        // Alerta con la “llegada del binario”
+        alert('PDF recibido. Tamaño: ' + blob.size + ' bytes');
+
+        const url = URL.createObjectURL(blob);
+        const iframe = document.getElementById('iframePDF');
+        if (iframe) { iframe.src = url; mostrarModal('modalPDF'); } else { window.open(url, '_blank'); }
+      }catch(err){ console.error(err); alert('Error al obtener el PDF.'); }
+    }
+
+    /* ===== Envío del formulario: confirmaciones y alerta de respuesta ===== */
+    async function enviarFormulario(ev){
+      ev.preventDefault();
+      const form = ev.target;
+      const accion = document.getElementById('accion').value;
+      const url = (accion === 'alta') ? 'alta.php' : 'modi.php';
+      const fd = new FormData(form);
+
+      const leg = document.getElementById('LegajoEmpleado').value;
+      if (accion === 'modi') {
+        if (!confirm('¿Estás seguro que desea modificar el registro ' + leg + '?')) return;
+        fd.append('LegajoEmpleadoOriginal', document.getElementById('legajoOriginal').value);
+      } else {
+        if (!confirm('¿Estás seguro de insertar el registro? ' + leg)) return;
+      }
+
+      try{
+        const resp = await fetch(url, { method:'POST', body: fd });
+        const json = await resp.json();
+
+        alert('Respuesta del servidor:\n' + (json.estado || JSON.stringify(json)));
+
+        document.getElementById('textoRespuesta').textContent = json.estado || JSON.stringify(json);
+        ocultarModal('modalForm'); mostrarModal('modalRespuesta');
+        cargaTabla();
+      }catch(err){
+        console.error(err);
+        document.getElementById('textoRespuesta').textContent = 'Error de comunicación con el servidor.';
+        ocultarModal('modalForm'); mostrarModal('modalRespuesta');
+      }
+    }
+
+    /* ===== Baja con confirmación y alerta respuesta ===== */
+    async function eliminarRegistro(legajo){
+      if(!confirm('¿Estás seguro que desea borrar eliminar el ' + legajo + '?')) return;
+      try{
+        const params = new URLSearchParams(); params.append('LegajoEmpleado', legajo);
+        const resp = await fetch('baja.php', {
+          method:'POST',
+          headers:{'Content-Type':'application/x-www-form-urlencoded'},
+          body: params.toString()
+        });
+        const json = await resp.json();
+
+        alert('Respuesta de la baja:\n' + (json.estado || JSON.stringify(json)));
+
+        document.getElementById('textoRespuesta').textContent = json.estado || JSON.stringify(json);
+        mostrarModal('modalRespuesta'); cargaTabla();
+      }catch(err){ console.error(err); alert('Error al eliminar.'); }
+    }
+
+    /* ===== Delegaciones y botones ===== */
+    document.getElementById('tbody').addEventListener('click', (ev)=>{
+      const btn = ev.target.closest('button'); if(!btn) return;
+      const acc = btn.dataset.accion; const tr = btn.closest('tr'); const legajo = tr.dataset.legajo;
+      if(acc==='pdf'){ mostrarPDF(legajo);
+      }else if(acc==='modi'){
+        const c = tr.querySelectorAll('td');
+        const reg = { LegajoEmpleado:c[0].textContent, ApellidoYNombres:c[1].textContent,
+                      Fecha_liquidacion:c[2].textContent, MesDeLiquidacion:c[3].textContent,
+                      SueldoBasico:c[4].textContent, Monto_no_remunerativo_1:c[6].textContent };
+        abrirModi(reg);
+      }else if(acc==='borrar'){ eliminarRegistro(legajo); }
+    });
+
+    document.querySelector('#tabla thead').addEventListener('click', (ev)=>{
+      const th = ev.target.closest('[data-orden]'); if(!th) return;
+      document.getElementById('orden').value = th.dataset.orden;
+    });
+
+    // Botones principales (estos listeners pueden no enganchar si el script se ejecuta antes del DOM;
+    // por eso más abajo agregamos un DOMContentLoaded que asegura el enganche)
+    const btnBuscar = document.getElementById('btnBuscar');
+    const btnVaciar = document.getElementById('btnVaciar');
+    const btnAlta   = document.getElementById('btnAlta');
+
+    if (btnBuscar) btnBuscar.addEventListener('click', cargaTabla);
+    if (btnVaciar) btnVaciar.addEventListener('click', ()=>{
+      const tbody = document.getElementById('tbody');
+      const pie   = document.getElementById('pie');
+      if (tbody) tbody.innerHTML = '<tr><td colspan="10">Sin datos</td></tr>';
+      if (pie)   pie.innerHTML   = 'Alumno: <strong>Bustamante Agustin</strong> · Total: 0';
+    });
+    if (btnAlta)   btnAlta.addEventListener('click',   abrirAlta);
+
+    document.getElementById('btnCancelarForm').addEventListener('click', ()=> ocultarModal('modalForm'));
+    document.getElementById('btnCerrarPDF').addEventListener('click', ()=>{ document.getElementById('iframePDF').src=''; ocultarModal('modalPDF'); });
+    document.getElementById('btnCerrarRespuesta').addEventListener('click', ()=> ocultarModal('modalRespuesta'));
+    document.getElementById('formLiquidacion').addEventListener('submit', enviarFormulario);
+
+    // 1ª carga: conceptos
+    cargarConceptos();
+
+    // Exporto funciones clave para los wrappers (respaldo onClick)
+    window.cargaTabla = cargaTabla;
+    window.abrirAlta  = abrirAlta;
+  })();
+  </script>
+
+  <!-- ===== BLOQUE “SEGURO”: listeners garantizados + wrappers globales ===== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btnBuscar = document.getElementById('btnBuscar');
+      const btnVaciar = document.getElementById('btnVaciar');
+      const btnAlta   = document.getElementById('btnAlta');
+
+      // Wrappers globales como respaldo (llamados por los onclick de los botones)
+      window.__cargaTabla = () => {
+        if (typeof window.cargaTabla === 'function') return window.cargaTabla();
+        alert('No se encontró la función cargaTabla(). Verifica que el script principal esté cargando.');
+      };
+
+      window.__vaciarTabla = () => {
+        const tbody = document.getElementById('tbody');
+        const pie   = document.getElementById('pie');
+        if (tbody) tbody.innerHTML = '<tr><td colspan="10">Sin datos</td></tr>';
+        if (pie)   pie.innerHTML   = 'Alumno: <strong>Bustamante Agustin</strong> · Total: 0';
+      };
+
+      window.__abrirAlta = () => {
+        if (typeof window.abrirAlta === 'function') return window.abrirAlta();
+        alert('No se encontró la función abrirAlta(). Verifica que el script principal esté cargando.');
+      };
+
+      // Enganche “garantizado”
+      if (btnBuscar) btnBuscar.addEventListener('click', window.__cargaTabla, { once:false });
+      if (btnVaciar) btnVaciar.addEventListener('click', window.__vaciarTabla, { once:false });
+      if (btnAlta)   btnAlta.addEventListener('click',   window.__abrirAlta,   { once:false });
+
+      console.log('[ABM] Listeners enganchados ✔');
+    });
+  </script>
+
 </body>
 </html>
