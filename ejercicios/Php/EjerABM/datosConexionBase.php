@@ -17,7 +17,7 @@ function cfg(): array {
     }
     if ($is_hostinger) {
         return [
-            'host'     => 'auth-db2021.hstgr.io',                // revisa tu panel por si cambia
+            'host'     => 'auth-db2021.hstgr.io',             
             'port'     => 3306,
             'dbname'   => 'u644169671_liquidaABM',
             'user'     => 'u644169671_usuario',
@@ -64,3 +64,4 @@ try {
     exit;
 }
 ?>
+
