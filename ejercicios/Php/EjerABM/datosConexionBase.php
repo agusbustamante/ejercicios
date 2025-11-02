@@ -20,7 +20,7 @@ function cfg(): array {
             'host'     => 'auth-db2021.hstgr.io',             
             'port'     => 3306,
             'dbname'   => 'u644169671_liquidaABM',
-            'user'     => 'u644169671_usuario',
+            'user'     => 'u644169671_usuario2',
             'password' => 'Ab20051974',
             'charset'  => 'utf8mb4',
         ];
@@ -64,4 +64,5 @@ try {
     exit;
 }
 ?>
+
 
