@@ -8,6 +8,8 @@ html, body { margin: 0; padding: 0; }
   --fondo:#f3e9ff;
   --texto:#1b1b1b;
   --borde:#d9c9f6;
+  /* alto real del header (barra-superior). Si cambiás padding, solo tocás esto: */
+  --alto-header: 56px;
 }
 
 /* ====== Layout base ====== */
@@ -17,7 +19,6 @@ body{
   background: var(--fondo);
   line-height: 1.25;
 }
-
 .max{
   max-width: 1200px;
   margin: 0 auto;
@@ -30,7 +31,7 @@ body{
   color: #fff;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;                    /* asegura que quedó arriba del thead */
   border-bottom: 3px solid var(--violeta-osc);
 }
 .barra-superior .barra-inner{
@@ -68,13 +69,15 @@ body{
   background: #fff;
   border: 1px solid var(--borde);
   border-radius: 8px;
-  overflow: hidden;
+  overflow: auto;                  /* <- asegura scroll si se necesita */
   box-shadow: 0 1px 2px rgba(0,0,0,.03);
 }
-
 table{ width: 100%; border-collapse: collapse; }
+
+/* Encabezados sticky */
 thead th{
-  position: sticky; top: 56px; /* debajo de la barra */
+  position: sticky; top: var(--alto-header);   /* debajo de la barra */
+  z-index: 11;                                 /* sobre el contenido */
   background: var(--violeta);
   color:#fff;
   font-weight: 700;
@@ -84,17 +87,17 @@ thead th{
   white-space: nowrap;
 }
 thead .filtros th{
-  position: sticky; top: calc(56px + 40px);
+  position: sticky; top: calc(var(--alto-header) + 40px);
+  z-index: 10;
   background: #f7f2ff;
   color: #321a59;
   font-weight: 600;
   padding: 8px 10px;
   border-bottom: 1px solid var(--borde);
 }
-tbody td{
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
+
+/* Cuerpo/pie */
+tbody td{ padding: 10px; border-bottom: 1px solid #eee; }
 tbody tr:nth-child(odd){ background: #faf7ff; }
 tfoot td{
   background: var(--violeta);
@@ -120,6 +123,7 @@ tfoot td{
   display: grid; place-items: center;
   background: rgba(28,10,46,.55);
   backdrop-filter: blur(2px);
+  z-index: 200;                    /* por encima del header y thead */
 }
 .modal.oculto{ display: none; }
 .modal-contenido{
@@ -138,7 +142,7 @@ tfoot td{
   gap: 12px 16px;
   margin-top: 10px;
 }
-.fila-form{ display: contents; } /* usa la grilla del form */
+.fila-form{ display: contents; }
 #formLiquidacion label{
   grid-column: span 2;
   font-weight: 600; color:#321a59; margin-top: 4px;
@@ -163,8 +167,10 @@ tfoot td{
 /* ====== Responsive ====== */
 @media (max-width: 720px){
   .barra-superior .barra-inner{ grid-template-columns: 1fr; gap: 6px; }
-  thead th{ top: 92px; }
-  thead .filtros th{ top: calc(92px + 40px); }
+  thead th{ top: calc(var(--alto-header) + 36px); }
+  thead .filtros th{ top: calc(var(--alto-header) + 36px + 40px); }
   #formLiquidacion{ grid-template-columns: 1fr; }
-  #formLiquidacion label, #formLiquidacion input, #formLiquidacion select{ grid-column: 1; }
+  #formLiquidacion label,
+  #formLiquidacion input,
+  #formLiquidacion select{ grid-column: 1; }
 }
