@@ -87,7 +87,7 @@ thead th{
   white-space: nowrap;
 }
 thead .filtros th{
-  position: sticky; top: calc(var(--alto-header) + 40px);
+  position: sticky; top: var(--alto-filtros, calc(var(--alto-header) + 40px));
   z-index: 10;
   background: #f7f2ff;
   color: #321a59;
@@ -177,8 +177,8 @@ tfoot td{
 /* ====== Responsive ====== */
 @media (max-width: 720px){
   .barra-superior .barra-inner{ grid-template-columns: 1fr; gap: 6px; }
-  thead th{ top: calc(var(--alto-header) + 36px); }
-  thead .filtros th{ top: calc(var(--alto-header) + 36px + 40px); }
+  thead th{ top: var(--alto-header); }
+  thead .filtros th{ top: var(--alto-filtros, calc(var(--alto-header) + 40px)); }
   #formLiquidacion{ grid-template-columns: 1fr; }
   #formLiquidacion label,
   #formLiquidacion input,
