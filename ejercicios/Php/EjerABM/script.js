@@ -229,15 +229,16 @@
     }catch(e){ console.error(e); alert('Error al eliminar.'); }
   }
 
-
+  // ===== Delegaciones y listeners (una sola vez) =====
+  // Botones barra
   $('#btnBuscar')?.addEventListener('click', cargaTabla);
   $('#btnVaciar')?.addEventListener('click', ()=>{
     registros = [];
     renderFiltrado();
   });
+  // Botón en header para limpiar filtros (visibilidad adicional)
   $('#btnLimpiarHeader')?.addEventListener('click', ()=>{
     Object.values(filtros).forEach(f => f && (f.value = ''));
-    if (!registros || registros.length === 0) return cargaTabla();
     renderFiltrado();
   });
   $('#btnAlta')?.addEventListener('click', abrirAlta);
@@ -285,50 +286,12 @@
   });
 
   // Limpiar filtros
-  function limpiarFiltros(){
-    console.log('[ABM] limpiarFiltros() invoked');
-    Object.values(filtros).forEach(f => { if (f) f.value = ''; });
-    // si no hay registros en memoria, pedimos al servidor; si hay, re-renderizamos
-    if (!registros || registros.length === 0) {
-      console.log('[ABM] no registros en memoria -> cargaTabla()');
-      return cargaTabla();
-    }
+  btnLimpiar?.addEventListener('click', ()=>{
+    Object.values(filtros).forEach(f => f && (f.value = ''));
     renderFiltrado();
-  }
-
-  // Enganchar el botón de la fila
-  btnLimpiar?.addEventListener('click', limpiarFiltros);
-  // Exponer para debugging desde consola
-  window.limpiarFiltros = limpiarFiltros;
+  });
 
   // Primera carga: combos
   cargarConceptos();
 })();
 
-// Ajusta variables CSS para sticky headers (alto real del header + alto de la primera fila del thead)
-(() => {
-  const calcular = () => {
-    const header = document.querySelector('.barra-superior');
-    const theadFirst = document.querySelector('#tabla thead tr');
-  const headerH = header ? Math.round(header.getBoundingClientRect().height) : 56;
-  const theadFirstH = theadFirst ? Math.round(theadFirst.getBoundingClientRect().height) : 40;
-  console.info('[ABM] calcular heights', { headerH, theadFirstH, css_alto_header: getComputedStyle(document.documentElement).getPropertyValue('--alto-header'), css_alto_filtros: getComputedStyle(document.documentElement).getPropertyValue('--alto-filtros') });
-  document.documentElement.style.setProperty('--alto-header', headerH + 'px');
-  document.documentElement.style.setProperty('--alto-filtros', (headerH + theadFirstH) + 'px');
-  };
-
-  const debounce = (fn, ms=120) => { let t; return (...a)=>{ clearTimeout(t); t = setTimeout(()=>fn(...a), ms); }; };
-  window.addEventListener('resize', debounce(calcular, 120));
-  window.addEventListener('load', () => setTimeout(calcular, 40));
-  if (document.readyState === 'complete' || document.readyState === 'interactive') setTimeout(calcular, 40);
-
-  // Vigilar cambios en el header o en el thead (por ejemplo botones añadidos o cambios de layout)
-  const obsTarget = document.querySelector('.barra-superior') || document.documentElement;
-  const theadNode = document.querySelector('#tabla thead');
-  const mo = new MutationObserver(debounce(() => {
-    // recalcular cuando cambie estructura o texto
-    calcular();
-  }, 80));
-  if (obsTarget) mo.observe(obsTarget, { attributes:true, childList:true, subtree:true });
-  if (theadNode) mo.observe(theadNode, { attributes:true, childList:true, subtree:true });
-})();
