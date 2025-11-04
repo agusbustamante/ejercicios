@@ -285,11 +285,21 @@
   });
 
   // Limpiar filtros
-  btnLimpiar?.addEventListener('click', ()=>{
-    Object.values(filtros).forEach(f => f && (f.value = ''));
-    if (!registros || registros.length === 0) return cargaTabla();
+  function limpiarFiltros(){
+    console.log('[ABM] limpiarFiltros() invoked');
+    Object.values(filtros).forEach(f => { if (f) f.value = ''; });
+    // si no hay registros en memoria, pedimos al servidor; si hay, re-renderizamos
+    if (!registros || registros.length === 0) {
+      console.log('[ABM] no registros en memoria -> cargaTabla()');
+      return cargaTabla();
+    }
     renderFiltrado();
-  });
+  }
+
+  // Enganchar el botón de la fila
+  btnLimpiar?.addEventListener('click', limpiarFiltros);
+  // Exponer para debugging desde consola
+  window.limpiarFiltros = limpiarFiltros;
 
   // Primera carga: combos
   cargarConceptos();
