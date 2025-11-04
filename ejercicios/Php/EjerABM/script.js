@@ -229,16 +229,15 @@
     }catch(e){ console.error(e); alert('Error al eliminar.'); }
   }
 
-  // ===== Delegaciones y listeners (una sola vez) =====
-  // Botones barra
+
   $('#btnBuscar')?.addEventListener('click', cargaTabla);
   $('#btnVaciar')?.addEventListener('click', ()=>{
     registros = [];
     renderFiltrado();
   });
-  // Botón en header para limpiar filtros (visibilidad adicional)
-  $('#btnLimpiarFiltros')?.addEventListener('click', ()=>{
+  $('#btnLimpiarHeader')?.addEventListener('click', ()=>{
     Object.values(filtros).forEach(f => f && (f.value = ''));
+    if (!registros || registros.length === 0) return cargaTabla();
     renderFiltrado();
   });
   $('#btnAlta')?.addEventListener('click', abrirAlta);
@@ -288,6 +287,7 @@
   // Limpiar filtros
   btnLimpiar?.addEventListener('click', ()=>{
     Object.values(filtros).forEach(f => f && (f.value = ''));
+    if (!registros || registros.length === 0) return cargaTabla();
     renderFiltrado();
   });
 
