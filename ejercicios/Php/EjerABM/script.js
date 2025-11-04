@@ -278,16 +278,16 @@
   $('#btnAlta')?.addEventListener('click', abrirAlta);
 
   // Limpiar filtros desde el botón del encabezado principal
-  $('#btnLimpiarFiltros')?.addEventListener('click', () => {
-    Object.values(filtros).forEach(f => f && (f.value = ''));
-    renderFiltrado();
-  });
+  function limpiarFiltros(){
+    // Vaciar todos los controles de filtros
+    Object.values(filtros).forEach(f => { if (f) f.value = ''; });
+    // Recargar los datos desde el servidor para restablecer la tabla completa
+    cargaTabla();
+  }
 
-  // Limpiar filtros desde el botón de la fila de filtros
-  btnLimpiarRow?.addEventListener('click', () => {
-    Object.values(filtros).forEach(f => f && (f.value = ''));
-    renderFiltrado();
-  });
+  $('#btnLimpiarFiltros')?.addEventListener('click', limpiarFiltros);
+
+  // El botón de la fila interna fue eliminado; el botón del encabezado usa limpiarFiltros()
 
   // Cerrar modales
   $('#btnCancelarForm')?.addEventListener('click', () => ocultarModal('modalForm'));
