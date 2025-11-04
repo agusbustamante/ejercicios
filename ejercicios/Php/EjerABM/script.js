@@ -310,18 +310,24 @@
   const calcular = () => {
     const header = document.querySelector('.barra-superior');
     const theadFirst = document.querySelector('#tabla thead tr');
-    const headerH = header ? header.offsetHeight : 56;
-    const theadFirstH = theadFirst ? theadFirst.offsetHeight : 40;
-    // --alto-header usado por thead th
+    const headerH = header ? Math.round(header.getBoundingClientRect().height) : 56;
+    const theadFirstH = theadFirst ? Math.round(theadFirst.getBoundingClientRect().height) : 40;
     document.documentElement.style.setProperty('--alto-header', headerH + 'px');
-    // --alto-filtros = header + primera fila thead (posición donde deben quedar los filtros)
     document.documentElement.style.setProperty('--alto-filtros', (headerH + theadFirstH) + 'px');
   };
 
   const debounce = (fn, ms=120) => { let t; return (...a)=>{ clearTimeout(t); t = setTimeout(()=>fn(...a), ms); }; };
   window.addEventListener('resize', debounce(calcular, 120));
-  // Ejecutar tras carga completa (fonts, recursos) y un pequeño timeout por si hay layout dinámico
   window.addEventListener('load', () => setTimeout(calcular, 40));
-  // también intentar calcular ya si el DOM está listo
   if (document.readyState === 'complete' || document.readyState === 'interactive') setTimeout(calcular, 40);
+
+  // Vigilar cambios en el header o en el thead (por ejemplo botones añadidos o cambios de layout)
+  const obsTarget = document.querySelector('.barra-superior') || document.documentElement;
+  const theadNode = document.querySelector('#tabla thead');
+  const mo = new MutationObserver(debounce(() => {
+    // recalcular cuando cambie estructura o texto
+    calcular();
+  }, 80));
+  if (obsTarget) mo.observe(obsTarget, { attributes:true, childList:true, subtree:true });
+  if (theadNode) mo.observe(theadNode, { attributes:true, childList:true, subtree:true });
 })();
