@@ -289,3 +289,24 @@
   // Primera carga: combos
   cargarConceptos();
 })();
+
+// Ajusta variables CSS para sticky headers (alto real del header + alto de la primera fila del thead)
+(() => {
+  const calcular = () => {
+    const header = document.querySelector('.barra-superior');
+    const theadFirst = document.querySelector('#tabla thead tr');
+    const headerH = header ? header.offsetHeight : 56;
+    const theadFirstH = theadFirst ? theadFirst.offsetHeight : 40;
+    // --alto-header usado por thead th
+    document.documentElement.style.setProperty('--alto-header', headerH + 'px');
+    // --alto-filtros = header + primera fila thead (posición donde deben quedar los filtros)
+    document.documentElement.style.setProperty('--alto-filtros', (headerH + theadFirstH) + 'px');
+  };
+
+  const debounce = (fn, ms=120) => { let t; return (...a)=>{ clearTimeout(t); t = setTimeout(()=>fn(...a), ms); }; };
+  window.addEventListener('resize', debounce(calcular, 120));
+  // Ejecutar tras carga completa (fonts, recursos) y un pequeño timeout por si hay layout dinámico
+  window.addEventListener('load', () => setTimeout(calcular, 40));
+  // también intentar calcular ya si el DOM está listo
+  if (document.readyState === 'complete' || document.readyState === 'interactive') setTimeout(calcular, 40);
+})();
