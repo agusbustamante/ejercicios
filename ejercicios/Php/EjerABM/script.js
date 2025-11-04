@@ -310,10 +310,11 @@
   const calcular = () => {
     const header = document.querySelector('.barra-superior');
     const theadFirst = document.querySelector('#tabla thead tr');
-    const headerH = header ? Math.round(header.getBoundingClientRect().height) : 56;
-    const theadFirstH = theadFirst ? Math.round(theadFirst.getBoundingClientRect().height) : 40;
-    document.documentElement.style.setProperty('--alto-header', headerH + 'px');
-    document.documentElement.style.setProperty('--alto-filtros', (headerH + theadFirstH) + 'px');
+  const headerH = header ? Math.round(header.getBoundingClientRect().height) : 56;
+  const theadFirstH = theadFirst ? Math.round(theadFirst.getBoundingClientRect().height) : 40;
+  console.info('[ABM] calcular heights', { headerH, theadFirstH, css_alto_header: getComputedStyle(document.documentElement).getPropertyValue('--alto-header'), css_alto_filtros: getComputedStyle(document.documentElement).getPropertyValue('--alto-filtros') });
+  document.documentElement.style.setProperty('--alto-header', headerH + 'px');
+  document.documentElement.style.setProperty('--alto-filtros', (headerH + theadFirstH) + 'px');
   };
 
   const debounce = (fn, ms=120) => { let t; return (...a)=>{ clearTimeout(t); t = setTimeout(()=>fn(...a), ms); }; };
