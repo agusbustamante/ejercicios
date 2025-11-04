@@ -236,6 +236,11 @@
     registros = [];
     renderFiltrado();
   });
+  // Botón en header para limpiar filtros (visibilidad adicional)
+  $('#btnLimpiarFiltros')?.addEventListener('click', ()=>{
+    Object.values(filtros).forEach(f => f && (f.value = ''));
+    renderFiltrado();
+  });
   $('#btnAlta')?.addEventListener('click', abrirAlta);
 
   // Botones modales
