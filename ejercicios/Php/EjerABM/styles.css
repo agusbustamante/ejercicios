@@ -87,7 +87,7 @@ thead th{
   white-space: nowrap;
 }
 thead .filtros th{
-  position: sticky; top: var(--alto-filtros, calc(var(--alto-header) + 40px));
+  position: sticky; top: calc(var(--alto-filtros, calc(var(--alto-header) + 40px)) - 4px);
   z-index: 10;
   background: #f7f2ff;
   color: #321a59;
