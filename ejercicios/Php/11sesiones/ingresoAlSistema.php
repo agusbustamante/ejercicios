@@ -65,6 +65,6 @@ try {
 
 } catch (Throwable $e) {
     // Podés loguear $e->getMessage() si querés
-    header('Location: formularioDeLogin.html?e=1');
+      header('Location: app_modulo1/index.html');
     exit;
 }
