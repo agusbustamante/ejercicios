@@ -1,69 +1,70 @@
 <?php
 /*
- * ingresoAlSistema.php
- *
- * Procesa las credenciales enviadas desde formularioDeLogin.html. Se
- * valida el usuario y la clave (SHA‑256), se incrementa el
- * contador de sesión la primera vez que se establece la sesión y se
- * persiste en la tabla usuarios. Inspirado en ingresoAlSistema.php de
- * 11sesiones y adaptado a la estructura de tabla (id, login,
- * apellido_nombres, password_hash, contador_sesion).
+ * ingresoAlSistema.php (corregido)
+ * Valida con SHA-256 y columnas reales:
+ *  id_usuario, login, nombre_apellido, clave_sha256, contador_sesiones
  */
 
 session_start();
 require_once __DIR__ . '/datosConexionBase.php';
 
-// Solo aceptar peticiones POST provenientes del formulario de login
+// Solo POST desde el formulario
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: formularioDeLogin.html');
     exit;
 }
 
 $login = trim($_POST['login'] ?? '');
-$clave = trim($_POST['clave'] ?? '');
+$clave = $_POST['clave'] ?? '';
 
-// Validar campos obligatorios
 if ($login === '' || $clave === '') {
-    header('Location: formularioDeLogin.html?e=1');
+    header('Location: formularioDeLogin.html?e=1'); // faltan datos
     exit;
 }
 
 try {
     $pdo = conectar();
-    // Buscar usuario por login
-    $stmt = $pdo->prepare('SELECT id, login, apellido_nombres, password_hash, contador_sesion FROM usuarios WHERE login = :login LIMIT 1');
-    $stmt->execute([':login' => $login]);
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-    // Calcular el hash de la clave en el mismo formato que en la base
-    $claveHash = hash('sha256', $clave);
-    if (!$usuario || strtolower($usuario['password_hash']) !== strtolower($claveHash)) {
+
+    // ✅ Validación directa con SHA2 en SQL y nombres de columnas correctos
+    $sql = "SELECT id_usuario, login, nombre_apellido, contador_sesiones
+            FROM usuarios
+            WHERE login = :login
+              AND clave_sha256 = SHA2(:clave,256)
+            LIMIT 1";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':login' => $login, ':clave' => $clave]);
+    $usr = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$usr) {
         // Usuario o clave incorrectos
         header('Location: formularioDeLogin.html?e=1');
         exit;
     }
-    // Incrementar contador solo en la primera carga de la sesión
-    $esNuevaSesion = !isset($_SESSION['id_usuario']);
-    $nuevoContador = (int)$usuario['contador_sesion'];
-    if ($esNuevaSesion) {
-        $nuevoContador++;
+
+    // ✅ Login OK: setear sesión
+    $_SESSION['id_usuario']       = (int)$usr['id_usuario'];
+    $_SESSION['login']            = $usr['login'];
+    // guardo con el mismo nombre que usa el resto de la app
+    $_SESSION['apellido_nombres'] = $usr['nombre_apellido'];
+    $_SESSION['timestamp_inicio'] = time();
+
+    // ✅ Incremento del contador solo una vez por sesión
+    if (empty($_SESSION['contador_incrementado'])) {
+        $upd = $pdo->prepare(
+            "UPDATE usuarios
+             SET contador_sesiones = contador_sesiones + 1
+             WHERE id_usuario = :id"
+        );
+        $upd->execute([':id' => $usr['id_usuario']]);
+        $_SESSION['contador_incrementado'] = true;
     }
-    // Guardar información en sesión
-    $_SESSION['id_usuario']        = $usuario['id'];
-    $_SESSION['login']             = $usuario['login'];
-    $_SESSION['apellido_nombres']  = $usuario['apellido_nombres'];
-    $_SESSION['contador_sesion']   = $nuevoContador;
-    $_SESSION['timestamp_inicio']  = time();
-    // Actualizar contador en BD si se incrementó
-    if ($esNuevaSesion) {
-        $upd = $pdo->prepare('UPDATE usuarios SET contador_sesion = :c WHERE id = :id');
-        $upd->execute([':c' => $nuevoContador, ':id' => $usuario['id']]);
-    }
-    // Redirigir a la página de bienvenida
+
+    // Ir a la portada (igual que 11sesiones)
     header('Location: index.php');
     exit;
+
 } catch (Throwable $e) {
-    // En caso de error, retornar al login con código de error genérico
+    // Podés loguear $e->getMessage() si querés
     header('Location: formularioDeLogin.html?e=1');
     exit;
 }
-?>
