@@ -15,30 +15,15 @@ body.vista-simple{
 /* Altura fija estimada del header; usada para separar el thead sticky */
 :root{ --header-height: 72px; }
 
-/* Contenedor principal con efecto glass */
+/* Contenedor principal limpio */
 .vista-simple .contenedor-tabla{
   max-width: 1280px;
   margin: 24px auto 0;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(20px);
-  border-radius: 16px;
-  box-shadow: 
-    0 20px 50px rgba(75,20,128,.12),
-    0 0 0 1px rgba(255,255,255,0.1);
-  border: 1px solid rgba(239,230,255,0.5);
-  padding: 20px 20px 32px;
-  position: relative;
-  overflow: hidden;
-}
-
-.vista-simple .contenedor-tabla::before{
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--violeta) 0%, var(--violeta-med) 100%);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(75,20,128,.08);
+  border: 1px solid var(--borde);
+  padding: 16px 16px 24px;
 }
 
 /* Encabezado superior */
@@ -65,48 +50,39 @@ body.vista-simple{
   border-spacing: 0;
   color: var(--texto);
   margin-top: 10px;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(75,20,128,.08);
+  box-shadow: 0 2px 8px rgba(75,20,128,.06);
 }
 
 .vista-simple thead th{
   background: linear-gradient(135deg, var(--violeta) 0%, var(--violeta-med) 100%);
   color: #fff;
   text-align: left;
-  font-weight: 800;
-  padding: 16px 18px;
-  font-size: 0.95rem;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  position: relative;
-  border-bottom: 3px solid rgba(255,255,255,0.1);
+  font-weight: 700;
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  position: static;
 }
 
-.vista-simple thead th:first-child{ border-top-left-radius: 12px; }
-.vista-simple thead th:last-child{ border-top-right-radius: 12px; }
+.vista-simple thead th:first-child{ border-top-left-radius: 8px; }
+.vista-simple thead th:last-child{ border-top-right-radius: 8px; }
 
 .vista-simple tbody td{
-  padding: 16px 18px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--borde);
   font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
   background: #fff;
+  transition: background-color 0.2s ease;
 }
 
 .vista-simple tbody tr:nth-child(odd) td{ 
-  background: linear-gradient(180deg, #fefeff 0%, var(--lavanda-2) 100%);
+  background: var(--lavanda-2);
 }
 
 .vista-simple tbody tr:hover td{ 
-  background: linear-gradient(135deg, #f8f4ff 0%, #ede3ff 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(75,20,128,.12);
+  background: #f1e9ff;
 }
-
-.vista-simple tbody tr:last-child td:first-child{ border-bottom-left-radius: 12px; }
-.vista-simple tbody tr:last-child td:last-child{ border-bottom-right-radius: 12px; }
 
 /* Inputs y fila de filtros: ocultar como en la 2da imagen */
 .vista-simple .fila-filtros,
@@ -153,58 +129,46 @@ body.vista-simple [data-row="filtros"]{
   border-radius:8px; padding:6px 10px;
 }
 
-/* Botones principales mejorados */
+/* Botones principales estables */
 .boton{
-  background: linear-gradient(135deg, var(--violeta) 0%, var(--violeta-med) 100%);
+  background: var(--violeta);
   color: #fff;
   border: 0;
-  padding: 12px 24px;
-  border-radius: 10px;
+  padding: 10px 20px;
+  border-radius: 8px;
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 4px 12px rgba(75,20,128,.2);
+  transition: background-color 0.2s ease;
 }
 .boton:hover{ 
-  background: linear-gradient(135deg, var(--violeta-osc) 0%, var(--violeta) 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(75,20,128,.3);
+  background: var(--violeta-osc);
 }
 
-/* Botones de acción mejorados */
+/* Botones de acción simples y estables */
 .boton-accion{
-  background: linear-gradient(135deg, #fff 0%, #f8f6ff 100%);
+  background: #fff;
   color: var(--violeta-med);
-  border: 2px solid var(--violeta-med);
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 700;
+  border: 1px solid var(--violeta-med);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 4px rgba(75,20,128,.1);
+  transition: all 0.2s ease;
 }
 .boton-accion:hover{ 
-  background: linear-gradient(135deg, var(--violeta-med) 0%, var(--violeta) 100%);
+  background: var(--violeta-med);
   color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(75,20,128,.25);
 }
 
-/* Wrapper de tabla con efecto glass */
+/* Wrapper de tabla simple */
 .tabla-wrapper{ 
   width: 100%; 
   overflow: auto; 
-  border-radius: 12px;
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.2);
-  box-shadow: 0 8px 32px rgba(75,20,128,.12);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(75,20,128,.1);
 }
 
 /* Table column sizing for better alignment */
@@ -221,14 +185,13 @@ body.vista-simple [data-row="filtros"]{
 /* Slightly increase spacing for the concept column so it's not too close */
 .vista-simple thead th:nth-child(6), .vista-simple tbody td:nth-child(6){ padding-left:18px; }
 
-/* Columnas numéricas con mejor alineación */
+/* Columnas numéricas con alineación simple */
 .vista-simple tbody td:nth-child(5),
 .vista-simple tbody td:nth-child(7){ 
   text-align: right; 
   font-variant-numeric: tabular-nums;
   font-weight: 600;
   color: var(--violeta-osc);
-  background: linear-gradient(90deg, transparent 0%, rgba(107,43,184,0.03) 100%);
 }
 
 /* Make header visually elevated and clear */
@@ -244,15 +207,13 @@ body.vista-simple [data-row="filtros"]{
 .vista-simple tbody td:nth-child(5),
 .vista-simple tbody td:nth-child(7){ text-align:right; font-variant-numeric: tabular-nums; }
 
-/* Estado vacío mejorado */
+/* Estado vacío simple */
 .vista-simple tbody td[colspan]{ 
   text-align: center; 
   color: #8b7aa3; 
-  padding: 48px 16px;
+  padding: 32px 16px;
   font-style: italic;
-  font-size: 1.1rem;
-  background: linear-gradient(135deg, #fefeff 0%, #f6f1ff 100%);
-  border-radius: 8px;
+  background: var(--lavanda-2);
 }
 
 /* Modal styles */
