@@ -14,17 +14,19 @@ body.vista-simple{
 }
 
 /* Altura fija estimada del header; usada para separar el thead sticky */
-:root{ --header-height: 72px; }
+:root{ --header-height: 120px; }
 
 /* Contenedor central con respiro */
 .vista-simple .contenedor-tabla{
   max-width: 1280px;
-  margin: 24px auto 0;
+  margin: calc(var(--header-height) + 12px) auto 0;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 8px 22px rgba(75,20,128,.12);
   border: 1px solid var(--borde);
   padding: 8px 8px 16px;
+  /* leave space at bottom so fixed footer doesn't overlap */
+  padding-bottom: 96px;
 }
 
 /* Encabezado superior */
@@ -146,6 +148,24 @@ body.vista-simple [data-row="filtros"]{
 /* Table wrapper: card-like with horizontal scroll on small screens */
 .tabla-wrapper{ width:100%; overflow:auto; border-radius:8px; }
 
+/* Table column sizing for better alignment */
+.vista-simple table{ table-layout: fixed; }
+.vista-simple thead th:nth-child(1), .vista-simple tbody td:nth-child(1){ width:8%; }
+.vista-simple thead th:nth-child(2), .vista-simple tbody td:nth-child(2){ width:28%; }
+.vista-simple thead th:nth-child(3), .vista-simple tbody td:nth-child(3){ width:12%; }
+.vista-simple thead th:nth-child(4), .vista-simple tbody td:nth-child(4){ width:14%; }
+.vista-simple thead th:nth-child(5), .vista-simple tbody td:nth-child(5){ width:12%; }
+.vista-simple thead th:nth-child(6), .vista-simple tbody td:nth-child(6){ width:8%; }
+.vista-simple thead th:nth-child(7), .vista-simple tbody td:nth-child(7){ width:10%; }
+.vista-simple thead th:nth-child(8), .vista-simple tbody td:nth-child(8){ width:8%; }
+
+/* Slightly increase spacing for the concept column so it's not too close */
+.vista-simple thead th:nth-child(6), .vista-simple tbody td:nth-child(6){ padding-left:18px; }
+
+/* Ensure numeric columns align to right and have monospace-like numbers */
+.vista-simple tbody td:nth-child(5),
+.vista-simple tbody td:nth-child(7){ text-align:right; font-variant-numeric: tabular-nums; }
+
 /* Make header visually elevated and clear */
 .vista-simple thead th{
   background: linear-gradient(180deg,var(--violeta), var(--violeta-med));
@@ -183,7 +203,14 @@ body.vista-simple [data-row="filtros"]{
 .acciones-form{ justify-content:flex-end; }
 
 /* Make footer compact contrast */
-.vista-simple .pie{ color:#fff; background: linear-gradient(90deg,var(--violeta),var(--violeta-med)); }
+.vista-simple .pie{
+  color:#fff; background: linear-gradient(90deg,var(--violeta),var(--violeta-med));
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+  padding: 10px 0; display:flex; justify-content:center;
+}
+
+/* Prevent content from being hidden under fixed footer on short pages */
+body.vista-simple{ padding-bottom: 72px; }
 
 /* Responsive tweaks */
 @media (max-width:720px){
