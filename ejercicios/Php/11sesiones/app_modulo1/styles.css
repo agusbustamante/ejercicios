@@ -118,16 +118,25 @@ body.vista-simple{
   background:var(--color-boton);
   color:#fff;
   border:1px solid var(--color-secundario);
-  padding:6px 12px;
-  border-radius:6px;
+  padding:6px 10px;
+  border-radius:5px;
   font-weight:600;
-  font-size:0.85rem;
+  font-size:0.8rem;
   cursor:pointer;
-  transition:background .12s ease;
+  transition:background .12s ease,transform .06s ease;
+  white-space: nowrap;
+  min-width: 65px;
+  display: inline-block;
+  text-align: center;
 }
 
 .boton-accion:hover{
   background:var(--color-boton-hover);
+  transform: translateY(-1px);
+}
+
+.boton-accion:active{
+  transform:translateY(0);
 }
 
 /* Tabla - Estilo Tabla2 */
@@ -143,8 +152,9 @@ body.vista-simple{
 
 .vista-simple table{
   width:100%;
+  min-width: 1200px;
   border-collapse:collapse;
-  table-layout:fixed;
+  table-layout:auto;
   color:var(--color-texto);
 }
 
@@ -154,23 +164,26 @@ body.vista-simple{
 }
 
 .vista-simple thead th{
-  padding:.55rem;
+  padding:10px 8px;
   text-align:left;
   border-bottom:1px solid var(--borde);
   font-weight:700;
-  font-size:0.9rem;
-  position:static;
+  font-size:0.88rem;
+  position:sticky;
+  top: 0;
   background:var(--color-primario);
-  z-index:1;
+  z-index:5;
+  white-space: nowrap;
 }
 
 .vista-simple tbody td{
-  padding:.55rem;
+  padding:8px;
   text-align:left;
   border-bottom:1px solid var(--borde);
-  font-size:0.9rem;
+  font-size:0.88rem;
   word-break:break-word;
-  overflow-wrap:anywhere;
+  overflow-wrap:break-word;
+  vertical-align: middle;
 }
 
 .vista-simple tbody tr:nth-child(odd){
@@ -185,35 +198,42 @@ body.vista-simple{
   background:rgba(90,24,154,.12);
 }
 
-/* Anchos de columna */
+/* Anchos de columna ajustados */
 .vista-simple thead th:nth-child(1), 
-.vista-simple tbody td:nth-child(1){ width:8%; }
+.vista-simple tbody td:nth-child(1){ width:7%; min-width: 70px; }
 
 .vista-simple thead th:nth-child(2), 
-.vista-simple tbody td:nth-child(2){ width:28%; }
+.vista-simple tbody td:nth-child(2){ width:16%; min-width: 140px; }
 
 .vista-simple thead th:nth-child(3), 
-.vista-simple tbody td:nth-child(3){ width:12%; }
+.vista-simple tbody td:nth-child(3){ width:10%; min-width: 100px; }
 
 .vista-simple thead th:nth-child(4), 
-.vista-simple tbody td:nth-child(4){ width:14%; }
+.vista-simple tbody td:nth-child(4){ width:12%; min-width: 120px; }
 
 .vista-simple thead th:nth-child(5), 
-.vista-simple tbody td:nth-child(5){ width:12%; }
+.vista-simple tbody td:nth-child(5){ width:11%; min-width: 100px; }
 
 .vista-simple thead th:nth-child(6), 
-.vista-simple tbody td:nth-child(6){ width:8%; }
+.vista-simple tbody td:nth-child(6){ width:12%; min-width: 90px; }
 
 .vista-simple thead th:nth-child(7), 
-.vista-simple tbody td:nth-child(7){ width:10%; }
+.vista-simple tbody td:nth-child(7){ width:11%; min-width: 100px; }
 
 .vista-simple thead th:nth-child(8), 
-.vista-simple tbody td:nth-child(8){ width:8%; }
+.vista-simple tbody td:nth-child(8){ width:7%; min-width: 60px; }
 
-/* Espaciado extra en concepto */
+.vista-simple thead th:nth-child(9), 
+.vista-simple tbody td:nth-child(9){ width:9%; min-width: 85px; }
+
+.vista-simple thead th:nth-child(10), 
+.vista-simple tbody td:nth-child(10){ width:8%; min-width: 75px; }
+
+/* Espaciado en concepto */
 .vista-simple thead th:nth-child(6), 
 .vista-simple tbody td:nth-child(6){ 
-  padding-left:18px; 
+  padding-left:8px; 
+  padding-right:8px;
 }
 
 /* Columnas numéricas alineadas a la derecha */
@@ -222,7 +242,16 @@ body.vista-simple{
   text-align: right; 
   font-variant-numeric: tabular-nums;
   font-weight: 600;
-  color: var(--violeta-osc);
+  color: var(--color-primario);
+  padding-right: 12px;
+}
+
+/* Centrar columnas de acciones */
+.vista-simple tbody td:nth-child(8),
+.vista-simple tbody td:nth-child(9),
+.vista-simple tbody td:nth-child(10){
+  text-align: center;
+  padding: 6px;
 }
 
 /* Estado vacío */
@@ -237,23 +266,50 @@ body.vista-simple{
 /* Pie de tabla (tfoot) */
 .vista-simple tfoot td{
   background:rgba(90,24,154,.08);
-  padding:.55rem;
+  padding:10px;
   font-weight:600;
   border-top:2px solid var(--color-secundario);
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
 }
 
-/* Ocultar elementos */
+/* Mostrar filtros */
 .vista-simple .fila-filtros,
 body.vista-simple tr.filtros,
 body.vista-simple [data-row="filtros"]{
-  display:none !important;
+  display: table-row !important;
 }
 
+.vista-simple tr.filtros th{
+  background: rgba(90,24,154,.15);
+  padding: 8px;
+}
+
+.vista-simple tr.filtros input,
+.vista-simple tr.filtros select{
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  background: #fff;
+}
+
+.vista-simple tr.filtros input:focus,
+.vista-simple tr.filtros select:focus{
+  outline: none;
+  border-color: var(--color-secundario);
+  box-shadow: 0 0 0 2px rgba(157,78,221,.12);
+}
+
+/* Mostrar columnas de acciones */
 .vista-simple thead th:nth-child(9),
 .vista-simple tbody td:nth-child(9),
 .vista-simple thead th:nth-child(10),
 .vista-simple tbody td:nth-child(10){ 
-  display:none; 
+  display: table-cell;
+  text-align: center;
 }
 
 /* Footer - Estilo Tabla2 */
@@ -292,12 +348,11 @@ body.vista-simple [data-row="filtros"]{
 
 .modal-contenido h2,
 .modal-contenido h3{
-  margin:0 0 12px;
-  color:var(--color-texto);
-  background:var(--color-primario);
+  margin:0 0 18px;
   color:#fff;
-  padding:.8rem 1rem;
-  font-size:1rem;
+  background:var(--color-primario);
+  padding:14px 18px;
+  font-size:1.1rem;
   font-weight:700;
 }
 
@@ -307,17 +362,19 @@ body.vista-simple [data-row="filtros"]{
 
 .fila-form{
   display:flex;
-  gap:22px;
-  margin-bottom:12px;
-  flex-wrap:wrap;
-  padding:18px;
+  gap:12px;
+  margin-bottom:14px;
+  flex-wrap:nowrap;
+  padding:0 18px;
+  align-items: center;
 }
 
 .fila-form label{
-  min-width:160px;
+  min-width:180px;
   font-weight:600;
   color:var(--color-texto);
-  margin-bottom:6px;
+  margin-bottom:0;
+  flex-shrink: 0;
 }
 
 .fila-form input[type="text"],
@@ -326,11 +383,10 @@ body.vista-simple [data-row="filtros"]{
 .fila-form select,
 .fila-form input[type="file"]{
   flex:1;
-  padding:12px 10px;
+  padding:10px;
   border:1px solid var(--borde);
   background:#fff;
-  height:48px;
-  width:100%;
+  min-height:42px;
   border-radius:4px;
 }
 
@@ -344,20 +400,39 @@ body.vista-simple [data-row="filtros"]{
 .acciones-form{
   justify-content:center;
   text-align:center;
-  margin-top:18px;
+  margin-top:20px;
+  margin-bottom: 18px;
+  gap: 12px;
 }
 
 /* Responsive */
-@media (max-width:720px){
+@media (max-width:1024px){
   .vista-simple .barra-inner{ 
-    padding:0 12px; 
+    padding:10px 12px; 
+    flex-direction: column;
+    align-items: flex-start;
   }
+  .vista-simple .titulo{
+    margin-bottom: 8px;
+  }
+  .vista-simple .acciones-header{
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width:720px){
   .fila-form{ 
     flex-direction:column; 
     align-items:stretch; 
   }
   .fila-form label{ 
     min-width:0; 
+  }
+  .boton-accion{
+    font-size: 0.75rem;
+    padding: 5px 8px;
+    min-width: 55px;
   }
 }
 
