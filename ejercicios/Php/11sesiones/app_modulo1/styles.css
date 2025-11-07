@@ -166,3 +166,54 @@ tbody td a.pdf:hover{ background:#f3f3f3; }
   .fila-form{ grid-template-columns:1fr; }
   table{ display:block; overflow-x:auto; }
 }
+
+/* =========================
+   FIX 1: el header no tape la tabla
+   ========================= */
+:root{
+  --alto-header: 66px; /* ajústalo si tu barra queda más alta/baja */
+}
+.barra-superior{ min-height: var(--alto-header) !important; }
+main{ padding-top: 8px !important; }               /* aire bajo la barra */
+thead th{ top: var(--alto-header) !important; }    /* sticky por debajo de la barra */
+
+/* =========================
+   FIX 2: que la tabla ocupe TODO el ancho
+   ========================= */
+.tabla-contenedor{
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 8px 12px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* por si hay wrappers intermedios */
+.tabla-contenedor .tabla-wrapper,
+.tabla-contenedor .tabla-scroll{
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* la tabla en sí, a 100% sin “tarjeta” al medio */
+table{
+  width: 100% !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* =========================
+   FIX 3: compactar un poco (opcional)
+   ========================= */
+thead th{ padding: 10px 12px !important; }
+tbody td{ padding: 9px 12px !important; }
+
+/* footer ancho completo */
+.pie{
+  max-width: none !important;
+  border-radius: 6px !important;
+}
+
