@@ -199,6 +199,14 @@ body.vista-simple{
   background: var(--lavanda-2);
 }
 
+/* Pie de tabla (tfoot) */
+.vista-simple tfoot td{
+  background: var(--lavanda-2);
+  padding: 12px 16px;
+  font-weight: 600;
+  border-top: 2px solid var(--violeta-med);
+}
+
 /* Ocultar elementos */
 .vista-simple .fila-filtros,
 body.vista-simple tr.filtros,
