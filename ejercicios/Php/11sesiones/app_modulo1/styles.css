@@ -13,6 +13,9 @@ body.vista-simple{
   background: var(--lavanda);
 }
 
+/* Altura fija estimada del header; usada para separar el thead sticky */
+:root{ --header-height: 72px; }
+
 /* Contenedor central con respiro */
 .vista-simple .contenedor-tabla{
   max-width: 1280px;
@@ -25,9 +28,16 @@ body.vista-simple{
 }
 
 /* Encabezado superior */
+.vista-simple .barra-superior{
+  background: var(--violeta);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 80;
+}
 .vista-simple .barra-superior .barra-inner{
   display:flex; align-items:center; justify-content:space-between;
-  max-width: 1280px; margin: 0 auto;
+  max-width: 1280px; margin: 0 auto; padding: 10px 16px; gap:12px;
 }
 .vista-simple .titulo{
   font-weight: 800; letter-spacing:.3px;
@@ -54,7 +64,7 @@ body.vista-simple{
   text-align:left;
   font-weight:700;
   padding: 12px 14px;
-  position: sticky; top:0; z-index:2;
+  position: sticky; top: var(--header-height); z-index: 30;
 }
 .vista-simple tbody td{
   padding: 12px 14px;
@@ -66,8 +76,8 @@ body.vista-simple{
 
 /* Inputs y fila de filtros: ocultar como en la 2da imagen */
 .vista-simple .fila-filtros,
-.vista-simple tr.filtros,
-.vista-simple [data-row="filtros"]{
+body.vista-simple tr.filtros,
+body.vista-simple [data-row="filtros"]{
   display:none !important;
 }
 
