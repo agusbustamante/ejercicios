@@ -5,9 +5,9 @@
 
 /* -------- Variables de color (tus violetas) -------- */
 :root{
-  --color-primario:   #5a189a;
-  --color-secundario: #9d4edd;
-  --color-fondo:      #f4ecfb;   /* lila muy suave, similar a tu captura */
+  --color-primario:   #4a148c;
+  --color-secundario: #6a1b9a;
+  --color-fondo:      #e8e8e8;
   --color-texto:      #212529;
   --color-borde:      #dee2e6;
   --color-hover:      #f3e8ff;
@@ -31,74 +31,81 @@ body.vista-simple{
 /* -------- Barra superior -------- */
 .barra-superior{
   position: sticky; top:0; z-index:50; color:#fff;
-  background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
-  box-shadow: 0 2px 8px rgba(90,24,154,.25);
+  background: var(--color-primario);
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
 }
 .barra-superior .barra-inner{
-  max-width:1280px; margin:0 auto; padding:14px 20px;
+  max-width:100%; margin:0 auto; padding:12px 20px;
   display:flex; align-items:center; gap:14px; flex-wrap:wrap;
 }
-.titulo{ font-size:1.35rem; font-weight:800; margin-right:auto; letter-spacing:.2px; }
-.acciones-header{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-.acciones-header label{ font-weight:600; display:flex; gap:6px; align-items:center; }
+.titulo{ font-size:1.25rem; font-weight:700; margin-right:auto; letter-spacing:0; }
+.acciones-header{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.acciones-header label{ font-weight:400; font-size:.95rem; display:flex; gap:6px; align-items:center; }
 .acciones-header input[type="text"]{
-  padding:.45rem .6rem; border:1px solid #fff8; border-radius:6px; min-width:210px; color:#1b1b1b;
+  padding:.4rem .7rem; border:1px solid #ccc; border-radius:4px; min-width:160px; 
+  background:#fff; color:#333; font-size:.9rem;
 }
 
 /* -------- Botones -------- */
 .boton{
-  background:#fff; color:var(--color-primario); border:1px solid #fff;
-  padding:.5rem .9rem; border-radius:8px; font-weight:700; cursor:pointer;
-  transition: transform .05s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+  background:#fff; color:var(--color-primario); border:1px solid #ddd;
+  padding:.45rem .85rem; border-radius:4px; font-weight:600; cursor:pointer; font-size:.9rem;
+  transition: background .2s ease, transform .05s ease;
 }
-.boton:hover{ background:var(--color-hover); box-shadow:0 0 0 3px #ffffff33 inset; }
+.boton:hover{ background:#f5f5f5; }
 .boton:active{ transform: translateY(1px); }
 
 /* -------- Contenedor principal -------- */
-main{ flex:1; }
+main{ flex:1; background:#e8e8e8; }
 .tabla-contenedor{
-  max-width:1280px; margin:18px auto; padding:24px;
-  background: #ffffffaa; backdrop-filter: blur(2px);
-  border-radius:10px; border:1px solid #e9d9f7;
+  max-width:100%; margin:0; padding:16px;
+  background: transparent;
 }
 
 /* -------- Tabla -------- */
-table{ width:100%; border-collapse:separate; border-spacing:0; background:#fff; border-radius:10px; overflow:hidden; }
+table{ 
+  width:100%; border-collapse:collapse; background:#fff; 
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
 thead th{
   position:sticky; top:0; z-index:10;
   background: var(--color-primario); color:#fff; text-align:left;
-  padding:14px 12px; border-bottom:2px solid #4b1480; font-weight:800; letter-spacing:.3px;
+  padding:10px 12px; border-bottom:1px solid #3a0e6c; font-weight:700; 
+  font-size:.9rem; letter-spacing:0;
   white-space: nowrap;
 }
 tbody td{
-  padding:12px 12px; border-bottom:1px solid var(--color-borde);
-  vertical-align:middle; background:#fff;
+  padding:8px 12px; border-bottom:1px solid #e0e0e0;
+  vertical-align:middle; background:#fff; font-size:.9rem;
 }
 /* Zebra striping y hover suave */
-tbody tr:nth-child(odd){ background:#fbf8ff; }
-tbody tr:hover td{ background:var(--color-hover); }
+tbody tr:nth-child(odd){ background:#f9f9f9; }
+tbody tr:hover td{ background:#f0f0f0; }
 tfoot td{
-  background: #3b0d69; color:#fff; font-weight:600; padding:12px;
+  background: var(--color-primario); color:#fff; font-weight:600; 
+  padding:10px 12px; font-size:.9rem;
 }
 
 /* columnas: anchos óptimos */
-th:nth-child(1){ width:110px; }
-th:nth-child(2){ min-width:240px; }
-th:nth-child(3){ width:130px; }
-th:nth-child(4){ width:140px; }
-th:nth-child(5){ width:140px; }
-th:nth-child(6){ min-width:200px; }
-th:nth-child(7){ width:170px; }
-th:nth-child(8){ width:110px; text-align:center; }
-th.col-modi, th.col-borrar{ width:110px; text-align:center; }
+th:nth-child(1){ width:90px; }
+th:nth-child(2){ min-width:200px; }
+th:nth-child(3){ width:110px; }
+th:nth-child(4){ width:100px; }
+th:nth-child(5){ width:120px; }
+th:nth-child(6){ min-width:180px; }
+th:nth-child(7){ width:140px; }
+th:nth-child(8){ width:80px; text-align:center; }
+th.col-modi, th.col-borrar{ width:100px; text-align:center; }
 
 /* -------- Fila de filtros (si la usás visible) -------- */
 tr.filtros th{
   background:#fff; position:sticky; top:48px; z-index:9;
   box-shadow: inset 0 -1px 0 var(--color-borde);
+  padding:8px;
 }
 tr.filtros input, tr.filtros select{
-  width:100%; padding:.45rem .6rem; border:1px solid var(--color-borde); border-radius:6px; background:#fff;
+  width:100%; padding:.35rem .5rem; border:1px solid var(--color-borde); 
+  border-radius:4px; background:#fff; font-size:.85rem;
 }
 
 /* -------- Vista simple: ocultar filtros y acciones (como tu captura) -------- */
@@ -109,18 +116,20 @@ body.vista-simple tbody td:nth-child(9),
 body.vista-simple thead th:nth-child(10),
 body.vista-simple tbody td:nth-child(10){ display:none; }
 
-/* -------- PDF “pill” centrado -------- */
+/* -------- PDF "pill" centrado -------- */
 tbody td a.pdf,
 tbody td[data-campo="pdf"] a{
-  display:inline-block; padding:6px 10px; border:1px solid var(--color-secundario);
-  border-radius:6px; color:var(--color-secundario); text-decoration:none; font-weight:700;
+  display:inline-block; padding:4px 12px; border:1px solid var(--color-primario);
+  border-radius:4px; color:var(--color-primario); text-decoration:none; 
+  font-weight:600; font-size:.85rem;
 }
-tbody td a.pdf:hover{ background:var(--color-hover); }
+tbody td a.pdf:hover{ background:#f3f3f3; }
 
 /* -------- Pie morado centrado -------- */
 .pie{
-  max-width:1280px; margin:12px auto 24px; padding:10px 16px;
-  background: var(--color-primario); color:#fff; border-radius:8px; text-align:center; font-weight:600;
+  max-width:100%; margin:0; padding:10px 20px;
+  background: var(--color-primario); color:#fff; text-align:center; 
+  font-weight:400; font-size:.9rem;
 }
 
 /* -------- Modales -------- */
