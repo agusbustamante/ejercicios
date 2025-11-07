@@ -15,15 +15,30 @@ body.vista-simple{
 /* Altura fija estimada del header; usada para separar el thead sticky */
 :root{ --header-height: 72px; }
 
-/* Contenedor central con respiro */
+/* Contenedor principal con efecto glass */
 .vista-simple .contenedor-tabla{
   max-width: 1280px;
   margin: 24px auto 0;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 8px 22px rgba(75,20,128,.12);
-  border: 1px solid var(--borde);
-  padding: 8px 8px 16px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 
+    0 20px 50px rgba(75,20,128,.12),
+    0 0 0 1px rgba(255,255,255,0.1);
+  border: 1px solid rgba(239,230,255,0.5);
+  padding: 20px 20px 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.vista-simple .contenedor-tabla::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--violeta) 0%, var(--violeta-med) 100%);
 }
 
 /* Encabezado superior */
@@ -43,29 +58,55 @@ body.vista-simple{
 }
 .vista-simple .acciones-header .boton:hover{ background: var(--violeta-osc); }
 
-/* Tabla */
+/* Tabla - Diseño mejorado */
 .vista-simple table{
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   color: var(--texto);
   margin-top: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(75,20,128,.08);
 }
+
 .vista-simple thead th{
-  background: var(--violeta);
-  color:#fff;
-  text-align:left;
-  font-weight:700;
-  padding: 12px 14px;
-  /* Make thead behave like a normal table header (not sticky) so it doesn't overlap rows */
-  position: static;
+  background: linear-gradient(135deg, var(--violeta) 0%, var(--violeta-med) 100%);
+  color: #fff;
+  text-align: left;
+  font-weight: 800;
+  padding: 16px 18px;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+  border-bottom: 3px solid rgba(255,255,255,0.1);
 }
+
+.vista-simple thead th:first-child{ border-top-left-radius: 12px; }
+.vista-simple thead th:last-child{ border-top-right-radius: 12px; }
+
 .vista-simple tbody td{
-  padding: 12px 14px;
+  padding: 16px 18px;
   border-bottom: 1px solid var(--borde);
-  height: 46px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background: #fff;
 }
-.vista-simple tbody tr:nth-child(odd){ background: var(--lavanda-2); }
-.vista-simple tbody tr:hover{ background: #f1e9ff; }
+
+.vista-simple tbody tr:nth-child(odd) td{ 
+  background: linear-gradient(180deg, #fefeff 0%, var(--lavanda-2) 100%);
+}
+
+.vista-simple tbody tr:hover td{ 
+  background: linear-gradient(135deg, #f8f4ff 0%, #ede3ff 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(75,20,128,.12);
+}
+
+.vista-simple tbody tr:last-child td:first-child{ border-bottom-left-radius: 12px; }
+.vista-simple tbody tr:last-child td:last-child{ border-bottom-right-radius: 12px; }
 
 /* Inputs y fila de filtros: ocultar como en la 2da imagen */
 .vista-simple .fila-filtros,
@@ -112,32 +153,59 @@ body.vista-simple [data-row="filtros"]{
   border-radius:8px; padding:6px 10px;
 }
 
-/* Global button style (applies to header and modals) */
+/* Botones principales mejorados */
 .boton{
-  background: var(--violeta);
+  background: linear-gradient(135deg, var(--violeta) 0%, var(--violeta-med) 100%);
   color: #fff;
   border: 0;
-  padding: .5rem .9rem;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(75,20,128,.2);
+}
+.boton:hover{ 
+  background: linear-gradient(135deg, var(--violeta-osc) 0%, var(--violeta) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(75,20,128,.3);
+}
+
+/* Botones de acción mejorados */
+.boton-accion{
+  background: linear-gradient(135deg, #fff 0%, #f8f6ff 100%);
+  color: var(--violeta-med);
+  border: 2px solid var(--violeta-med);
+  padding: 8px 16px;
   border-radius: 8px;
   font-weight: 700;
+  font-size: 0.85rem;
   cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(75,20,128,.1);
 }
-.boton:hover{ background: var(--violeta-osc); }
-
-/* Small action buttons used inside table rows (PDF / Modi / Borrar) */
-.boton-accion{
-  background: transparent;
-  color: var(--violeta-med);
-  border: 1px solid var(--violeta-med);
-  padding: .35rem .55rem;
-  border-radius: 6px;
-  font-weight:700;
-  cursor:pointer;
+.boton-accion:hover{ 
+  background: linear-gradient(135deg, var(--violeta-med) 0%, var(--violeta) 100%);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(75,20,128,.25);
 }
-.boton-accion:hover{ background: var(--violeta-med); color: #fff; }
 
-/* Table wrapper: card-like with horizontal scroll on small screens */
-.tabla-wrapper{ width:100%; overflow:auto; border-radius:8px; }
+/* Wrapper de tabla con efecto glass */
+.tabla-wrapper{ 
+  width: 100%; 
+  overflow: auto; 
+  border-radius: 12px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 32px rgba(75,20,128,.12);
+}
 
 /* Table column sizing for better alignment */
 .vista-simple table{ table-layout: fixed; }
@@ -153,9 +221,15 @@ body.vista-simple [data-row="filtros"]{
 /* Slightly increase spacing for the concept column so it's not too close */
 .vista-simple thead th:nth-child(6), .vista-simple tbody td:nth-child(6){ padding-left:18px; }
 
-/* Ensure numeric columns align to right and have monospace-like numbers */
+/* Columnas numéricas con mejor alineación */
 .vista-simple tbody td:nth-child(5),
-.vista-simple tbody td:nth-child(7){ text-align:right; font-variant-numeric: tabular-nums; }
+.vista-simple tbody td:nth-child(7){ 
+  text-align: right; 
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--violeta-osc);
+  background: linear-gradient(90deg, transparent 0%, rgba(107,43,184,0.03) 100%);
+}
 
 /* Make header visually elevated and clear */
 .vista-simple thead th{
@@ -170,8 +244,16 @@ body.vista-simple [data-row="filtros"]{
 .vista-simple tbody td:nth-child(5),
 .vista-simple tbody td:nth-child(7){ text-align:right; font-variant-numeric: tabular-nums; }
 
-/* Improve empty state */
-.vista-simple tbody td[colspan]{ text-align:center; color:#6b5b7b; padding:36px 16px; }
+/* Estado vacío mejorado */
+.vista-simple tbody td[colspan]{ 
+  text-align: center; 
+  color: #8b7aa3; 
+  padding: 48px 16px;
+  font-style: italic;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #fefeff 0%, #f6f1ff 100%);
+  border-radius: 8px;
+}
 
 /* Modal styles */
 .modal{ position:fixed; left:0; top:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; background:rgba(16,8,24,0.45); z-index:60; }
