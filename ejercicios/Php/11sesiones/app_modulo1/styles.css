@@ -1,122 +1,149 @@
-/* ============================
-   PARCHE VISUAL (override)
-   ============================ */
 
-/* 1) Contenedor y anchos: evitar que se rompa el layout */
-.vista-simple .contenedor-tabla,
-.vista-simple .tabla-contenedor{
-  max-width: 1280px;   /* antes 1400: ajusto para que no “salte” */
-  width: 100%;
-  padding: 24px;       /* menos padding para que entre en pantallas medianas */
-}
-
-/* 2) Tabla: quitar min-width excesivo y permitir ajuste fluido */
-.vista-simple table{
-  width: 100%;
-  /* min-width: 1200px;  QUITAR: hacía overflow en pantallas medianas */
-  table-layout: auto;
-  border-collapse: collapse;
-}
-
-/* 3) Cabecera sticky robusta (altura controlada) */
 :root{
-  --alto-header: 72px;   /* ajuste único para sticky */
-}
-.vista-simple .barra-superior .barra-inner{
-  padding: 16px 24px;
-}
-.vista-simple .barra-superior{
-  min-height: var(--alto-header);
-}
-.vista-simple thead th{
-  top: 0;                /* sticky de la cabecera */
+  --color-primario:   #5a189a;
+  --color-secundario: #9d4edd;
+  --color-fondo:      #f4ecfb;   /* lila muy suave, similar a tu captura */
+  --color-texto:      #212529;
+  --color-borde:      #dee2e6;
+  --color-hover:      #f3e8ff;
+  --color-white:      #ffffff;
 }
 
-/* 4) Fila de filtros sticky debajo del thead (si la mostrás) */
-.vista-simple tr.filtros th{
-  position: sticky;
-  top: 42px;             /* altura aprox de cabecera de tabla */
-  background: #ffffff;
-  z-index: 9;
-  box-shadow: inset 0 -1px 0 var(--color-borde);
+/* -------- Reset mínimo -------- */
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; }
+img{ max-width:100%; height:auto; display:block; }
+button,input,select{ font: inherit; }
+
+/* -------- Layout general -------- */
+body.vista-simple{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  display:flex; flex-direction:column; min-height:100vh;
 }
 
-/* 5) “Vista limpia” como la 2da imagen: ocultar filtros y acciones */
+/* -------- Barra superior -------- */
+.barra-superior{
+  position: sticky; top:0; z-index:50; color:#fff;
+  background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+  box-shadow: 0 2px 8px rgba(90,24,154,.25);
+}
+.barra-superior .barra-inner{
+  max-width:1280px; margin:0 auto; padding:14px 20px;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.titulo{ font-size:1.35rem; font-weight:800; margin-right:auto; letter-spacing:.2px; }
+.acciones-header{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.acciones-header label{ font-weight:600; display:flex; gap:6px; align-items:center; }
+.acciones-header input[type="text"]{
+  padding:.45rem .6rem; border:1px solid #fff8; border-radius:6px; min-width:210px; color:#1b1b1b;
+}
+
+/* -------- Botones -------- */
+.boton{
+  background:#fff; color:var(--color-primario); border:1px solid #fff;
+  padding:.5rem .9rem; border-radius:8px; font-weight:700; cursor:pointer;
+  transition: transform .05s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+}
+.boton:hover{ background:var(--color-hover); box-shadow:0 0 0 3px #ffffff33 inset; }
+.boton:active{ transform: translateY(1px); }
+
+/* -------- Contenedor principal -------- */
+main{ flex:1; }
+.tabla-contenedor{
+  max-width:1280px; margin:18px auto; padding:24px;
+  background: #ffffffaa; backdrop-filter: blur(2px);
+  border-radius:10px; border:1px solid #e9d9f7;
+}
+
+/* -------- Tabla -------- */
+table{ width:100%; border-collapse:separate; border-spacing:0; background:#fff; border-radius:10px; overflow:hidden; }
+thead th{
+  position:sticky; top:0; z-index:10;
+  background: var(--color-primario); color:#fff; text-align:left;
+  padding:14px 12px; border-bottom:2px solid #4b1480; font-weight:800; letter-spacing:.3px;
+  white-space: nowrap;
+}
+tbody td{
+  padding:12px 12px; border-bottom:1px solid var(--color-borde);
+  vertical-align:middle; background:#fff;
+}
+tbody tr:hover td{ background:#faf5ff; } /* hover suave */
+tfoot td{
+  background: #3b0d69; color:#fff; font-weight:600; padding:12px;
+}
+
+/* columnas: anchos óptimos */
+th:nth-child(1){ width:110px; }
+th:nth-child(2){ min-width:240px; }
+th:nth-child(3){ width:130px; }
+th:nth-child(4){ width:140px; }
+th:nth-child(5){ width:140px; }
+th:nth-child(6){ min-width:200px; }
+th:nth-child(7){ width:170px; }
+th:nth-child(8){ width:110px; text-align:center; }
+th.col-modi, th.col-borrar{ width:110px; text-align:center; }
+
+/* -------- Fila de filtros (si la usás visible) -------- */
+tr.filtros th{ background:#fff; position:sticky; top:48px; z-index:9; box-shadow: inset 0 -1px 0 var(--color-borde); }
+tr.filtros input, tr.filtros select{
+  width:100%; padding:.45rem .6rem; border:1px solid var(--color-borde); border-radius:6px; background:#fff;
+}
+
+/* -------- Vista simple: ocultar filtros y acciones (como tu captura) -------- */
 body.vista-simple .filtros{ display:none !important; }
-/* si no querés ver acciones, ocultá columnas 9 y 10 (Modi/Borrar) */
+/* Ocultar columnas de acciones 9 y 10 cuando querés solo lectura */
 body.vista-simple thead th:nth-child(9),
 body.vista-simple tbody td:nth-child(9),
 body.vista-simple thead th:nth-child(10),
 body.vista-simple tbody td:nth-child(10){ display:none; }
 
-/* 6) PDF centrado y con “pill” */
-.vista-simple thead th:nth-child(8),
-.vista-simple tbody td:nth-child(8){
-  text-align:center;
+/* -------- PDF “pill” centrado -------- */
+tbody td a.pdf,
+tbody td[data-campo="pdf"] a{
+  display:inline-block; padding:6px 10px; border:1px solid var(--color-secundario);
+  border-radius:6px; color:var(--color-secundario); text-decoration:none; font-weight:700;
 }
-.vista-simple tbody td a.pdf,
-.vista-simple tbody td[data-campo="pdf"] a{
-  display:inline-block; padding:6px 10px;
-  border:1px solid var(--color-secundario);
-  border-radius:6px; color:var(--color-secundario);
-  text-decoration:none; font-weight:600;
-}
-.vista-simple tbody td a.pdf:hover{
-  background:var(--color-secundario); color:#fff;
+tbody td a.pdf:hover{ background:var(--color-hover); }
+
+/* -------- Pie morado centrado -------- */
+.pie{
+  max-width:1280px; margin:12px auto 24px; padding:10px 16px;
+  background: var(--color-primario); color:#fff; border-radius:8px; text-align:center; font-weight:600;
 }
 
-/* 7) Filas: altura y zebra más suaves (como la captura) */
-.vista-simple tbody td{ padding:12px 14px; }
-.vista-simple tbody tr:nth-child(odd){ background: #fbf8ff; }
-.vista-simple tbody tr:hover{ background: var(--color-hover); }
-
-/* 8) Botones header: evitar “salto” por border al hover */
-.boton{
-  border-width: 2px;
-  box-shadow: none;
-}
-.boton:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0,0,0,.12);
-}
-
-/* 9) Modal: asegurar overlay y centrado siempre */
-.modal{
-  position: fixed; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(0,0,0,.5);
-  z-index: 1000;
-}
-.modal.oculto{ display:none !important; }
+/* -------- Modales -------- */
+.modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#0006; z-index:100; }
+.modal.oculto{ display:none; }
 .modal-contenido{
-  width: 720px; max-width: 95%;
-  background:#fff; border-radius:10px;
-  overflow: hidden; /* header del modal pegado */
+  width:min(860px, 96vw); background:#fff; border-radius:14px; padding:18px; border:1px solid #eee;
+  box-shadow: 0 10px 40px rgba(0,0,0,.20);
 }
-.modal-contenido .fila-form{ padding: 12px 20px; }
-
-/* 10) Pie centrado como barra violeta (2da imagen) */
-.vista-simple .pie{
-  max-width: 1280px; margin: 12px auto 24px;
-  border-radius: 8px;
+.modal h2,.modal h3{ margin-bottom:10px; color:var(--color-primario); }
+.fila-form{ display:grid; grid-template-columns:210px 1fr; gap:10px; align-items:center; margin:8px 0; }
+.fila-form input, .fila-form select{
+  padding:.5rem .6rem; border:1px solid var(--color-borde); border-radius:8px; background:#fff;
 }
 
-/* 11) Responsivo: no romper en 1024/1366 */
+/* -------- Utilidades -------- */
+.oculto{ display:none !important; }
+[hidden]{ display:none !important; }
+
+/* -------- Responsivo -------- */
 @media (max-width: 1366px){
-  .vista-simple .contenedor-tabla,
-  .vista-simple .tabla-contenedor{ max-width: 1100px; padding: 20px; }
+  .tabla-contenedor{ max-width:1100px; padding:20px; }
 }
 @media (max-width: 1024px){
-  .vista-simple .contenedor-tabla,
-  .vista-simple .tabla-contenedor{ max-width: 960px; padding: 16px; }
-  .vista-simple thead th{ font-size: .8rem; padding: 12px 10px; }
-  .vista-simple tbody td{ font-size: .9rem; }
+  .barra-superior .barra-inner{ gap:10px; }
+  .tabla-contenedor{ max-width:960px; padding:16px; }
+  thead th{ font-size:.92rem; padding:12px 10px; }
+  tbody td{ font-size:.96rem; }
 }
-@media (max-width: 768px){
-  .vista-simple .barra-superior .barra-inner{
-    flex-direction: column; align-items: flex-start; gap:10px;
-  }
-  .vista-simple .contenedor-tabla,
-  .vista-simple .tabla-contenedor{ max-width: 100%; padding: 12px; }
-  .modal-contenido{ width: 95%; }
+@media (max-width: 800px){
+  .barra-superior .barra-inner{ flex-direction:column; align-items:flex-start; }
+  .tabla-contenedor{ max-width:100%; padding:12px; border-radius:8px; }
+  .modal-contenido{ width:95vw; }
+  .fila-form{ grid-template-columns:1fr; }
+  table{ display:block; overflow-x:auto; }
 }
