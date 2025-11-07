@@ -1,4 +1,9 @@
+/* ============================
+   Estilos base + Fix visual
+   Liquidaciones de sueldos
+   ============================ */
 
+/* -------- Variables de color (tus violetas) -------- */
 :root{
   --color-primario:   #5a189a;
   --color-secundario: #9d4edd;
@@ -69,7 +74,9 @@ tbody td{
   padding:12px 12px; border-bottom:1px solid var(--color-borde);
   vertical-align:middle; background:#fff;
 }
-tbody tr:hover td{ background:#faf5ff; } /* hover suave */
+/* Zebra striping y hover suave */
+tbody tr:nth-child(odd){ background:#fbf8ff; }
+tbody tr:hover td{ background:var(--color-hover); }
 tfoot td{
   background: #3b0d69; color:#fff; font-weight:600; padding:12px;
 }
@@ -86,7 +93,10 @@ th:nth-child(8){ width:110px; text-align:center; }
 th.col-modi, th.col-borrar{ width:110px; text-align:center; }
 
 /* -------- Fila de filtros (si la usás visible) -------- */
-tr.filtros th{ background:#fff; position:sticky; top:48px; z-index:9; box-shadow: inset 0 -1px 0 var(--color-borde); }
+tr.filtros th{
+  background:#fff; position:sticky; top:48px; z-index:9;
+  box-shadow: inset 0 -1px 0 var(--color-borde);
+}
 tr.filtros input, tr.filtros select{
   width:100%; padding:.45rem .6rem; border:1px solid var(--color-borde); border-radius:6px; background:#fff;
 }
