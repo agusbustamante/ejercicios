@@ -15,7 +15,7 @@ body.vista-simple{
 /* Altura fija estimada del header; usada para separar el thead sticky */
 :root{ --header-height: 72px; }
 
-/* Contenedor */
+/* Contenedor central con respiro */
 .vista-simple .contenedor-tabla{
   max-width: 1280px;
   margin: 24px auto 0;
@@ -24,18 +24,9 @@ body.vista-simple{
   box-shadow: 0 8px 22px rgba(75,20,128,.12);
   border: 1px solid var(--borde);
   padding: 8px 8px 16px;
-  /* leave space at bottom so fixed footer doesn't overlap */
-  padding-bottom: 96px;
 }
 
 /* Encabezado superior */
-.vista-simple .barra-superior{
-  background: var(--violeta);
-  color: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 80;
-}
 .vista-simple .barra-superior .barra-inner{
   display:flex; align-items:center; justify-content:space-between;
   max-width: 1280px; margin: 0 auto; padding: 10px 16px; gap:12px;
@@ -110,9 +101,9 @@ body.vista-simple [data-row="filtros"]{
 
 /* Pie centrado y delgado */
 .vista-simple .pie{
-  max-width:1280px; margin: 10px auto 24px; text-align:center;
-  color:#fff; background: var(--violeta); border-radius:8px; padding:10px 12px;
-  font-weight:600;
+  max-width:1280px; margin: 16px auto 24px; text-align:center;
+  color:#fff; background: linear-gradient(90deg,var(--violeta),var(--violeta-med));
+  border-radius:8px; padding:10px 12px; font-weight:600;
 }
 
 /* Orden y caja de búsqueda superior: estilizá o reducilo */
@@ -202,15 +193,7 @@ body.vista-simple [data-row="filtros"]{
 
 .acciones-form{ justify-content:flex-end; }
 
-/* Make footer compact contrast */
-.vista-simple .pie{
-  color:#fff; background: linear-gradient(90deg,var(--violeta),var(--violeta-med));
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
-  padding: 10px 0; display:flex; justify-content:center;
-}
 
-/* Prevent content from being hidden under fixed footer on short pages */
-body.vista-simple{ padding-bottom: 72px; }
 
 /* Responsive tweaks */
 @media (max-width:720px){
