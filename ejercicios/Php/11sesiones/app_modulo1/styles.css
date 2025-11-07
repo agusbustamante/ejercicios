@@ -217,3 +217,79 @@ tbody td{ padding: 9px 12px !important; }
   border-radius: 6px !important;
 }
 
+/* ===== FIX DEFINITIVO: header + ancho total ===== */
+
+/* 0) Altura real de TU barra superior (ajustá si hace falta) */
+:root{
+  --alto-header: 84px;                 /* probá 76–92 según tu barra */
+  --offset-sticky: calc(var(--alto-header) + 6px);
+}
+
+/* 1) La barra no debe tapar nada */
+.barra-superior{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  min-height: var(--alto-header) !important;
+}
+/* Un pelín de aire bajo la barra */
+main{ padding-top: 6px !important; }
+
+/* 2) Encabezado de tabla sticky por DEBAJO de la barra */
+thead th{
+  position: sticky !important;
+  top: var(--offset-sticky) !important;
+  z-index: 900 !important;
+}
+
+/* Si tenés la fila de filtros visible, que quede debajo del thead */
+tr.filtros th{
+  position: sticky !important;
+  top: calc(var(--offset-sticky) + 36px) !important; /* alto del thead */
+  z-index: 890 !important;
+}
+
+/* 3) FORZAR ancho completo y remover “tarjeta centrada” */
+main,
+.tabla-contenedor,
+.contenedor-tabla,
+.tabla-wrapper,
+.tabla-scroll{
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 12px !important;          /* solo un poquito de padding lateral */
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* La tabla en sí, igual: */
+table{
+  width: 100% !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* 4) Compactar un poco filas y header (opcional) */
+thead th{ padding: 10px 12px !important; }
+tbody td{ padding: 9px 12px !important; }
+
+/* 5) Footer a lo ancho */
+.pie{
+  max-width: none !important;
+  width: 100% !important;
+  margin: 16px 0 0 !important;
+  border-radius: 6px !important;
+}
+
+/* 6) Por si algún estilo viejo insiste en centrar: */
+main > *{
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+
+
