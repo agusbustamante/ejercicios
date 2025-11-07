@@ -13,12 +13,12 @@ body.vista-simple{
 }
 
 /* Altura fija estimada del header; usada para separar el thead sticky */
-:root{ --header-height: 120px; }
+:root{ --header-height: 72px; }
 
-/* Contenedor central con respiro */
+/* Contenedor */
 .vista-simple .contenedor-tabla{
   max-width: 1280px;
-  margin: calc(var(--header-height) + 12px) auto 0;
+  margin: 24px auto 0;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 8px 22px rgba(75,20,128,.12);
@@ -65,7 +65,8 @@ body.vista-simple{
   text-align:left;
   font-weight:700;
   padding: 12px 14px;
-  position: sticky; top: var(--header-height); z-index: 30;
+  /* Make thead behave like a normal table header (not sticky) so it doesn't overlap rows */
+  position: static;
 }
 .vista-simple tbody td{
   padding: 12px 14px;
