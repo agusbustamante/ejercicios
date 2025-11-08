@@ -66,7 +66,7 @@
     tbody.innerHTML = '';
     if (!lista.length) {
       tbody.innerHTML = '<tr><td colspan="10">Sin resultados</td></tr>';
-      pie.innerHTML   = 'Alumno: <strong>Bustamante Agustin</strong> · Total: 0';
+      if (pie) pie.innerHTML = '';
       return;
     }
     const frag = document.createDocumentFragment();
@@ -88,7 +88,7 @@
       frag.appendChild(tr);
     }
     tbody.appendChild(frag);
-    pie.innerHTML = `Alumno: <strong>Bustamante Agustin</strong> · Total: ${lista.length}`;
+    if (pie) pie.innerHTML = '';
   };
 
   const actualizarFiltrado = debounce(renderFiltrado);
