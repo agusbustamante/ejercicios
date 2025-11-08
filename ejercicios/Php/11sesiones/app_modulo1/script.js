@@ -122,6 +122,10 @@
 
   // ===== Cargar lista (con alerta de variables) =====
   const cargaTabla = async () => {
+    // Restaurar el valor por defecto del orden
+    const ordenInput = $('#orden');
+    if (ordenInput) ordenInput.value = 'LegajoEmpleado';
+    
     const params = armarParams();
     alert(
       'Variables a enviar (antes de Ajax):\n' +
@@ -242,6 +246,9 @@
   // ===== Limpiar filtros (botón de encabezado) =====
   const limpiarFiltros = () => {
     Object.values(filtros).forEach(f => { if (f) f.value = ''; });
+    // Limpiar también el campo de orden
+    const ordenInput = $('#orden');
+    if (ordenInput) ordenInput.value = '';
     // Mostramos todo SIN re-llamar al server (si querés, cambiá por cargaTabla();)
     renderFiltrado();
   };
