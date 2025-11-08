@@ -81,6 +81,9 @@ tbody td{
 /* Zebra striping y hover suave */
 tbody tr:nth-child(odd){ background:#f9f9f9; }
 tbody tr:hover td{ background:#f0f0f0; }
+tfoot{
+  display: none;
+}
 tfoot td{
   background: var(--color-primario); color:#fff; font-weight:600; 
   padding:10px 12px; font-size:.9rem;
