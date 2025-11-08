@@ -95,35 +95,78 @@ th:nth-child(5){ width:120px; }
 th:nth-child(6){ min-width:180px; }
 th:nth-child(7){ width:140px; }
 th:nth-child(8){ width:80px; text-align:center; }
+th:nth-child(9), th:nth-child(10){ width:100px; text-align:center; }
 th.col-modi, th.col-borrar{ width:100px; text-align:center; }
 
 /* -------- Fila de filtros (si la usás visible) -------- */
 tr.filtros th{
-  background:#fff; position:sticky; top:48px; z-index:9;
+  background:#fff; position:sticky; top:42px; z-index:9;
   box-shadow: inset 0 -1px 0 var(--color-borde);
   padding:8px;
+  border-bottom:1px solid #ccc;
 }
 tr.filtros input, tr.filtros select{
-  width:100%; padding:.35rem .5rem; border:1px solid var(--color-borde); 
+  width:100%; padding:.35rem .5rem; border:1px solid #ccc; 
   border-radius:4px; background:#fff; font-size:.85rem;
 }
+tr.filtros input[type="date"]{
+  padding:.3rem .4rem;
+}
+tr.filtros input[type="number"]{
+  padding:.35rem .5rem;
+}
 
-/* -------- Vista simple: ocultar filtros y acciones (como tu captura) -------- */
-body.vista-simple .filtros{ display:none !important; }
-/* Ocultar columnas de acciones 9 y 10 cuando querés solo lectura */
+/* -------- Vista simple: MOSTRAR filtros y acciones -------- */
+body.vista-simple .filtros{ display:table-row !important; }
+/* Mostrar columnas de acciones */
 body.vista-simple thead th:nth-child(9),
 body.vista-simple tbody td:nth-child(9),
 body.vista-simple thead th:nth-child(10),
-body.vista-simple tbody td:nth-child(10){ display:none; }
+body.vista-simple tbody td:nth-child(10){ display:table-cell; }
 
 /* -------- PDF "pill" centrado -------- */
 tbody td a.pdf,
 tbody td[data-campo="pdf"] a{
-  display:inline-block; padding:4px 12px; border:1px solid var(--color-primario);
-  border-radius:4px; color:var(--color-primario); text-decoration:none; 
-  font-weight:600; font-size:.85rem;
+  display:inline-block; padding:4px 12px; border:1px solid #1976d2;
+  border-radius:4px; color:#1976d2; text-decoration:none; 
+  font-weight:600; font-size:.85rem; background:#fff;
+  transition: background .2s ease;
 }
-tbody td a.pdf:hover{ background:#f3f3f3; }
+tbody td a.pdf:hover{ background:#e3f2fd; }
+
+/* -------- Botones de acción en tabla -------- */
+tbody td button.btn-accion,
+tbody td .btn-accion{
+  padding:5px 14px; border:1px solid #1976d2; border-radius:4px;
+  background:#fff; color:#1976d2; font-weight:600; font-size:.85rem;
+  cursor:pointer; transition: background .2s ease;
+  margin:0 2px;
+}
+tbody td button.btn-accion:hover,
+tbody td .btn-accion:hover{
+  background:#e3f2fd;
+}
+tbody td button.btn-modi,
+tbody td .btn-modi{
+  border-color:#1976d2;
+  color:#1976d2;
+}
+tbody td button.btn-borrar,
+tbody td .btn-borrar{
+  border-color:#d32f2f;
+  color:#d32f2f;
+}
+tbody td button.btn-borrar:hover,
+tbody td .btn-borrar:hover{
+  background:#ffebee;
+}
+
+/* Centrar botones de acción */
+tbody td[data-campo="modificar"],
+tbody td[data-campo="borrar"],
+tbody td.col-acciones{
+  text-align:center;
+}
 
 /* -------- Pie morado centrado -------- */
 .pie{
@@ -285,11 +328,7 @@ tbody td{ padding: 9px 12px !important; }
   border-radius: 6px !important;
 }
 
-/* 6) Por si algún estilo viejo insiste en centrar: */
 main > *{
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
-
-
-
