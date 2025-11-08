@@ -81,9 +81,9 @@
         <td>${Number(reg.SueldoBasico || 0).toFixed(2)}</td>
         <td>${reg.concepto_no_remunerativo_1 || ''}</td>
         <td>${Number(reg.Monto_no_remunerativo_1 || 0).toFixed(2)}</td>
-        <td>${Number(reg.pdf_bytes) > 0 ? '<button class="boton-accion" data-accion="pdf">PDF</button>' : '-'}</td>
-        <td><button class="boton-accion" data-accion="modi">Modi</button></td>
-        <td><button class="boton-accion" data-accion="borrar">Borrar</button></td>
+        <td style="text-align:center;">${Number(reg.pdf_bytes) > 0 ? '<button class="btn-accion" data-accion="pdf">PDF</button>' : '-'}</td>
+        <td style="text-align:center;"><button class="btn-accion btn-modi" data-accion="modi">Modi</button></td>
+        <td style="text-align:center;"><button class="btn-accion btn-borrar" data-accion="borrar">Borrar</button></td>
       `;
       frag.appendChild(tr);
     }
