@@ -21,6 +21,7 @@
 
   // ===== Estado en memoria (para filtros cliente) =====
   let registros = [];
+  let conceptosMap = {}; // Mapa de códigos a nombres de conceptos
 
   // ===== Referencias a filtros =====
   const filtros = {
@@ -73,13 +74,17 @@
     for (const reg of lista) {
       const tr = document.createElement('tr');
       tr.dataset.legajo = reg.LegajoEmpleado;
+      // Obtener nombre del concepto desde el mapa
+      const codigoConcepto = reg.concepto_no_remunerativo_1 || '';
+      const nombreConcepto = conceptosMap[codigoConcepto] || codigoConcepto;
+      
       tr.innerHTML = `
         <td>${reg.LegajoEmpleado}</td>
         <td>${reg.ApellidoYNombres}</td>
         <td>${reg.Fecha_liquidacion}</td>
         <td>${reg.MesDeLiquidacion}</td>
         <td>${Number(reg.SueldoBasico || 0).toFixed(2)}</td>
-        <td>${reg.concepto_no_remunerativo_1 || ''}</td>
+        <td>${nombreConcepto}</td>
         <td>${Number(reg.Monto_no_remunerativo_1 || 0).toFixed(2)}</td>
         <td style="text-align:center;">${Number(reg.pdf_bytes) > 0 ? '<button class="btn-accion" data-accion="pdf">PDF</button>' : '-'}</td>
         <td style="text-align:center;"><button class="btn-accion btn-modi" data-accion="modi">Modi</button></td>
@@ -114,6 +119,8 @@
         o.value = it.CodigoConcepto;
         o.textContent = `${it.CodigoConcepto} – ${it.Descripcion}`;
         sel.appendChild(o);
+        // Guardar en el mapa para usar en la tabla
+        conceptosMap[it.CodigoConcepto] = it.Descripcion;
       });
     } catch (e) {
       console.error(e);
@@ -179,7 +186,7 @@
     $('#Fecha_liquidacion').value       = reg.Fecha_liquidacion;
     $('#MesDeLiquidacion').value        = reg.MesDeLiquidacion;
     $('#SueldoBasico').value            = reg.SueldoBasico;
-    $('#CodConceptoNoRem').value        = '';
+    $('#CodConceptoNoRem').value        = reg.concepto_no_remunerativo_1 || '';
     $('#Monto_no_remunerativo_1').value = reg.Monto_no_remunerativo_1;
     $('#pdf_liquidacion').value         = '';
     
