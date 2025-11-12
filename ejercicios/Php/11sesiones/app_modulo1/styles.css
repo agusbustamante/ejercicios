@@ -1,4 +1,4 @@
-﻿/* ============================
+/* ============================
    Estilos base + Fix visual
    Liquidaciones de sueldos
    ============================ */
@@ -140,6 +140,11 @@ tr.filtros input[type="number"]{
 
 /* -------- Vista simple: MOSTRAR filtros y acciones -------- */
 body.vista-simple .filtros{ display:table-row !important; }
+/* Ocultar filtros vacíos de nombre (columna 2) y concepto (columna 6) */
+body.vista-simple .filtros th:nth-child(2),
+body.vista-simple .filtros th:nth-child(6) {
+  display: none;
+}
 /* Mostrar columnas de acciones */
 body.vista-simple thead th:nth-child(9),
 body.vista-simple tbody td:nth-child(9),
