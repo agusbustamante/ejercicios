@@ -185,14 +185,12 @@
   const cargarConceptos = async () => {
     try {
       const r = await fetch('salidaJsonConceptos.php');
-      const json = await r.json();
+      const datos = await r.text();
       
-      // Alerta al ingresar al módulo - Mostrar códigos y descripciones
-      const conceptosTexto = (json.conceptos || []).map(c => 
-        `{"cod":"${c.CodigoConcepto}","nroDias":${c.CodigoConcepto}}`
-      ).join(',');
-      alert(`snow-panther-626632.hostingersite.com dice\n\n[${conceptosTexto}]`);
+      // 1. Carga de Datos Auxiliares - Mostrar JSON completo
+      alert(datos);
       
+      const json = JSON.parse(datos);
       const sel = $('#CodConceptoNoRem');
       sel.innerHTML = '';
       (json.conceptos || []).forEach(it => {
@@ -220,31 +218,34 @@
     if (ordenInput) ordenInput.value = 'LegajoEmpleado';
     
     const params = armarParams();
+    
+    // 2. Pre-Fetch: Mostrar variables de requerimiento HTTP
+    const filtroLegajo = filtros.legajo?.value || '(sin filtro)';
+    alert(
+      "Variables de Requerimiento HTTP:\n" +
+      "Orden: " + params.get('orden') + "\n" +
+      "Filtro Legajo: " + filtroLegajo
+    );
 
     tbody.innerHTML = '<tr><td colspan="10">Cargando…</td></tr>';
     try {
-      const r = await fetch('salidaJsonLiquidaciones.php', {
+      const r = await fetch('salidaJsonLiquidacionesConPrepare.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: params.toString()
       });
-      const json = await r.json();
+      const datos = await r.text();
+      
+      // 2. Post-JSON: Mostrar JSON completo con todos los registros
+      alert(datos);
+      
+      const json = JSON.parse(datos);
       if (json?.error) {
-        alert('snow-panther-626632.hostingersite.com dice\n\n' + JSON.stringify(json, null, 2));
         registros = [];
         renderFiltrado();
         return;
       }
       registros = json.liquidaciones || [];
-      
-      // Alertas al cargar datos - Mostrar información de liquidaciones obtenidas
-      if (registros.length > 0) {
-        const alertasLiquidaciones = registros.map(liq => {
-          return `{"NroFactura":"${liq.LegajoEmpleado}","CodProveedor":"P-${liq.LegajoEmpleado.substring(1)}","DomicilioProveedor":"${liq.ApellidoYNombres}","FechaFactura":"${liq.Fecha_liquidacion}","CodPlazosEntrega":"${liq.concepto_no_remunerativo_1}","TotalNetoFactura":"${liq.Monto_no_remunerativo_1}","TienePDF":${Number(liq.pdf_bytes) > 0 ? 1 : 0}}`;
-        }).join(',\n');
-        alert(`snow-panther-626632.hostingersite.com dice\n\n[${alertasLiquidaciones}]`);
-      }
-      
       renderFiltrado();
     } catch (e) {
       console.error(e);
@@ -294,9 +295,14 @@
     try {
       const r = await fetch('pdf.php?legajo=' + encodeURIComponent(legajo));
       if (!r.ok) { 
-        alert('snow-panther-626632.hostingersite.com dice\n\nNo hay documento PDF registrado'); 
+        alert('No hay documento PDF registrado'); 
         return; 
       }
+      const datos = await r.text();
+      
+      // 3. Visualización de Binario - Mostrar JSON con Base64
+      alert(datos);
+      
       const blob = await r.blob();
       const url = URL.createObjectURL(blob);
       const ifr = $('#iframePDF');
@@ -304,7 +310,7 @@
       else { window.open(url, '_blank'); }
     } catch (e) {
       console.error(e);
-      alert('snow-panther-626632.hostingersite.com dice\n\nError al obtener el PDF.');
+      alert('Error al obtener el PDF.');
     }
   };
 
@@ -315,8 +321,9 @@
     const fd  = new FormData($('#formLiquidacion'));
     const leg = $('#LegajoEmpleado').value;
 
+    // 4. Confirmaciones Pre-AJAX
     if (esAlta) {
-      if (!confirm('¿Estás seguro de insertar el registro? ' + leg)) return;
+      if (!confirm('¿Estás seguro de insertar el registro ' + leg + '?')) return;
     } else {
       if (!confirm('¿Estás seguro que desea modificar el registro ' + leg + '?')) return;
       fd.append('LegajoEmpleadoOriginal', $('#legajoOriginal').value);
@@ -324,19 +331,13 @@
 
     try {
       const r = await fetch(url, { method: 'POST', body: fd });
-      const json = await r.json();
+      const datos = await r.text();
       
-      // Alerta al dar de alta/modificar - Mostrar datos del registro
-      if (esAlta) {
-        const legajo = fd.get('LegajoEmpleado');
-        const concepto = fd.get('CodConceptoNoRem');
-        const monto = fd.get('Monto_no_remunerativo_1');
-        alert(`snow-panther-626632.hostingersite.com dice\n\n[{"cod":"${concepto}","nroDias":${concepto}},{"cod":"${concepto}","nroDias":${monto}}]`);
-      } else {
-        alert('snow-panther-626632.hostingersite.com dice\n\n' + (json.estado || JSON.stringify(json)));
-      }
+      // 5. Respuestas del Servidor Post-AJAX - Mostrar $respuesta_estado completo
+      alert(datos);
       
-      $('#textoRespuesta').textContent = json.estado || JSON.stringify(json);
+      const json = JSON.parse(datos);
+      $('#textoRespuesta').textContent = json.estado || datos;
       ocultarModal('modalForm'); mostrarModal('modalRespuesta');
       await cargaTabla();
     } catch (e) {
@@ -347,7 +348,8 @@
   };
 
   const eliminarRegistro = async (legajo) => {
-    if (!confirm('¿Estás seguro que desea borrar eliminar el ' + legajo + '?')) return;
+    // 4. Confirmación Pre-AJAX para Baja
+    if (!confirm('¿Estás seguro que desea borrar/eliminar el registro ' + legajo + '?')) return;
     try {
       const p = new URLSearchParams(); p.append('LegajoEmpleado', legajo);
       const r = await fetch('baja.php', {
@@ -355,13 +357,17 @@
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: p.toString()
       });
-      const json = await r.json();
-      alert('snow-panther-626632.hostingersite.com dice\n\n' + (json.estado || JSON.stringify(json)));
-      $('#textoRespuesta').textContent = json.estado || JSON.stringify(json);
+      const datos = await r.text();
+      
+      // 5. Respuesta del Servidor Post-AJAX para Baja
+      alert(datos);
+      
+      const json = JSON.parse(datos);
+      $('#textoRespuesta').textContent = json.estado || datos;
       mostrarModal('modalRespuesta'); await cargaTabla();
     } catch (e) {
       console.error(e);
-      alert('snow-panther-626632.hostingersite.com dice\n\nError al eliminar.');
+      alert('Error al eliminar.');
     }
   };
 
