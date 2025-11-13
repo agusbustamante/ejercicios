@@ -298,12 +298,13 @@
         alert('No hay documento PDF registrado'); 
         return; 
       }
-      const datos = await r.text();
       
-      // 3. Visualización de Binario - Mostrar JSON con Base64
-      alert(datos);
-      
+      // Obtener el blob primero
       const blob = await r.blob();
+      
+      // 3. Visualización de Binario - Mostrar tamaño del PDF
+      alert('PDF recibido. Tamaño: ' + blob.size + ' bytes');
+      
       const url = URL.createObjectURL(blob);
       const ifr = $('#iframePDF');
       if (ifr) { ifr.src = url; mostrarModal('modalPDF'); }
