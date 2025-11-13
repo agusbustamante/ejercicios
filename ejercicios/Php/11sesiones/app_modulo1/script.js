@@ -236,10 +236,19 @@
       });
       const datos = await r.text();
       
-      // 2. Post-JSON: Mostrar JSON completo con todos los registros
-      alert(datos);
+      // Verificar si la respuesta es JSON válido
+      let json;
+      try {
+        json = JSON.parse(datos);
+        // 2. Post-JSON: Mostrar JSON completo con todos los registros (solo si es válido)
+        alert(datos);
+      } catch (parseError) {
+        // Si no es JSON, mostrar el error HTML en consola y en la tabla
+        console.error('Respuesta no es JSON:', datos);
+        tbody.innerHTML = '<tr><td colspan="10">Error: El servidor devolvió HTML en lugar de JSON. Revisa la consola (F12).</td></tr>';
+        return;
+      }
       
-      const json = JSON.parse(datos);
       if (json?.error) {
         registros = [];
         renderFiltrado();
