@@ -166,63 +166,29 @@ tbody td[data-campo="modificar"], tbody td[data-campo="borrar"], tbody td.col-ac
 
 /* -------- Responsivo -------- */
 @media (max-width: 768px){
-  .barra-superior .barra-inner{ padding:10px 15px; gap:10px; }
-  .titulo{ font-size:1.1rem; }
-  .acciones-header{ gap:6px; }
-  .acciones-header input[type="text"]{ min-width:130px; padding:.35rem .6rem; font-size:.85rem; }
-  .boton{ padding:.35rem .6rem; font-size:.85rem; }
-  
-  .tabla-contenedor{ padding:12px; }
+  .barra-superior .barra-inner{ gap:8px; flex-wrap:wrap; }
+  .tabla-contenedor{ padding:10px; }
   table{ font-size:.9rem; }
-  thead th{ padding:8px 8px; font-size:.85rem; }
-  tbody td{ padding:6px 8px; font-size:.85rem; }
-  
-  th:nth-child(1){ width:60px; }
-  th:nth-child(2){ min-width:120px; }
-  th:nth-child(3){ width:80px; }
-  th:nth-child(4){ width:70px; }
-  th:nth-child(5){ width:90px; }
-  th:nth-child(6){ min-width:100px; }
-  th:nth-child(7){ width:100px; }
-  th:nth-child(8){ width:60px; }
-  th:nth-child(9), th:nth-child(10){ width:70px; }
-  
-  .modal-contenido{ width:90vw; padding:15px; }
-  .fila-form{ grid-template-columns:1fr; gap:8px; }
-  .fila-form input, .fila-form select{ padding:.4rem .5rem; font-size:.85rem; }
-  
-  tbody td button.btn-accion{ padding:4px 8px; font-size:.8rem; }
-  tbody td a.pdf{ padding:3px 6px; font-size:.8rem; }
+  thead th, tbody td{ padding:6px 8px; font-size:.85rem; }
 }
 
 @media (max-width: 480px){
-  .barra-superior .barra-inner{ flex-direction:column; align-items:stretch; padding:8px 12px; gap:8px; }
-  .titulo{ font-size:1rem; margin-right:0; }
+  .barra-superior .barra-inner{ flex-direction:column; padding:8px; }
+  .titulo{ font-size:.95rem; }
   .acciones-header{ flex-direction:column; width:100%; }
-  .acciones-header input[type="text"]{ width:100%; min-width:auto; padding:.35rem .5rem; font-size:.8rem; }
-  .boton{ padding:.3rem .5rem; font-size:.75rem; width:100%; }
+  .acciones-header input, .boton{ width:100%; padding:.3rem .4rem; font-size:.75rem; }
   
-  .tabla-contenedor{ padding:6px; }
-  table{ font-size:.8rem; }
-  thead th{ padding:6px 5px; font-size:.75rem; white-space:normal; }
-  tbody td{ padding:4px 6px; font-size:.8rem; }
+  .tabla-contenedor{ padding:4px; overflow-x:auto; }
+  table{ font-size:.75rem; min-width:600px; }
+  thead th{ padding:4px; font-size:.7rem; }
+  tbody td{ padding:3px; font-size:.75rem; }
   
-  th:nth-child(1){ width:45px; }
-  th:nth-child(2){ min-width:90px; }
-  th:nth-child(3){ width:60px; }
-  th:nth-child(4){ width:50px; }
-  th:nth-child(5){ width:70px; }
-  th:nth-child(6){ min-width:80px; }
-  th:nth-child(7){ width:80px; }
-  th:nth-child(8){ width:45px; }
-  th:nth-child(9), th:nth-child(10){ width:55px; }
+  th:nth-child(2), th:nth-child(6){ min-width:70px; }
+  th:nth-child(1), th:nth-child(8){ width:40px; }
+  th:nth-child(3), th:nth-child(4), th:nth-child(5){ width:50px; }
+  th:nth-child(7), th:nth-child(9), th:nth-child(10){ width:55px; }
   
-  .modal-contenido{ width:95vw; padding:12px; border-radius:8px; }
-  .fila-form{ gap:6px; }
-  .fila-form input, .fila-form select{ padding:.3rem .4rem; font-size:.8rem; }
-  
-  tbody td button.btn-accion{ padding:3px 6px; font-size:.7rem; margin:1px; }
-  tbody td a.pdf{ padding:2px 5px; font-size:.7rem; }
-  
-  .pie{ font-size:.8rem; padding:6px 12px; }
+  .modal-contenido{ width:95vw; padding:10px; }
+  .fila-form{ grid-template-columns:1fr; }
+  tbody td button.btn-accion, tbody td a.pdf{ padding:2px 4px; font-size:.65rem; }
 }
