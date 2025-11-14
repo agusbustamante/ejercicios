@@ -7,7 +7,7 @@ if ($login === '' || $clave === '') {
     header('Location: formularioDeLogin.html?e=1'); exit;
 }
 
-require __DIR__ . '/app_modulo1/datosConexionBase.php';
+require __DIR__ . '/datosConexionBase.php';
 
 try {
     // Compara la clave en la CONSULTA (SHA2 en MySQL)
