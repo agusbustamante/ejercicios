@@ -87,17 +87,17 @@ tfoot td{
   padding:10px 12px; font-size:.9rem;
 }
 
-/* columnas: anchos �ptimos */
-th:nth-child(1){ width:90px; }
-th:nth-child(2){ min-width:200px; }
-th:nth-child(3){ width:110px; }
-th:nth-child(4){ width:100px; }
-th:nth-child(5){ width:120px; }
-th:nth-child(6){ min-width:180px; }
-th:nth-child(7){ width:140px; }
-th:nth-child(8){ width:80px; text-align:center; }
-th:nth-child(9), th:nth-child(10){ width:100px; text-align:center; }
-th.col-modi, th.col-borrar{ width:100px; text-align:center; }
+/* columnas: anchos óptimos */
+th:nth-child(1){ width:8%; }
+th:nth-child(2){ width:20%; }
+th:nth-child(3){ width:10%; }
+th:nth-child(4){ width:9%; }
+th:nth-child(5){ width:12%; }
+th:nth-child(6){ width:14%; }
+th:nth-child(7){ width:12%; }
+th:nth-child(8){ width:8%; text-align:center; }
+th:nth-child(9), th:nth-child(10){ width:8%; text-align:center; }
+th.col-modi, th.col-borrar{ width:8%; text-align:center; }
 
 tr.filtros th{
   background:#fff; position:sticky; top:42px; z-index:9;
@@ -160,37 +160,26 @@ tbody td[data-campo="modificar"], tbody td[data-campo="borrar"], tbody td.col-ac
 
 /* -------- Responsivo -------- */
 @media (max-width: 768px){
-  .barra-superior .barra-inner{ gap:8px; }
-  .acciones-header input[type="text"]{ min-width:120px; }
+  .barra-superior .barra-inner{ gap:8px; flex-wrap:wrap; }
+  .acciones-header input[type="text"]{ min-width:100px; padding:.3rem .5rem; font-size:.85rem; }
+  .boton{ padding:.3rem .5rem; font-size:.85rem; }
   .tabla-contenedor{ padding:8px; }
   table, thead th, tbody td{ font-size:.85rem; }
-  thead th, tbody td{ padding:6px; }
-  th:nth-child(2){ min-width:120px; }
-  th:nth-child(6){ min-width:100px; }
+  thead th, tbody td{ padding:5px 6px; }
 }
 
 @media (max-width: 600px){
   .barra-superior .barra-inner{ flex-direction:column; padding:8px; gap:8px; }
   .titulo{ font-size:1rem; }
   .acciones-header{ flex-direction:column; width:100%; }
-  .acciones-header input, .boton{ width:100%; padding:.25rem .3rem; font-size:.8rem; }
+  .acciones-header input, .boton{ width:100%; padding:.25rem .3rem; font-size:.75rem; }
   
-  .tabla-contenedor{ padding:6px; }
-  table{ font-size:.8rem; width:100%; }
-  thead th{ padding:5px 4px; font-size:.75rem; }
-  tbody td{ padding:4px; font-size:.8rem; }
+  .tabla-contenedor{ padding:4px; }
+  table{ font-size:.75rem; }
+  thead th{ padding:4px 3px; font-size:.7rem; }
+  tbody td{ padding:3px; font-size:.75rem; }
+  tbody td button.btn-accion, tbody td a.pdf{ padding:2px 3px; font-size:.65rem; }
   
-  th:nth-child(1){ width:50px; }
-  th:nth-child(2){ width:90px; }
-  th:nth-child(3){ width:60px; }
-  th:nth-child(4){ width:55px; }
-  th:nth-child(5){ width:65px; }
-  th:nth-child(6){ width:85px; }
-  th:nth-child(7){ width:70px; }
-  th:nth-child(8){ width:50px; }
-  th:nth-child(9), th:nth-child(10){ width:60px; }
-  
-  tbody td button.btn-accion, tbody td a.pdf{ padding:2px 4px; font-size:.7rem; }
   .modal-contenido{ width:95vw; padding:10px; }
   .fila-form{ grid-template-columns:1fr; gap:6px; }
 }
