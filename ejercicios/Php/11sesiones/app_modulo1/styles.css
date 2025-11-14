@@ -160,34 +160,37 @@ tbody td[data-campo="modificar"], tbody td[data-campo="borrar"], tbody td.col-ac
 
 /* -------- Responsivo -------- */
 @media (max-width: 768px){
-  .barra-superior .barra-inner{ gap:8px; flex-wrap:wrap; }
-  .tabla-contenedor{ padding:10px; }
-  table{ font-size:.9rem; }
-  thead th, tbody td{ padding:6px 8px; font-size:.85rem; }
+  .barra-superior .barra-inner{ gap:8px; }
+  .acciones-header input[type="text"]{ min-width:120px; }
+  .tabla-contenedor{ padding:8px; }
+  table, thead th, tbody td{ font-size:.85rem; }
+  thead th, tbody td{ padding:6px; }
+  th:nth-child(2){ min-width:120px; }
+  th:nth-child(6){ min-width:100px; }
 }
 
-@media (max-width: 480px){
-  .barra-superior .barra-inner{ flex-direction:column; padding:8px; }
-  .titulo{ font-size:.95rem; }
+@media (max-width: 600px){
+  .barra-superior .barra-inner{ flex-direction:column; padding:8px; gap:8px; }
+  .titulo{ font-size:1rem; }
   .acciones-header{ flex-direction:column; width:100%; }
-  .acciones-header input, .boton{ width:100%; padding:.3rem .4rem; font-size:.75rem; }
+  .acciones-header input, .boton{ width:100%; padding:.25rem .3rem; font-size:.8rem; }
   
-  .tabla-contenedor{ padding:4px; }
-  table{ font-size:.75rem; width:100%; overflow-x:auto; }
-  thead th{ padding:4px; font-size:.7rem; white-space:nowrap; }
-  tbody td{ padding:3px; font-size:.75rem; }
+  .tabla-contenedor{ padding:6px; }
+  table{ font-size:.8rem; width:100%; }
+  thead th{ padding:5px 4px; font-size:.75rem; }
+  tbody td{ padding:4px; font-size:.8rem; }
   
-  th:nth-child(1){ width:35px; }
-  th:nth-child(2){ width:70px; }
-  th:nth-child(3){ width:45px; }
-  th:nth-child(4){ width:40px; }
-  th:nth-child(5){ width:45px; }
-  th:nth-child(6){ width:65px; }
-  th:nth-child(7){ width:50px; }
-  th:nth-child(8){ width:35px; }
-  th:nth-child(9), th:nth-child(10){ width:40px; }
+  th:nth-child(1){ width:50px; }
+  th:nth-child(2){ width:90px; }
+  th:nth-child(3){ width:60px; }
+  th:nth-child(4){ width:55px; }
+  th:nth-child(5){ width:65px; }
+  th:nth-child(6){ width:85px; }
+  th:nth-child(7){ width:70px; }
+  th:nth-child(8){ width:50px; }
+  th:nth-child(9), th:nth-child(10){ width:60px; }
   
+  tbody td button.btn-accion, tbody td a.pdf{ padding:2px 4px; font-size:.7rem; }
   .modal-contenido{ width:95vw; padding:10px; }
-  .fila-form{ grid-template-columns:1fr; }
-  tbody td button.btn-accion, tbody td a.pdf{ padding:2px 4px; font-size:.65rem; }
+  .fila-form{ grid-template-columns:1fr; gap:6px; }
 }
