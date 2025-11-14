@@ -222,7 +222,7 @@
 
     tbody.innerHTML = '<tr><td colspan="10">Cargando…</td></tr>';
     try {
-      const r = await fetch('salidaJsonLiquidacionesphp', {
+      const r = await fetch('salidaJsonLiquidaciones.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: params.toString()
@@ -434,3 +434,4 @@
   // Primera carga: combos
   cargarConceptos();
 })();
+
