@@ -1,9 +1,3 @@
-﻿/* ============================
-   Estilos base + Fix visual
-   Liquidaciones de sueldos
-   ============================ */
-
-/* -------- Variables de color (tus violetas) -------- */
 :root{
   --color-primario:   #4a148c;
   --color-secundario: #6a1b9a;
@@ -178,15 +172,20 @@ tbody td[data-campo="modificar"], tbody td[data-campo="borrar"], tbody td.col-ac
   .acciones-header{ flex-direction:column; width:100%; }
   .acciones-header input, .boton{ width:100%; padding:.3rem .4rem; font-size:.75rem; }
   
-  .tabla-contenedor{ padding:4px; overflow-x:auto; }
-  table{ font-size:.75rem; min-width:600px; }
-  thead th{ padding:4px; font-size:.7rem; }
+  .tabla-contenedor{ padding:4px; }
+  table{ font-size:.75rem; width:100%; overflow-x:auto; }
+  thead th{ padding:4px; font-size:.7rem; white-space:nowrap; }
   tbody td{ padding:3px; font-size:.75rem; }
   
-  th:nth-child(2), th:nth-child(6){ min-width:70px; }
-  th:nth-child(1), th:nth-child(8){ width:40px; }
-  th:nth-child(3), th:nth-child(4), th:nth-child(5){ width:50px; }
-  th:nth-child(7), th:nth-child(9), th:nth-child(10){ width:55px; }
+  th:nth-child(1){ width:35px; }
+  th:nth-child(2){ width:70px; }
+  th:nth-child(3){ width:45px; }
+  th:nth-child(4){ width:40px; }
+  th:nth-child(5){ width:45px; }
+  th:nth-child(6){ width:65px; }
+  th:nth-child(7){ width:50px; }
+  th:nth-child(8){ width:35px; }
+  th:nth-child(9), th:nth-child(10){ width:40px; }
   
   .modal-contenido{ width:95vw; padding:10px; }
   .fila-form{ grid-template-columns:1fr; }
