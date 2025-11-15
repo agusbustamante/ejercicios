@@ -279,9 +279,9 @@
         const botonPDF = fila ? fila.querySelector('[data-accion="pdf"]') : null;
         
         if (botonPDF && botonPDF.textContent === 'PDF') {
-          pdfInfo.innerHTML = '<p style="color: green; background: #f0f8f0; padding: 8px; border-radius: 4px;">📄 Este registro YA TIENE un PDF. Deja el campo vacío para mantenerlo, o selecciona uno nuevo para reemplazarlo.</p>';
+          pdfInfo.innerHTML = '<p style="color: green; background: #f0f8f0; padding: 8px; border-radius: 4px;">Este registro ya tiene PDF</p>';
         } else {
-          pdfInfo.innerHTML = '<p style="color: orange; background: #fff8f0; padding: 8px; border-radius: 4px;">📄 Este registro NO tiene PDF. Selecciona un archivo para agregarlo.</p>';
+          pdfInfo.innerHTML = '<p style="color: orange; background: #fff8f0; padding: 8px; border-radius: 4px;">Este registro no tiene PDF. Selecciona un archivo para agregarlo.</p>';
         }
       }
     }, 100);
