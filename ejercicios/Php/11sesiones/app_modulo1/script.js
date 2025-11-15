@@ -319,10 +319,10 @@
         return;
       }
       
+      // Abrir directamente en nueva pestaña en lugar de usar iframe
       const url = URL.createObjectURL(blob);
-      const ifr = $('#iframePDF');
-      if (ifr) { ifr.src = url; mostrarModal('modalPDF'); }
-      else { window.open(url, '_blank'); }
+      window.open(url, '_blank');
+      
     } catch (e) {
       alert('Error al obtener el PDF: ' + e.message);
     }
