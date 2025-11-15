@@ -148,6 +148,11 @@
       const tr = document.createElement('tr');
       tr.dataset.legajo = reg.LegajoEmpleado;
       tr.dataset.concepto = reg.concepto_no_remunerativo_1 || ''; // Guardar el código
+      tr.dataset.apellidoYNombres = reg.ApellidoYNombres;
+      tr.dataset.fechaLiquidacion = reg.Fecha_liquidacion;
+      tr.dataset.mesDeLiquidacion = reg.MesDeLiquidacion;
+      tr.dataset.sueldoBasico = reg.SueldoBasico || '0';
+      tr.dataset.montoNoRemunerativo = reg.Monto_no_remunerativo_1 || '0';
       
       // Obtener nombre del concepto desde el mapa
       const codigoConcepto = reg.concepto_no_remunerativo_1 || '';
@@ -377,15 +382,14 @@
     if (acc === 'pdf')   return mostrarPDF(leg);
     if (acc === 'borrar') return eliminarRegistro(leg);
     if (acc === 'modi') {
-      const c = tr.querySelectorAll('td');
       const reg = {
-        LegajoEmpleado:             c[0].textContent,
-        ApellidoYNombres:           c[1].textContent,
-        Fecha_liquidacion:          c[2].textContent,
-        MesDeLiquidacion:           c[3].textContent,
-        SueldoBasico:               c[4].textContent,
+        LegajoEmpleado:             tr.dataset.legajo,
+        ApellidoYNombres:           tr.dataset.apellidoYNombres,
+        Fecha_liquidacion:          tr.dataset.fechaLiquidacion,
+        MesDeLiquidacion:           tr.dataset.mesDeLiquidacion,
+        SueldoBasico:               tr.dataset.sueldoBasico,
         concepto_no_remunerativo_1: tr.dataset.concepto || '', // Usar el código guardado
-        Monto_no_remunerativo_1:    c[6].textContent
+        Monto_no_remunerativo_1:    tr.dataset.montoNoRemunerativo
       };
       return abrirModi(reg);
     }
