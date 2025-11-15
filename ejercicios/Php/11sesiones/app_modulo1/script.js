@@ -146,13 +146,6 @@
     const frag = document.createDocumentFragment();
     for (const reg of lista) {
       const tr = document.createElement('tr');
-      tr.dataset.legajo = reg.LegajoEmpleado;
-      tr.dataset.concepto = reg.concepto_no_remunerativo_1 || ''; // Guardar el código
-      tr.dataset.apellidoYNombres = reg.ApellidoYNombres;
-      tr.dataset.fechaLiquidacion = reg.Fecha_liquidacion;
-      tr.dataset.mesDeLiquidacion = reg.MesDeLiquidacion;
-      tr.dataset.sueldoBasico = reg.SueldoBasico || '0';
-      tr.dataset.montoNoRemunerativo = reg.Monto_no_remunerativo_1 || '0';
       
       // Obtener nombre del concepto desde el mapa
       const codigoConcepto = reg.concepto_no_remunerativo_1 || '';
@@ -170,6 +163,15 @@
         <td style="text-align:center;"><button class="btn-accion btn-modi" data-accion="modi">Modi</button></td>
         <td style="text-align:center;"><button class="btn-accion btn-borrar" data-accion="borrar">Borrar</button></td>
       `;
+      
+      tr.dataset.legajo = reg.LegajoEmpleado;
+      tr.dataset.concepto = reg.concepto_no_remunerativo_1 || ''; // Guardar el código
+      tr.dataset.apellidoYNombres = reg.ApellidoYNombres;
+      tr.dataset.fechaLiquidacion = reg.Fecha_liquidacion;
+      tr.dataset.mesDeLiquidacion = reg.MesDeLiquidacion;
+      tr.dataset.sueldoBasico = reg.SueldoBasico || '0';
+      tr.dataset.montoNoRemunerativo = reg.Monto_no_remunerativo_1 || '0';
+      
       frag.appendChild(tr);
     }
     tbody.appendChild(frag);
@@ -220,9 +222,8 @@
     
     const params = armarParams();
     alert(
-      'Variables a enviar (antes de Ajax):\n' +
-      'orden = ' + params.get('orden') + '\n' +
-      'f_liquidaciones_mes_num = ' + (params.get('f_liquidaciones_mes_num') || '(vacío)')
+      'Variables a enviar:\n' +
+      'orden = ' + params.get('orden')
     );
 
     tbody.innerHTML = '<tr><td colspan="10">Cargando…</td></tr>';
@@ -289,14 +290,20 @@
     try {
       const r = await fetch('pdf.php?legajo=' + encodeURIComponent(legajo));
       if (!r.ok) { alert('No hay documento PDF registrado'); return; }
+      
+      const contentType = r.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/pdf')) {
+        const texto = await r.text();
+        alert('Error: ' + texto);
+        return;
+      }
+      
       const blob = await r.blob();
-      alert('PDF recibido. Tamaño: ' + blob.size + ' bytes');
       const url = URL.createObjectURL(blob);
       const ifr = $('#iframePDF');
       if (ifr) { ifr.src = url; mostrarModal('modalPDF'); }
       else { window.open(url, '_blank'); }
     } catch (e) {
-      console.error(e);
       alert('Error al obtener el PDF.');
     }
   };
