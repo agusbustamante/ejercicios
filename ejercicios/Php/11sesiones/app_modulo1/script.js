@@ -299,7 +299,12 @@
   const mostrarPDF = async (legajo) => {
     try {
       const r = await fetch('pdf.php?legajo=' + encodeURIComponent(legajo));
-      if (!r.ok) { alert('No hay documento PDF registrado'); return; }
+      
+      if (!r.ok) { 
+        const texto = await r.text();
+        alert('Error del servidor: ' + texto); 
+        return; 
+      }
       
       const contentType = r.headers.get('content-type');
       if (!contentType || !contentType.includes('application/pdf')) {
@@ -309,12 +314,17 @@
       }
       
       const blob = await r.blob();
+      if (blob.size === 0) {
+        alert('El PDF está vacío');
+        return;
+      }
+      
       const url = URL.createObjectURL(blob);
       const ifr = $('#iframePDF');
       if (ifr) { ifr.src = url; mostrarModal('modalPDF'); }
       else { window.open(url, '_blank'); }
     } catch (e) {
-      alert('Error al obtener el PDF.');
+      alert('Error al obtener el PDF: ' + e.message);
     }
   };
 
