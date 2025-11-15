@@ -147,30 +147,40 @@
     for (const reg of lista) {
       const tr = document.createElement('tr');
       
+      // Guardar datos en dataset ANTES de crear el HTML
+      tr.dataset.legajo = reg.LegajoEmpleado || '';
+      tr.dataset.concepto = reg.concepto_no_remunerativo_1 || '';
+      tr.dataset.apellidoYNombres = reg.ApellidoYNombres || '';
+      tr.dataset.fechaLiquidacion = reg.Fecha_liquidacion || '';
+      tr.dataset.mesDeLiquidacion = reg.MesDeLiquidacion || '';
+      tr.dataset.sueldoBasico = reg.SueldoBasico || '0';
+      tr.dataset.montoNoRemunerativo = reg.Monto_no_remunerativo_1 || '0';
+      
       // Obtener nombre del concepto desde el mapa
       const codigoConcepto = reg.concepto_no_remunerativo_1 || '';
       const nombreConcepto = conceptosMap[codigoConcepto] || codigoConcepto;
       
-      tr.innerHTML = `
-        <td>${reg.LegajoEmpleado}</td>
-        <td>${reg.ApellidoYNombres}</td>
-        <td>${reg.Fecha_liquidacion}</td>
-        <td>${reg.MesDeLiquidacion}</td>
-        <td style="text-align:right;">${formatearNumero(reg.SueldoBasico)}</td>
-        <td>${nombreConcepto}</td>
-        <td style="text-align:right;">${formatearNumero(reg.Monto_no_remunerativo_1)}</td>
-        <td style="text-align:center;">${Number(reg.pdf_bytes) > 0 ? '<button class="btn-accion" data-accion="pdf">PDF</button>' : '-'}</td>
-        <td style="text-align:center;"><button class="btn-accion btn-modi" data-accion="modi">Modi</button></td>
-        <td style="text-align:center;"><button class="btn-accion btn-borrar" data-accion="borrar">Borrar</button></td>
-      `;
+      // Crear celdas manualmente para preservar dataset
+      const celdas = [
+        reg.LegajoEmpleado,
+        reg.ApellidoYNombres,
+        reg.Fecha_liquidacion,
+        reg.MesDeLiquidacion,
+        formatearNumero(reg.SueldoBasico),
+        nombreConcepto,
+        formatearNumero(reg.Monto_no_remunerativo_1),
+        Number(reg.pdf_bytes) > 0 ? '<button class="btn-accion" data-accion="pdf">PDF</button>' : '-',
+        '<button class="btn-accion btn-modi" data-accion="modi">Modi</button>',
+        '<button class="btn-accion btn-borrar" data-accion="borrar">Borrar</button>'
+      ];
       
-      tr.dataset.legajo = reg.LegajoEmpleado;
-      tr.dataset.concepto = reg.concepto_no_remunerativo_1 || ''; // Guardar el código
-      tr.dataset.apellidoYNombres = reg.ApellidoYNombres;
-      tr.dataset.fechaLiquidacion = reg.Fecha_liquidacion;
-      tr.dataset.mesDeLiquidacion = reg.MesDeLiquidacion;
-      tr.dataset.sueldoBasico = reg.SueldoBasico || '0';
-      tr.dataset.montoNoRemunerativo = reg.Monto_no_remunerativo_1 || '0';
+      celdas.forEach((contenido, i) => {
+        const td = document.createElement('td');
+        if (i === 4 || i === 6) td.style.textAlign = 'right'; // Números a la derecha
+        if (i >= 7) td.style.textAlign = 'center'; // Botones al centro
+        td.innerHTML = contenido;
+        tr.appendChild(td);
+      });
       
       frag.appendChild(tr);
     }
