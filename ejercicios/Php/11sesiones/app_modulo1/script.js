@@ -286,26 +286,28 @@
     $('#Monto_no_remunerativo_1').value = reg.Monto_no_remunerativo_1;
     $('#pdf_liquidacion').value         = '';
     
-    // Mostrar información del PDF existente
-    const pdfInfo = $('#pdf_info');
-    if (pdfInfo) {
-      // Verificar si hay PDF en esta fila
-      const fila = document.querySelector(`tr[data-legajo="${reg.LegajoEmpleado}"]`);
-      const botonPDF = fila ? fila.querySelector('[data-accion="pdf"]') : null;
-      
-      if (botonPDF && botonPDF.textContent === 'PDF') {
-        pdfInfo.innerHTML = '<p style="color: green;">📄 Este registro ya tiene un PDF. Deja el campo vacío para mantenerlo, o selecciona uno nuevo para reemplazarlo.</p>';
-      } else {
-        pdfInfo.innerHTML = '<p style="color: orange;">📄 Este registro no tiene PDF. Selecciona un archivo para agregarlo.</p>';
-      }
-    }
-    
     // Deshabilitar el campo legajo para modificaciones (no se puede cambiar la PK)
     const legajoInput = $('#LegajoEmpleado');
     if (legajoInput) {
       legajoInput.disabled = true;
       legajoInput.style.backgroundColor = '#f0f0f0';
     }
+    
+    // Mostrar información del PDF después de que el modal esté visible
+    setTimeout(() => {
+      const pdfInfo = $('#pdf_info');
+      if (pdfInfo) {
+        // Verificar si hay PDF en esta fila
+        const fila = document.querySelector(`tr[data-legajo="${reg.LegajoEmpleado}"]`);
+        const botonPDF = fila ? fila.querySelector('[data-accion="pdf"]') : null;
+        
+        if (botonPDF && botonPDF.textContent === 'PDF') {
+          pdfInfo.innerHTML = '<p style="color: green; background: #f0f8f0; padding: 8px; border-radius: 4px;">📄 Este registro YA TIENE un PDF. Deja el campo vacío para mantenerlo, o selecciona uno nuevo para reemplazarlo.</p>';
+        } else {
+          pdfInfo.innerHTML = '<p style="color: orange; background: #fff8f0; padding: 8px; border-radius: 4px;">📄 Este registro NO tiene PDF. Selecciona un archivo para agregarlo.</p>';
+        }
+      }
+    }, 100);
     
     mostrarModal('modalForm');
   };
@@ -377,8 +379,15 @@
     try {
       const r = await fetch(url, { method: 'POST', body: fd });
       const json = await r.json();
-      alert('Respuesta del servidor:\n' + (json.estado || JSON.stringify(json)));
-      $('#textoRespuesta').textContent = json.estado || JSON.stringify(json);
+      
+      // Mostrar información detallada
+      let mensaje = json.estado || JSON.stringify(json);
+      if (json.debug && json.debug.length > 0) {
+        mensaje += '\n\n=== INFORMACIÓN DETALLADA ===\n' + json.debug.join('\n');
+      }
+      
+      alert('Respuesta del servidor:\n' + mensaje);
+      $('#textoRespuesta').textContent = mensaje;
       ocultarModal('modalForm'); mostrarModal('modalRespuesta');
       await cargaTabla();
     } catch (e) {
